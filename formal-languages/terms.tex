@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Formal Lang Assignment 1}
+\author{Tyler Tracy}
+\date{January 2020}
+
+\begin{document}
+
+\maketitle
+1. The intersection is \{3\} \\
+2. The union is \{1,2,3,a,b\} \\
+3. A/B = \{1,2\} \\
+4. B/A = \{a,b\} \\
+5. Power set of A = \{\{1 \},\{2\},\{3\},\{1,2\},\{1,3\},\{2,3\},\{1,2,3\}\} \\
+6. Power set of B = \{\{a\},\{b\},\{3\},\{a,b\},\{a,3\},\{b,3\},\{a,b,3\}\} \\
+
+Truth Table for A implies B
+\begin{displaymath}
+\begin{array}{|c c|c|}
+% |c c|c| means that there are three columns in the table and
+% a vertical bar ’|’ will be printed on the left and right borders,
+% and between the second and the third columns.
+% The letter ’c’ means the value will be centered within the column,
+% letter ’l’, left-aligned, and ’r’, right-aligned.
+A & B & A \rightarrow B\\ % Use & to separate the columns
+\hline % Put a horizontal line between the table header and the rest.
+T & T & T\\
+T & F & F\\
+F & T & T\\
+F & F & T\\
+\end{array}
+\end{displaymath}
+
+
+Proof by induction: \\
+(n+1)*n= 2*(1+2+...+n) \\
+@ n = 1 : (1+1) * 1 = 2*(1) = 2 \\
+@ n=k+1 : (k+2)*(k+1)=2*(1+2+...+k+k+1) \\
+	    (k+2)*(k+1)=(k+1)*k+2*(k+1) \\
+	    (k+2)*(k+1)=(k+2)*(k+1) \\
+
+\end{document}
