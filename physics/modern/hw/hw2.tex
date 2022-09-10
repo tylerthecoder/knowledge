@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{braket}
 \usepackage{amsmath}
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
 
 \title{Modern Physics Homework 2}
 \author{Tyelr Tracy}
@@ -15,22 +17,139 @@ Chapter 2: Problems, 6, 13, 23, 25 and 47
 \section*{Chapter 2, Q. 6}
 An astronaut must journey to a distant planet, which is 200 light-years from Earth. What speed will be necessary if the astronaut wishes to age only 10 years during the round trip?
 
+\textbf{Solution:}
+
+Given: $ \Delta t = 10y $ $ \ell_0 = 2 * 200ly = 400ly $
+
+We can use the length contraction formula to solve. The contracted length is equal to the time the astronaut will experience multiplied by how fast he will be going relative to the planet. So $ \ell = \Delta t * v $
+
+Setup Equation:
+
+$$ \Delta t * v = \ell_0 * \sqrt{1 - \frac{v^2}{c^2}} $$
+
+Solve for v:
+
+$$ v = \frac{\ell_0}{\sqrt{\cfrac{\ell_0^2}{c^2} + \Delta t^2}} $$
+
+Plug In values:
+
+$$ v = \frac{400ly}{\sqrt{\cfrac{(400ly)^2}{1\cfrac{ly}{y}^2} + (10y)^2}} $$
+
+Solve:
+
+$$ v = .999688 \frac{ly}{y} = .999688 c $$
+
+
 \section*{Chapter 2, Q. 13}
 a) A physics professor claims in court that the reason he went through the red light ($\lambda$ = 650 nm) was that, due to his motion, the red color was Doppler shifted to green ($\lambda$ = 550 nm). How fast was he going?
 
-b) to the problem that reads as follows b) assume another physicist witnessed the accident while travelling along the cross street (and thus transverse to the line of sight from them to the traffic light). They also claim that the light was red and not green. How fast was this physicist going?
+\textbf{Solution:}
+
+Given: $\lambda = 550nm$ $ \lambda_0 = 650nm $
+
+We can find the frequency using $ f = \cfrac{c}{\lambda} $
+
+
+We can use the relativistic doppler shift formula to solve.
+
+$$\frac{c}{\lambda} = \frac{c}{\lambda_0} \sqrt{\cfrac{1- \cfrac{u}{c}}{1 + \cfrac{u}{c}}}$$
+
+Solve for u:
+
+$$ \cfrac{u}{c} = \cfrac{\lambda^{2} - \lambda_0^{2}}{\lambda^{2}+\lambda_0^2} $$
+
+Plug in values:
+
+$$ \cfrac{u}{c} = \cfrac{(550nm)^2 - (650nm)^2}{(550nm)^2 + (650nm)^2} $$
+$$ \cfrac{u}{c} = -.1655 $$
+
+The professor was moving away from the light source at a speed of $ .1655c $
+
+b) assume another physicist witnessed the accident while traveling along the cross street (and thus transverse to the line of sight from them to the traffic light). They also claim that the light was red and not green. How fast was this physicist going?
 
 
 \section*{Chapter 2, Q. 23}
 Suppose Amelia traveled at a speed of 0.80c to a star that (according to Casper on Earth) is 8.0 light-years away.  Casper ages 20 years during Amelia's round trip. How much younger than Casper is Amelia when she returns to Earth?
 
+Given: $ \Delta t = 20y $ $ \ell_0 = 8ly * 2 = 16ly $
+
+We will use the length contraction equation to find out how far Amelia traveled in her frame of reference.
+
+Setup Equation:
+
+$$ \ell = \ell_0 * \sqrt{1 - \frac{v^2}{c^2}} $$
+
+Plug in and Solve
+
+$$ \ell = 16 * \sqrt{1 - \frac{.8c^2}{c^2}} $$
+$$ \ell = 16 * \sqrt{1 - \frac{.8c^2}{c^2}} $$
+$$ \ell = 9.6 ly $$
+
+Amelia traveled 9.6 light years in her frame of reference.
+
+$$\Delta t = \frac{\ell}{v} = \frac{9.6ly}{.8 \cfrac{ly}{y}} = 12 years $$
+
+Amelia aged 12 years in her frame of reference. She is 8 years younger than Casper.
+
 \section*{Chapter 2, Q. 25}
 (a) Using the relativistically correct final velocities for the collision shown in Figure 2.21a ($v^{'}_{1f} = -0.585c, v^{'}_{2f}=+0.294c$), show that relativistic kinetic energy is conserved according to observer O'.
 
+\textbf{Solution:}
+
+Kinetic Energy Before
+
+$$ KE = \frac{2m^2}{\sqrt{1 - \cfrac{v^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{v^2}{c^2}}}$$
+$$ KE = \frac{2mc^2}{\sqrt{1 - \cfrac{0^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{(-0.75c)^2}{c^2}}} - mc^2$$
+$$ KE =  .512 mc^2 $$
+
+Kinetic Energy After
+
+$$ KE = \frac{2m^2}{\sqrt{1 - \cfrac{v^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{v^2}{c^2}}}$$
+$$ KE = \frac{2mc^2}{\sqrt{1 - \cfrac{(-.585c^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{(.294c)^2}{c^2}}} - mc^2$$
+$$ KE =  .512 mc^2 $$
+
+The kinetic energies are the same. Relativistic kinetic energy is conserved.
+
+
+
 (b) Using the relativistically correct final velocities for the collision shown in Figure 2.21b ($v_{1f}$ = -0.051c, $v_{2f}$ = +0.727c), show that relativistic kinetic energy is conserved according to observer O.
+
+Kinetic Energy Before
+
+$$ KE = \frac{2m^2}{\sqrt{1 - \cfrac{v^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{v^2}{c^2}}}$$
+$$ KE = \frac{2mc^2}{\sqrt{1 - \cfrac{(-.55c^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{(-.34c)^2}{c^2}}} - mc^2$$
+$$ KE =  .458 mc^2 $$
+
+Kinetic Energy After
+
+$$ KE = \frac{2m^2}{\sqrt{1 - \cfrac{v^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{v^2}{c^2}}}$$
+$$ KE = \frac{2mc^2}{\sqrt{1 - \cfrac{(-.051c^2}{c^2}}} - 2mc^2 + \frac{mc^2}{\sqrt{1 - \cfrac{(-.727c)^2}{c^2}}} - mc^2$$
+$$ KE =  .458 mc^2 $$
+
+The kinetic energies are the same. Relativistic kinetic energy is conserved.
+
 
 \section*{Chapter 2, Q. 47}
 Observer O sees a red flash of light at the origin at t = 0 and a blue flash of light at x = 3.26 km at a time t = 7.63 us. What are the distance and the time interval between the flashes according to observer O', who moves relative to O in the direction of increasing x with a speed of 0.625c?  Assume that the origins of the two coordinate systems line up at t = t' = 0.
+
+
+Given:
+$ \Delta t_0 = 7.63us $ $ \ell_0= 3.26km $
+
+We can use the length and time dilation equations to find the speed and time in O' frame of reference.
+
+Setup Equations:
+	$$\ell = \ell_0 * \sqrt{1 - \frac{v^2}{c^2}}$$
+	$$\Delta t = \Delta t_0 * \sqrt{1 - \frac{v^2}{c^2}}$$
+
+Plug
+	$$\ell = 3.26 km * \sqrt{1 - \frac{(.625c)^2}{c^2}}$$
+	$$\Delta t = 7.63 us * \sqrt{1 - \frac{(.625c)^2}{c^2}}$$
+
+Solve
+	$$\ell = 2.54km$$
+	$$\Delta t = 5.96 us $$
+
 
 
 
