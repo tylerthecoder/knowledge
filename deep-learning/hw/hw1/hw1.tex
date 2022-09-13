@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{braket}
+\usepackage{amsmath}
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\title{Deep learning Homework 1}
+\author{tylertracy1999 }
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1, Derivatives}
+
+a) What is Jacobian matrix? $J_y^{(k)}(z^{(k)})$?
+
+The Jacobian matrix is the matrix of all the derivatives of the inputs with respect to the output. It will be of dimensions $D \textbf{x} M$
+
+$$\begin{bmatrix}
+	\frac{\partial y_1}{\partial z_1} & \dots & \frac{\partial y_1}{\partial z_D} \\
+	\vdots & \ddots & \\
+	\frac{\partial y_M}{\partial z_1} & \dots & \frac{\partial y_M}{\partial z_D} \\
+\end{bmatrix}$$
+
+b) If function f is a scalar function as follows, what is Jacobian matrix $J_y^{(k)}(z^{(k)})$
+
+When this is true, this means that instead of $y = f(z)$, we have $y_i = f(z_i)$. Meaning that each value of y solely depends on the corresponding value of z. Since we have this 1-1 relationship, the Jacobian matrix is now square. Also The diagonals of the Jacobian are 0 since values of z only change when their since corresponding value of y changes.
+
+
+$$\begin{bmatrix}
+	\frac{\partial y_1}{\partial z_1} & 0 & \dots & 0 \\
+	0 & \frac{\partial y_2}{\partial z_2} & \dots & 0 \\
+	\vdots & \vdots & \ddots & 0 \\
+	0 & \dots & 0 & \frac{\partial y_M}{\partial z_D} \\
+\end{bmatrix}$$
+
+\section*{Question 2, Multivariate Quadratic}
+
+
+$ E = \frac{1}{2} w^TAw + w^Tb+c$
+
+Parameters are updated: $w^{(k+1)} = w^{(k)} - \eta \nabla_w E$
+
+
+What is the optimal learning rate?
+
+Since A is diagonal, that means that all of the $w_i$'s are decoupled. That means this is a sum of $N$ quadratic functions.
+
+$$ E = \frac{1}{2}\sum_{i}(a_{ii}w_i^2 + b_iw_i + c) $$
+
+Our goal is to get w to update to the minimum of the function. Since these are all quadratics, we can find the minimum by taking the derivative and setting it equal to 0. We can then solve for w.
+
+Lets find the optimal learning rate for a single quadratic. The update rule for a single quadratic is:
+
+$$ w^{(k+1)} = w^{(k)} - \eta \frac{\partial E}{\partial w} $$
+
+The optimal learning rate means that $w^{(k+1)}$ will be the minimum, i.e. we got to the minimum in one step. So n should be the distance between the current w and the minimum w. We can find the minimum by taking the derivative and setting it equal to 0. We can then solve for w.
+
+$$ E' = a_{ii}w + b_i $$
+$$ w_i = -\frac{b_i}{a_{ii}} $$
+
+Now we can plug these values into the update rule and solve for the optimal learning rate.
+
+$$ -\frac{b}{a} = w - \eta (a_{ii}w + b_{i}) $$
+$$ \eta(a_{ii}w + b_{i}) = w + \frac{b_i}{a_{ii}} $$
+$$ \eta = \frac{wa_{ii} + b_i}{a_{ii}} * \frac{1}{a_{ii}w + b_{i}} $$
+$$ \eta = \frac{1}{a_{ii}}$$
+
+So the optimal learning rate for a single quadratic is $\frac{1}{a_{ii}}$. The learning rate has to be the same for all quadratics since it is constant. A learning rate that is over twice the optimal learning rate will diverge so we want to pick a learning rate where $\eta < 2 \eta_{i,opt}$ this will prevent the update rule from diverging in every direction.
+
+
+\section*{Question 3, Gradient Descent}
+
+What is Gradient Decent? What are the pros and cons of Gradient Decent?
+
+Gradient Decent is a method of finding the minimum of a function. The basic idea is to make a random guess at where the minimum is and then compute the gradient of the function at that point. The negative gradient will point to the direction of steepest descent. If we move in that direction with a constant step and well calculated step size, then the algorithm will eventually converge on the minimum.
+
+The pros of this method is that it is simple and quick for simple functions. It is also easy to implement.
+
+The cons are it can easily get stuck on saddle points or local minima. It can also be slow for complex functions
+
+
+
+
+What is Stochastic Gradient Decent? What are the pros and cons of Stochastic Gradient Decent?
+
+What is Mini-Batch Gradient Decent? What are the pros and cons of Mini-Batch Gradient Decent?
+
+
+\section*{Question 4, Regularization}
+
+
+\section*{Question 5, Implementation}
+
+
+\end{document}
