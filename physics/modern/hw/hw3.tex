@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{braket}
+\usepackage{amsmath}
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\title{Deep learning Homework 1}
+\author{tylertracy1999 }
+
+\begin{document}
+
+\maketitle
+
+Chapter 3, Problems 6, 40 and 44  and Chapter 4, Problems 6 and 21
+
+
+\section*{Chapter 3, Q. 6}
+
+Radio waves have a frequency of the order of 1 to 100 MHz.  What is the range of energies of these photons? Our bodies are continuously bombarded by these photons. Why are they not dangerous to us?
+
+\textbf{Solution:}
+
+Given: $f_{min} = 1MHz$,  $f_{max} = 100MHz$
+
+We can use the photon energy equation to solve. $ E = hf $
+
+$$ E_{min} = h * f_{min} = hf = 6.626 * 10^{-34}J * 10^6 Hz = 6.626 * 10^{-27} J $$
+
+$$ E_{max} = h * f_{max} = hf = 6.626 * 10^{-34}J * 10^8 Hz = 6.626 * 10^{-25} J $$
+
+The energy of these photons is so low that they are not dangerous to us. The energy of these photons is not enough to free an electron.
+
+\section*{Chapter 3, Q. 40}
+
+A photon of wavelength 7.52 pm scatters from a free electron at rest. After the interaction, the electron is observed to be moving in the direction of the original photon. Find the momentum of the electron
+
+\textbf{Solution:}
+
+Using the conservation of momentum we can write
+
+$$ p_{photon,i} + p_{electron,i} = p_{photon,f} + p_{electron,f} $$
+
+The momentum of a photon is: $ p_{photon} = \frac{h}{\lambda} $. The electron isn't moving to begin with so it doesn't have any momentum. Plugging in this values we get:
+
+$$ \frac{h}{\lambda_i} + 0 = \frac{h}{\lambda_f} + p_{electron,f} $$
+
+Rearranging we find
+
+$$ \frac{h}{\lambda_i} + \frac{h}{\lambda_f} = p_{electron,f} $$
+
+We can find the ending lambda using a the following scattering equation.
+
+$$ \lambda_f = \lambda_i + \frac{h}{m_ec}(1 - cos(\theta)) $$
+
+Since the electron is moving in the same direction as the original photon $\theta = \pi$
+
+$$ \lambda_f = \lambda_i + \frac{h}{m_ec}(1 - cos(\pi))) $$
+$$ \lambda_f = \lambda_i + \frac{h}{m_ec}(1 - -1)) $$
+$$ \lambda_f = \lambda_i + \frac{2h}{m_ec} $$
+
+
+Plugging in to the momentum equation we get
+
+$$ p_{electron,f} = \frac{h}{\lambda_i} + \frac{h}{\lambda_i + \frac{2h}{m_ec} } $$
+
+$$ p_{electron,f} = \frac{6.626 x 10^{-34}Js}{7.52x10^{-12}m} + \frac{6.626 x 10^{-34}Js}{7.52x10^{-12}m + \frac{2x6.626 x 10^{-34}Js}{9.109x10^{-31}kg * 3x10^8\frac{m}{s}}} $$
+
+$$ p_{electron,f} = 8.826 x 10^{-23} \frac{kg m}{s}  $$
+
+
+\section*{Chapter 3, Q. 44}
+
+A photon of energy E interacts with an electron at rest and undergoes pair production, producing a positive electron (positron) and an electron (in addition to the original electron): photon + e - → e + + e - + e - The two electrons and the positron move off with identical momenta in the direction of the initial photon. Find the kinetic energy of the three final particles and find the energy E of the photon. (Hint: Conserve momentum and total relativistic energy.)
+
+\textbf{Solution:}
+
+$$ E_\gamma + E_{e1i} = E_{e1f} + E_{e2f} + E_{e3f} $$
+
+Each of the electrons has the same momentum so since they are all the same mass they have the same energy. So the 3 particles will have total energy
+
+$$ E = 3 * m_ec^2\gamma $$
+
+That is total energy. The kinetic energy is $ E_{tot} - E_{rest} $ so the total kinetic energy is
+
+$$ KE = 3 * m_ec^2\gamma - 3 * m_ec^2 $$
+$$ KE = 3 * m_ec^2(\gamma - 1) $$
+
+The energy of the photon is the total energy minus the rest mass energy of the electron.
+
+$$ E_\gamma = hf = 3 * m_ec^2\gamma - m_ec^2$$
+
+
+\section*{Chapter 4, Q. 6}
+
+In an electron microscope we wish to study particles of diameter about 0.10 um (about 1000 times the size of a single atom).
+
+(a) What should be the de Broglie wavelength of the electrons?
+
+\textbf{Solution:}
+
+You would want a wavelength near the size of the particle. So $ \lambda = .1um $
+
+
+(b) Through what potential difference should the electrons be accelerated to have that de Broglie wavelength?
+
+\textbf{Solution:}
+
+The momentum of this particle is found using
+$$ p = \frac{h}{\lambda} $$
+
+$$ E = \cfrac{p^2}{2m_e} $$
+
+$$ E = \cfrac{h^2}{2m_e\lambda^2} $$
+
+Plug in values to find
+
+$$ E = \cfrac{6.626x10^{-34}Js}{2(9.109x10^{-31}kg)(.1x10^{-6}m)^2} $$
+
+$$ E = 2.41 x 10^{-23} J = 1.51 * 10^{-4} eV $$
+
+This is the amount of energy needed to get the electron to the wavelength we want.
+
+$$ V = 1.51 * 10^{-4} eV $$
+
+\section*{Chapter 4, Q. 21}
+
+A nucleus emits a gamma ray of energy 1.0 MeV from a state that has a lifetime of 1.2 ns. What is the uncertainty in the energy of the gamma ray? The best gamma-ray detectors can measure gamma-ray energies to a precision of no better than a few eV. Will this uncertainty be directly measurable?
+
+
+\textbf{Solution:}
+
+Given: $ E = 1.0 MeV$, $ \Delta t = 1.2 ns $
+
+We can use the uncertainty principle to find the uncertainty in energy.
+
+$$ \Delta E \Delta t = h $$
+$$ \Delta E = \cfrac{h}{\Delta t} $$
+
+Plug in values to find
+
+$$ \Delta E = \cfrac{6.626*10^{-34}Js}{1.2*10^{-9}s} $$
+
+$$ \Delta E = 5.522 * 10^{-25} J = 3.45*10^{-6} eV $$
+
+This uncertainty is very little and would no tbe directly measurable.
+
+
+\end{document}

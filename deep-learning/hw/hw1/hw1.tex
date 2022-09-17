@@ -78,19 +78,68 @@ What is Gradient Decent? What are the pros and cons of Gradient Decent?
 
 Gradient Decent is a method of finding the minimum of a function. The basic idea is to make a random guess at where the minimum is and then compute the gradient of the function at that point. The negative gradient will point to the direction of steepest descent. If we move in that direction with a constant step and well calculated step size, then the algorithm will eventually converge on the minimum.
 
-The pros of this method is that it is simple and quick for simple functions. It is also easy to implement.
+The pros of this method is that it is simple and quick for simple functions. It is also easy to implement. It is also normally quicker since it runs through all the training data then makes the update
 
 The cons are it can easily get stuck on saddle points or local minima. It can also be slow for complex functions
 
 
-
-
 What is Stochastic Gradient Decent? What are the pros and cons of Stochastic Gradient Decent?
+
+
+Stochastic Gradient Decent is different from normal Gradient Decent because instead of moving in the direction of the negative gradient of all of the data points, it moves in the direction of the negative gradient of a single data point.
+This mechanisms help to stay away from local minimums, because if you hit a local minimum in one data point's gradient, the next iteration could point you a different way away from that.
+
+The cons of Stochastic Gradient Decent is that it takes longer because it has to update the model after each data point in the training set instead of after the whole training set is done.
 
 What is Mini-Batch Gradient Decent? What are the pros and cons of Mini-Batch Gradient Decent?
 
+Mini-Batch Gradient Decent is a combination of Stochastic Gradient Decent and Gradient Decent. It takes a subset or "batch" of data points and computes the gradient of the batch. It then updates the model in the direction of the negative gradient of the batch.
+
+The pros of this is that it helps to avoid local minima and saddle points, and it is faster than Stochastic Gradient Decent because it doesn't have to update the model after every data point.
+
+The cons of this is that is that you have another hyper parameter to tune which is the mini-batch size
+
+
 
 \section*{Question 4, Regularization}
+
+What is each of the following regularization and how does it help deep neural network?
+
+a. (3 points) Batch normalization.
+
+Batch normalization is a way of normalizing the input data such that they have a mean of 0 and a standard deviation of 1. This essentially acts as another layer on the model and it can be applied after every layer. This helps the model by making the data it receives more uniform and thus easier to train and lessens the chance of the model over-fitting.
+
+b. (3 points) Drop out.
+
+In dropout regularization every iteration of training, a random set of neurons are dropped out of the network. This helps the network to generalize better and prevent over-fitting. It also helps to prevent the network from relying on a single neuron.
+
+The number of nodes to drop each iteration is another hyper parameter that needs to be tuned.
+
+
+c. (3 points) L1/L2 regularization.
+
+L1 and L2 regularizations assume that over-fitting comes from the weights of the model being too large. They both add a penalty to the cost function.
+
+For L1 the regularized cost function looks like:
+
+$$ Cost = Loss + \lambda \sum_{i} |w_i| $$
+
+And for L2 the regularized cost function looks like:
+
+$$ Cost = Loss + \lambda \sum_{i} w_i^2 $$
+
+The $\lambda$ is a new hyper parameter that we have to tune. The larger the $\lambda$ the more the weights will be penalized.
+
+These help the model by preventing over-fitting. They do this by preventing the weights from getting too large which is a good indicator of overfitting.
+
+d. (3 points) Data augmentation.
+
+Data augmentation helps generate more training data for the model. It does this by taking the original training data and apply transformations to it (for images it can translate or shear the subject of the image). This generates a bunch of new training data nd helps the model generalize better thus preventing over-fitting.
+
+e. (3 points) Early stop
+
+Early stopping is the method of segmenting your training data into a training set and a validation set. The model is trained on the training set and the validation set is used to check the accuracy of the model. The model is trained until the validation set accuracy starts to decrease. This is a good indicator that the model is over-fitting and we should "early-stop" training
+
 
 
 \section*{Question 5, Implementation}
