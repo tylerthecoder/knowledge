@@ -12,11 +12,13 @@ def getLabel(data: tuple):
 
 
 def gen_data_and_write(filename: str, size: int):
-	with open(filename, 'w') as f:
-		for i in range(size):
-			data = gen_data_point()
-			label = getLabel(data)
-			f.write(f'{data[0]},{data[1]},{label}\n')
+	with open("./data/" + filename + "_data.csv", 'w') as data:
+		with open("./data/" + filename + "_labels.csv", 'w') as labels:
+			for i in range(size):
+				dp = gen_data_point()
+				label = getLabel(dp)
+				data.write(f'{dp[0]},{dp[1]}\n')
+				labels.write(f'{label}\n')
 
 
 n_training = 100000
@@ -24,6 +26,6 @@ n_validation = 20000
 n_testing = 20000
 
 # Generate training data
-gen_data_and_write('./data/training_data.txt', n_training)
-gen_data_and_write('./data/validation_data.txt', n_validation)
-gen_data_and_write('./data/testing_data.txt', n_testing)
+gen_data_and_write('training', n_training)
+gen_data_and_write('validation', n_validation)
+gen_data_and_write('testing', n_testing)
