@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{braket}
+\usepackage{amsmath}
+
+\title{Modern Physics Homework 1}
+\author{Tyelr Tracy}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Q 3}
+
+The lowest energy of a particle in an infinite one-dimensional well is 4.4 eV. If the width of the well is doubled, what is its lowest energy?
+
+\textbf{Solution:}
+
+The equation for The energy of a particle in a 1 dimensional well is given by:
+
+$$ E = n^2\cfrac{h^2}{8mL^2} $$
+
+$h$ is Planck's constant, $m$ is the mass of the particle, and $L$ is the length of the well.
+
+So if we double the length of the well then the energy would go down by a fourth
+
+$$ E = n^2\cfrac{h^2}{8m(2L)^2} $$
+$$ E = n^2\cfrac{h^2}{8m4L^2} $$
+$$ E = (\cfrac{1}{4})n^2\cfrac{h^2}{8mL^2} $$
+$$ E = \cfrac{1}{4}E_0 $$
+$$ E = \cfrac{1}{4} {4.4ev} $$
+$$ E = 1.1 eV $$
+
+
+\section*{Q 6}
+
+What is the minimum energy of a neutron ($mc^2$ = 940 MeV) confined to a region of space of nuclear dimensions $(1.0 x 10^{-14} m)?$
+
+\textbf{Solution:}
+
+The equation for The energy of a particle in a 1 dimensional well is given by:
+
+$$ E = n^2\cfrac{h^2}{8mL^2} $$
+
+We know that L = $10^{-14} m$ and $m = \cfrac{940 MeV}{c^2}$ and $ n = 1 $
+
+Plugging in we get:
+
+$$ E = \cfrac{h^2}{8(940 MeV/c^2)(10^{-14} m)^2} $$
+
+$$ E = 495958 J = 2 MeV $$
+
+
+\section*{Q 14}
+
+A particle is trapped in an infinite one-dimensional well of width L. If the particle is in its ground state, evaluate the probability to find the particle
+
+(a) between x = 0 and x = L/3;
+
+\textbf{Solution:}
+
+The probability equation is given by
+
+$$ P = \int_{0}^{L/3} |\psi(x)|^2 dx $$
+$$ P = \int_{0}^{L/3} \cfrac{2}{L} sin^2 \cfrac{ \pi x}{L} dx $$
+$$ P = \cfrac{2}{L} \int_{0}^{L/3} sin^2 \cfrac{ \pi x}{L} dx $$
+$$ u = \cfrac{\pi x}{L}, P = \cfrac{2}{\pi} \int_{0}^{\pi/3} sin^2 u dx $$
+$$ P = \cfrac{2}{\pi} (\cfrac{u}{4} - \cfrac{sin(2u)}{4}) \rvert_{0}^{\pi / 3}  $$
+$$ P = .195 $$
+
+
+
+(b) between x = L/3 and x = 2L/3;
+
+$$ P = \cfrac{2}{\pi} (\cfrac{u}{4} - \cfrac{sin(2u)}{4}) \rvert_{\cfrac{\pi}{3}}^{\cfrac{2\pi}{3}}  $$
+$$ P = .609 $$
+
+
+(c) between x = 2L/3 and x = L.
+
+$$ P = \cfrac{2}{\pi} (\cfrac{u}{4} - \cfrac{sin(2u)}{4}) \rvert_{\cfrac{2\pi}{3}}^{\pi}  $$
+$$ P = .195 $$
+
+
+\end{document}
+
+/drive/1KNBbRfu3qRhVETs5mJhVar9o08bLm1T0
