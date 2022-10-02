@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{braket}
+\usepackage{amsmath}
+
+\title{Wolfram Physics Model}
+\author{Tyler Tracy}
+
+\begin{document}
+
+\maketitle
+
+
+Rules:
+
+Simple: $\{\{x,y\}\} \rightarrow \{\{x,y\}, \{y,z\}\} $
+
+Multi: $\{\{x,y,z\}, \{x,y,w\}\} \rightarrow \{\{x,y,z,w\}\}$ 
+
+Canonical form:
+$$\{\{1, 1\}, \{2, 4, 5\}, \{7, 5\}\} -> \{\{3, 8\}, \{2, 7\}, \{5, 4, 1\}, \{4, 6\}, \{5,1, 7\}\}$$
+Becomes:
+$$\{\{1,2,3\},\{4,4\},\{5,3\}\} -> \{\{3,2,4\}, \{3,4,5\},\{1,5\},\{2,6\}, \{7,8\}\}$$
+
+Can get a single integer for canonical form Flatten and look up in tuple index (Don’t know how this works too well)
+
+Signature:
+$$ \{\{x,y\}\} -> \{\{x,y\}, \{y,z\}\} $$ is $1_2 -> 2_2$
+
+
+You can limit the set of possible rules by saying rules need to be “Left Connected”
+This takes the possible number of distinct elements for $2_2 -> 2_2$ rules from 8 to 6. 
+
+$2_2 -> 2_2$ has 562 possible canonical, left connected rules
+
+There is no easy way to compute the number of possible rules for a certain signature
+
+
+Initial Conditions
+The only possible init conditions for 12 {{1,1}} ( A loop ) {{1,2}} (An edge)
+To count the number of init conditions you can eliminate equivalent connections
+
+
+73 inequivalent left-connect 12 -> 22 rules, but none lead to structors more complex than trees (Starting from a single self loop)
+
+
+This rule produces a basic grid
+$$\{\{x, y, y\}, \{z, x, u\}\} -> \{\{y, v, y\}, \{y, z, v\}, \{u, v, v\}\}$$
+
+This rule produces a cone
+$$\{\{x, x, y\}, \{x, z, u\}\} -> \{\{u, u, z\}, \{y, v, z\}, \{y, v, z\}\}$$
+
+
+
+
+
+
+
+
+
+\end{document}
