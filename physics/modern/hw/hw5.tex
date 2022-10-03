@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{braket}
+\usepackage{amsmath}
+
+\title{Modern Physics Homework 4}
+\author{Tyler Tracy}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Chapter 6, Problem 1}
+
+Electrons in atoms are known to have kinetic energies in the range of a few eV. Show that the uncertainty principle allows electrons of this energy to be confined in a region the size of an atom (0.1 nm)
+
+
+\textbf{Solution:}
+
+The electron's position is known to be the size of $ \Delta x = 0.1 nm $. With the uncertainty relation we can find what the uncertainty in the electron's momentum is.
+
+$$\Delta x \Delta p \geq \frac{\hbar}{2}$$
+$$ \Delta p \geq \frac{\hbar}{2 \Delta x}$$
+$$ \Delta p \geq \frac{\hbar}{2 \times 0.1 nm}$$
+$$ \Delta p \geq \frac{\hbar}{2 \times 0.1 nm}$$
+$$ \Delta p \geq 5.27 \times 10^{-25} kg \cdot m/s$$
+
+We can find the max kinetic energy of the electron by using the equation $E = \frac{p^2}{2m}$
+
+$$\Delta KE = \frac{(\Delta p)^2}{2m}$$
+$$\Delta KE = \frac{(5.27 \times 10^{-25} kg \cdot m/s)^2}{2m_e}$$
+$$\Delta KE = 1.53 \times 10^{-19} J = .9535 eV$$
+
+So we can see that the electron can have its kinetic energy known in the range of a few eV.
+
+
+\section{Chapter 6, Problem 18}
+In the n = 3 state of hydrogen, find the electron’s velocity, kinetic energy, and potential energy
+
+\textbf{Solution:}
+
+First we will find the bohr radius of the n = 3 state.
+
+$$r_{3} = \frac{4\pi \hbar^2}{m_e e^2}$$
+$$r_{3} = .4761nm $$
+
+Now we find the Electrons kinetic energy and potential energy.
+
+$$KE = \frac{1}{8 \pi \epsilon_0} \frac{e^2}{r} = 2.42 \times 10^{-19} J $$
+$$U = -\frac{1}{4 \pi \epsilon_0} \frac{e^2}{r} = -4.84 \times 10^{-19} J $$
+
+Now we find the velocity of the electron.
+
+$$ v = \sqrt{\frac{2KE}{m_e}} = 729000 m/s $$
+
+\section{Chapter 6, Problem 21}
+An electron is in the n = 5 state of hydrogen. To what states can the electron make transitions, and what are the energies of the emitted radiations?
+
+\textbf{Solution:}
+
+An electron can jump to any state with a lower energy. The electron can jump to the n = 4, n = 3, n = 2, and n = 1 states. The energy of the emitted radiation is the difference in energy between the two states.
+
+$$E_{5} = -\frac{13.6}{5^2} = -.54 eV$$
+
+A jump to the n = 4 state would emit a photon with the difference in energy between the two states.
+
+$$E_{4} = -\frac{13.6}{4^2} = -.85 eV$$
+
+$$\Delta E = E_{5} - E_{4} = .31 eV$$
+
+The same process can be done for the other states.
+
+$$ E_{5\rightarrow3} = E_{5} - E_{3} = .97 eV$$
+
+$$ E_{5\rightarrow2} = E_{5} - E_{2} = 2.86 eV$$
+
+$$ E_{5\rightarrow1} = E_{5} - E_{1} = 13.1 eV$$
+
+
+
+
+\section{Chapter 6, Problem 29}
+An alternative development of the Bohr theory begins by assuming that the stationary states are those for which the circumference of the orbit is an integral number of de Broglie wavelengths. 
+
+(a) Show that this condition leads to standing de Broglie waves around the orbit. 
+
+(b) Show that this condition gives the angular momentum condition, Eq. 6.26, used in the Bohr theory.
+
+\textbf{Solution:}
+
+This condition implies that $2 \pi r = n \lambda$. Stating that the circumfernce can be traveled with some integer multile lengths of the wave.
+
+If we use the de Broglie wavelength we get $2 \pi r = \frac{hn}{p}$
+
+If we rearrange this equation we get $ \frac{nh}{2 \pi} = pr $
+
+Which can be rewritten as $ n \hbar = mvr $.
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
