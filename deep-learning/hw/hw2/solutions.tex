@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{braket}
+\usepackage{amsmath}
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Question 1}
+
+What is the difference between CNNs and RNNs?
+
+CNNs can be used to classify data that has spatial structure, such as images. It does this by using filters to extract features from patches of the images that are close to each other. RNNs can be used to classify data that has temporal structure, such as text. It does this by using recurrent connections to extract features from words that are close to each other in the sequence.
+
+
+What tasks that CNNs can do but RNNs? Please explain with examples.
+
+A CNN can be used to extract features from images whereas that would be near impossible with an RNN. You could feed each pixel into the RNN but that would be very slow and not very efficient. 
+
+
+
+\section{Question 2}
+
+What are the limitations of RNNs?
+
+RNNs are very slow to train and are not very efficient. They also have a hard time remembering long term dependencies. They are only really good at performing short term predictive tasks (like predicting the next word in a sentence).
+
+If we have a GPU to accelerate speed by parallel computations, can it parallelize the computations of RNN at timestep-level during training phase? If so, does it also hold true at the inference phase of RNN?  Please justify your answer.
+
+Forward and backwards propagation are both sequential. This is because when passing time series data through the network, information is propagated forward. This means you must compute the output of each layer before you can compute the output of the next layer. This is also true for backwards propagation. This means that the GPU cannot parallelize the computations of RNN at timestep-level during training phase. This is also true at the inference phase of RNN.
+
+
+Explain the problems of vanishing gradient and exploding gradient, in which cases will any of those problems happen?
+
+The gradient tends to get smaller or larger as time goes on. As more layers are processed the gradient will vanish or explode as the gradient gets more extreme. This happens when the activation function has a large variance between their inputs and outputs. Thus the gradient calculation will have a small error. 
+
+
+
+
+
+
+\section{Question 3}
+
+
+
+
+\section{Question 4}
+
+
+
+
+
+
+\end{document}
