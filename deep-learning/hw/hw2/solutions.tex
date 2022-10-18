@@ -41,11 +41,32 @@ The gradient tends to get smaller or larger as time goes on. As more layers are 
 
 
 
+RNN schemas
 
+The first one is called "One to Many". It is used when multiples outputs are needed for a single input. For example, when you want to produce music off of a single note.  
 
+The second one is a "many to one" RNN schema. It is used when multiple inputs yeild a single output. This can be used in NLP to predict the sentiment of a sentence by passing in the sentence word by word and getting a single output of the sentiment of the sentence.
+
+The third one is a "Many to Many" RNN scheam where there are more hidden layers than inputs. This is used when you want to translate a sentence from one language to another. You would pass in the sentence word by word and get the translated sentence word by word.
+
+The fourth one is also a "Many to Many" RNN schema. The difference is this one makes a prediction at each time step. This is used when you want to predict the next word in a sentence. You would pass in the sentence word by word and get the next word in the sentence word by word.
 
 \section{Question 3}
 
+Distinguish between Seq2Seq, attention, self-attention, transformer.
+
+Seq2Seq is a model that converts a sequence of inputs to a sequence of outputs. The length of inputs and outputs do no thave to be the same. Most of the time the sequence is encoded by an encoder which compresses the sequence to a single vector. Then the vector is passed to a decoder RNN which outputs the new sequence. This can be used for language translation. 
+
+Attention is used to help the model focus on the important parts of the input sequence. At each decoder step the model gets to decide which part of the input sequence to focus on by learning an attention function. This helps in Seq2Seq model because it allows earlier parts of the input sequence to be used to predict later parts of the output sequence.
+
+
+Self Attention is the idea of paying attention to the current sequence you are processing. It interacts with elements of the same nature (e.g. the input sequence tokens). Each token is is combined with all of the other tokens in the sequence to form a new state for the token. This can be repeated N times.   
+
+
+Transformers are a model that uses attention for the encoder, decoder, and the interaction between them. The encoder uses self-attention to encode the states. Then the decoder uses "masked" self-attention to predict the next token. The self-attention is masked because it cannot look at the future tokens. 
+
+
+What is multiple head positional encoding used in transformer? 
 
 
 
