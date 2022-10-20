@@ -47,7 +47,7 @@ The first one is called "One to Many". It is used when multiples outputs are nee
 
 The second one is a "many to one" RNN schema. It is used when multiple inputs yeild a single output. This can be used in NLP to predict the sentiment of a sentence by passing in the sentence word by word and getting a single output of the sentiment of the sentence.
 
-The third one is a "Many to Many" RNN scheam where there are more hidden layers than inputs. This is used when you want to translate a sentence from one language to another. You would pass in the sentence word by word and get the translated sentence word by word.
+The third one is a "Many to Many" RNN scheam where there are more hidden layers than inputs. This is used when you want to translate a sentence from one language to another. You would pass in the sentence word by word and get the translated sentence word by word. This model has to "memorize" things since it doens't make a prediction until it has proccessed a lot of the input sequence
 
 The fourth one is also a "Many to Many" RNN schema. The difference is this one makes a prediction at each time step. This is used when you want to predict the next word in a sentence. You would pass in the sentence word by word and get the next word in the sentence word by word.
 
