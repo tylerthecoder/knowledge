@@ -8,9 +8,6 @@
 
 \begin{document}
 
-\maketitle
-
-
 \section{Question 1}
 
 What is the difference between CNNs and RNNs?
@@ -20,7 +17,7 @@ CNNs can be used to classify data that has spatial structure, such as images. It
 
 What tasks that CNNs can do but RNNs? Please explain with examples.
 
-A CNN can be used to extract features from images whereas that would be near impossible with an RNN. You could feed each pixel into the RNN but that would be very slow and not very efficient. 
+A CNN can be used to extract features from images whereas that would be near impossible with an RNN. You could feed each pixel into the RNN but that would be very slow and not very efficient.
 
 
 
@@ -37,13 +34,13 @@ Forward and backwards propagation are both sequential. This is because when pass
 
 Explain the problems of vanishing gradient and exploding gradient, in which cases will any of those problems happen?
 
-The gradient tends to get smaller or larger as time goes on. As more layers are processed the gradient will vanish or explode as the gradient gets more extreme. This happens when the activation function has a large variance between their inputs and outputs. Thus the gradient calculation will have a small error. 
+The gradient tends to get smaller or larger as time goes on. As more layers are processed the gradient will vanish or explode as the gradient gets more extreme. This happens when the activation function has a large variance between their inputs and outputs. Thus the gradient calculation will have a small error.
 
 
 
 RNN schemas
 
-The first one is called "One to Many". It is used when multiples outputs are needed for a single input. For example, when you want to produce music off of a single note.  
+The first one is called "One to Many". It is used when multiples outputs are needed for a single input. For example, when you want to produce music off of a single note.
 
 The second one is a "many to one" RNN schema. It is used when multiple inputs yeild a single output. This can be used in NLP to predict the sentiment of a sentence by passing in the sentence word by word and getting a single output of the sentiment of the sentence.
 
@@ -55,24 +52,46 @@ The fourth one is also a "Many to Many" RNN schema. The difference is this one m
 
 Distinguish between Seq2Seq, attention, self-attention, transformer.
 
-Seq2Seq is a model that converts a sequence of inputs to a sequence of outputs. The length of inputs and outputs do no thave to be the same. Most of the time the sequence is encoded by an encoder which compresses the sequence to a single vector. Then the vector is passed to a decoder RNN which outputs the new sequence. This can be used for language translation. 
+Seq2Seq is a model that converts a sequence of inputs to a sequence of outputs. The length of inputs and outputs do no thave to be the same. Most of the time the sequence is encoded by an encoder which compresses the sequence to a single vector. Then the vector is passed to a decoder RNN which outputs the new sequence. This can be used for language translation.
 
 Attention is used to help the model focus on the important parts of the input sequence. At each decoder step the model gets to decide which part of the input sequence to focus on by learning an attention function. This helps in Seq2Seq model because it allows earlier parts of the input sequence to be used to predict later parts of the output sequence.
 
 
-Self Attention is the idea of paying attention to the current sequence you are processing. It interacts with elements of the same nature (e.g. the input sequence tokens). Each token is is combined with all of the other tokens in the sequence to form a new state for the token. This can be repeated N times.   
+Self Attention is the idea of paying attention to the current sequence you are processing. It interacts with elements of the same nature (e.g. the input sequence tokens). Each token is is combined with all of the other tokens in the sequence to form a new state for the token. This can be repeated N times.
 
 
-Transformers are a model that uses attention for the encoder, decoder, and the interaction between them. The encoder uses self-attention to encode the states. Then the decoder uses "masked" self-attention to predict the next token. The self-attention is masked because it cannot look at the future tokens. 
+Transformers are a model that uses attention for the encoder, decoder, and the interaction between them. The encoder uses self-attention to encode the states. Then the decoder uses "masked" self-attention to predict the next token. The self-attention is masked because it cannot look at the future tokens.
 
 
-What is multiple head positional encoding used in transformer? 
+What is multiple head positional encoding used in transformer?
 
 
 
 \section{Question 4}
 
 
+I successfully trained a model to perform binary addition for part 1 and made a python notebook to run it. Here are sample outputs from the deployment procedure.
+
+\begin{verbatim*}
+Bin 1 0100 Bin 2 1010
+0100 + 1010 = 1110
+2 + 5 = 7 ( 100.0 % correct)
+\end{verbatim*}
+
+\begin{verbatim*}
+Bin 1 010100 Bin 2 001010
+010100 + 001010 = 011110
+10 + 20 = 30 ( 100.0 % correct)
+\end{verbatim*}
+
+\begin{verbatim*}
+Bin 1 01111000 Bin 2 11011110
+01111000 + 11011110 = 10011001
+30 + 123 = 153 ( 100.0 % correct)
+\end{verbatim*}
+
+
+I couldn't get part 2 working. The builtin RNN module with pytorch didn't seem extendable enough. I tried a lot of different methods.
 
 
 
