@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\title{Modern Physics Homework 8}
+
+\author{Tyler Tracy}
+
+\begin{document}
+
+\maketitle
+
+\section*{Chapter 11, Problem 11}
+
+At what temperature do the lattice and electronic heat capacities of copper become equal to each other? Take $T_D$ = 343 K and $E_F$ = 7.03 eV. Which contribution is larger above this temperature? Below this temperature?
+
+The heat capacity equals
+
+$ C = aT + bT^3 $
+$ C = \frac{\pi k R}{2E_f} * T + \frac{12\pi^4R}{5T_D^3} * T^3 $
+
+The first part of this represents the electronic heat capacity and the second part represents the lattice heat capacity. We will set these equal to each other and solve for T.
+
+$ \frac{12\pi^4R}{5T_D^3} * T^3 = \frac{\pi k R}{2E_f} * T $
+
+$ 4.81 * 10^{-5} * T^3 = 5.03 * 10^{-4} T $
+$ .0957 T^3 = T $
+$ T = 3.23 K $
+
+The electronic heat capacity is larger below this temperature because the $T^3$ term drops off quicker.
+
+The lattice heat capacity is larger above this temperature because the $T^3$ term is larger.
+
+
+\section*{Chapter 11, Problem 15}
+
+(a) In copper at room temperature, what is the electron energy at which the Fermi-Dirac distribution function has the value 0.1?
+
+Setup the equation
+
+$ f(E) = \frac{1}{e^{(E-E_F)/kT} + 1} $
+
+$ .1 = \frac{1}{e^{\frac{E-7.03}{8.617*10^{-5}*295}} + 1} $
+
+Solve for E
+
+$E = ln(\frac{1}{.1} - 1)* .0256 + 7.03 $
+
+$E = 7.086 eV $
+
+
+(b) Over what energy range does the Fermi-Dirac distribution function for copper drop from 0.9 to 0.1?
+
+$E = ln(\frac{1}{.9} - 1)* .0256 + 7.03 $
+
+$ E = 6.973 $
+
+\section*{Chapter 11, Problem 16}
+
+Calculate the de Broglie wavelength of an electron with energy $E_F$ in copper, and compare the value with the atomic separation in copper.
+
+$ v_f = \sqrt{\frac{2E_f}{m}} $
+
+$ v_f = 1.57 * 10^{6} m/s $
+
+$ \lambda = \frac{h}{m_ev_f} $
+
+$ \lambda = 4.633 * 10^{-25} m $
+
+This is much shorter than the atomic separation in copper, which is about 0.3 nm.
+
+
+
+\end{document}
