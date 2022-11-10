@@ -12,31 +12,51 @@
 
 \section*{Question 1}
 
-(5 points) From what you have learnt about general attention mechanism, explain how and when would it
-become self-attention.
+(5 points) From what you have learnt about general attention mechanism, explain how and when would it become self-attention.
+
+Attention is when you "pay attention" to another part of a model. Self attention is model pays attention to a current layer. So in a layer of a neural net applying attention to a layer would have the layer combine all values in the sequence to figure out which values are important. If you consider the query key value model of attention, self attention has all of those in the same layer.
+
+
 (5 points) Similarly, please explain how and when attention would become cross-attention.
+
+Cross attention is a mechanism developed for transformers. It helps establish the relationship between the inputs and outputs values. It adds information from the input sequence to the decoder. The input data is passed through a feed forward network and then passed through an attention mechanism and combined with the output data.
+
+
 (10 points) For each of the above attention mechanisms, please find a research paper that utilize it. Please
-(a) provide a link to the paper, then (b) shortly describe the reason why they use such attention mechanism
-in their work
+
+
+(a) provide a link to the paper, then (b) shortly describe the reason why they use such attention mechanism in their work
+
+https://openaccess.thecvf.com/content_ICCV_2019/papers/Huang_CCNet_Criss-Cross_Attention_for_Semantic_Segmentation_ICCV_2019_paper.pdf
+
+This paper uses cross attention to establish the relationship between 1 pixel and the rest of the image.
+
+https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf
+
+This paper introduces the transformer and shows that self attention can be used to learn the relationship between the inputs.
 
 
 \section*{Question 2}
 
-Attention mechanisms can be categorized into soft-attention and hard-attention. Each of the mechanisms
-have both pros and cons. However, soft-attention is much more popular than hard-attention.
+Attention mechanisms can be categorized into soft-attention and hard-attention. Each of the mechanisms have both pros and cons. However, soft-attention is much more popular than hard-attention.
+
 (10 points) Please find and declare pros and cons of each attention mechanism.
 (5 points) Give an example of a task in which hard-attention is superior to soft-attention and vice versa.
 (5 points) Explain why soft-attention is recognized by the community more than hard-attention.
 
+Hard attention determines which parts of an input are important and how important they are. So it could take an image and determine that the middle where the face is the only important part. This isn't differentiable because you are changing the values that you are operating on. Reinforcement learning is normally used to train a mechanism like this. This non-differentiability makes it hard to train especially when the model gets larger. This is why a different mechanism, soft attention, is used.
+
+Soft attention is a mechanism that takes a weighted sum of all of the inputs. It has higher weights in the places that it is paying attention. Since you are paying attention to every token this is differentiable. This makes it easier to train and much more popular.
+
+
 
 \section*{Question 3}
 
-(10 points) Autoencoder (AE) is an popular neural network scheme that is trained in unsupervised manner
-for various applications, e.g., dimensionality reduction, image denoising, image compression, etc. Variational
-Autoencoder (VAE) is firstly introduced in 2014. Please explain the advantages of VAE over AE.
+(10 points) Autoencoder (AE) is an popular neural network scheme that is trained in unsupervised manner for various applications, e.g., dimensionality reduction, image denoising, image compression, etc. Variational Autoencoder (VAE) is firstly introduced in 2014. Please explain the advantages of VAE over AE.
 (10 points) Please list 2 applications of VAE and briefly describe how it is used (trained and deployed) in
 each application
 
 
+A variational auto-encoder output probabilities instead of discrete values for its output. It also has a normalized latent space. This means that values that are between each other in the training set are also valid output. Thus you can generate new data using a VAE. You would achieve this by sampling from the latent space and then decoding the sample. VAEs are also much more general than AEs because of this. VAEs can also be used for efficient data compression. Since they embed all input data in a normalized way, they are learning the best way to compress the data. These can be used by passing an image into the encoder and then using the output as the compressed image.
 
 \end{document}
