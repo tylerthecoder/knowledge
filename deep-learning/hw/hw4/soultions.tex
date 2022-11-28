@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\title{Deep learning homework 4}
+
+\author{Tyler Tracy}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Problem 1}
+
+(5 points): Although GANs have only been proposed in 2014, they have received a lot of attention and have been applied in many topics ranging from computer vision, natural language and signal processing. Please generally describe the required components in a GAN, how those components are trained, and how to deploy a GAN after we train it.
+
+A GAN has two main parts, the discriminator and the generator. The generator learns to produce plausible data, the discriminator learns how to tell if a given input is fake (produced by the generator). The generator is trained to produce output that fools the discriminator and the discriminator is trained to recognized fake data produced by the discriminator. To deploy a GAN you take the generator and have it produce fake data.
+
+
+(5 points): A very common problem when training GANs is mode collapse. Please describe what this problem is, then, find and describe a solution to mitigate such problem.
+
+Mode collapse is when a GAN tends to produce the same output over and over again. This happens because the generator finds one output that works well and it just keeps producing that output. A good way to mitigate against this is to make the discriminator start to reject the output if it is too similar to the previous output.
+
+(5 points): List three applications of GANs and name of the corresponding method of each application.  For each application, please shortly describe its inputs, outputs, then briefly describe the method you chose to serve such application. Please also provide an URL to a scientific paper of the selected method.
+
+1. Generating photos of human faces. The input is random noise and the output is a photo of a human face. You would take the generator and feed in random data to get a random image. https://arxiv.org/abs/1710.10196
+
+2. Image to Image translation: The input is an image and the output is a different image. You would take the generator and feed in an image and get a different image. https://arxiv.org/abs/1611.07004
+
+3. Semantic image to photo translation: The input is points that represent a 3D scene and the output is a photo of that scene. You would take the generator and feed in the points and get a photo. https://arxiv.org/abs/1711.11585
+
+\section*{Problem 2}
+
+
+
+
+
+
+\end{document}
+
