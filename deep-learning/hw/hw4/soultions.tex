@@ -16,16 +16,16 @@
 
 \section*{Problem 1}
 
-(5 points): Although GANs have only been proposed in 2014, they have received a lot of attention and have been applied in many topics ranging from computer vision, natural language and signal processing. Please generally describe the required components in a GAN, how those components are trained, and how to deploy a GAN after we train it.
+Although GANs have only been proposed in 2014, they have received a lot of attention and have been applied in many topics ranging from computer vision, natural language and signal processing. Please generally describe the required components in a GAN, how those components are trained, and how to deploy a GAN after we train it.
 
 A GAN has two main parts, the discriminator and the generator. The generator learns to produce plausible data, the discriminator learns how to tell if a given input is fake (produced by the generator). The generator is trained to produce output that fools the discriminator and the discriminator is trained to recognized fake data produced by the discriminator. To deploy a GAN you take the generator and have it produce fake data.
 
 
-(5 points): A very common problem when training GANs is mode collapse. Please describe what this problem is, then, find and describe a solution to mitigate such problem.
+A very common problem when training GANs is mode collapse. Please describe what this problem is, then, find and describe a solution to mitigate such problem.
 
 Mode collapse is when a GAN tends to produce the same output over and over again. This happens because the generator finds one output that works well and it just keeps producing that output. A good way to mitigate against this is to make the discriminator start to reject the output if it is too similar to the previous output.
 
-(5 points): List three applications of GANs and name of the corresponding method of each application.  For each application, please shortly describe its inputs, outputs, then briefly describe the method you chose to serve such application. Please also provide an URL to a scientific paper of the selected method.
+ist three applications of GANs and name of the corresponding method of each application.  For each application, please shortly describe its inputs, outputs, then briefly describe the method you chose to serve such application. Please also provide an URL to a scientific paper of the selected method.
 
 1. Generating photos of human faces. The input is random noise and the output is a photo of a human face. You would take the generator and feed in random data to get a random image. https://arxiv.org/abs/1710.10196
 
@@ -35,8 +35,51 @@ Mode collapse is when a GAN tends to produce the same output over and over again
 
 \section*{Problem 2}
 
+Value Iteration and Policy Iteration are basic algorithms to find an optimal policy $\pi_{*}$ in Reinforcement Learning (RL). Please provide key points to distinguish between Value Iteration and Policy Iteration
+
+Value iterations computes all possible states and computes which one is optimal, it is more simple but takes a ong time since it must iterate over all states. Policy iteration starts with a random policy and then computes which state that policy will produce then updates it to a better state. Both of these methods are guaranteed to converge to the optimal policy but policy iteration does it much quicker.
 
 
+$$ V(s) = \max_{s} \sum_{s'} T(s,a,s') \left[ R(s,a,s') + \gamma V(s') \right] $$
+$$ V(s) = \max_{s} (R(s,a) + \gamma \sum_{s'} T(s,a,s') V(s')) $$
+
+These two equations are equivalent because the first equation is iterating over all possible next states and finding the one with the best value for teh next states. The second equation is the same thing but it is computing the reward for the current state first then adding that to the sum of the rewards for the next states times the $\gamma$. Both are doing the same thing.
+
+
+Please explain the role of $\gamma$ in the above equation and indicate the valid range of $\gamma$'s values.
+What happens if $\gamma$ decreases its value. Vice versa, if $\gamma$ grows its value, what would happen.
+
+Gamma indicates how important the future values are. If gamma is small the agent will only care about the immediate reward and not the future rewards.
+If the gamma is large then the agent will care about the future rewards more than the immediate reward.
+
+
+What are Q function and V function in Reinforcement Learning (RL) ? When should we prefer Q function to V function and vice versa ? Please justify your answers
+
+The V function is the value of a state. The Q function gives you the value of an action in a state. You would use the V function when you don't care about the action and just want to know the value of a state. You would use the Q function when you care about the action and want to know the value of an action in a state.
+
+
+
+
+\section*{Problem 3}
+
+CartPole
+An input to this from the environment is the position and velocity of the pole and the cart.
+The output actions to take is moving the cart to the left or right.
+The reward is 1 for every step taken without dropping the pole.
+
+
+Acrobot
+An input to this is the angles and velocities of the joints.
+The output actions are to apply torque to the joints.
+The reward is -1 for every step taken.
+
+
+LunarLander
+The input is a 8 dimensional vector that represents the position and velocity of the land and if a leg is touching the ground.
+The output actions are to do nothing, fire left, fire right, fire main engine.
+The reward is 100 for landing, -100 for crashing, with points taken away for firing the engines.
+
+The videos and plots are included in the zip file.
 
 
 
