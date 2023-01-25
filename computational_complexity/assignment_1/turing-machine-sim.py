@@ -6,20 +6,14 @@ class TransitionTable:
 	# transitionLookup[fromState][read] = (toState, write, direction)
 	table: Dict[str, Dict[str, Tuple[str, str, str]]] = {}
 
-	def addJffXml(self, node: Element) -> None:
+	def add_jff_xml(self, node: Element) -> None:
 		def getLabel(y):
-			if node.getElementsByTagName(y)[0].firstChild is None:
-				return "_"
-			return node.getElementsByTagName(y)[0].firstChild.nodeValue
+			child = node.getElementsByTagName(y)[0]
+			return "_" if child.firstChild is None else child.firstChild.nodeValue
 
 		if getLabel("from") not in self.table:
 			self.table[getLabel("from")] = {}
-
-		self.table[getLabel("from")][getLabel("read")] = (
-			getLabel("to"),
-			getLabel("write"),
-			getLabel("move")
-		)
+		self.table[getLabel("from")][getLabel("read")] = (getLabel("to"), getLabel("write"), getLabel("move"))
 
 	def get(self, fromState: str, read: str) -> Tuple[ str, str, str ]:
 		return self.table[fromState][read]
@@ -62,7 +56,7 @@ class TM:
 			startNode = dom.getElementsByTagName("initial")[0].parentNode.getAttribute("id")
 			endNodes = [x.parentNode.getAttribute("id") for x in dom.getElementsByTagName("final")]
 			for x in dom.getElementsByTagName("transition"):
-				transitions.addJffXml(x)
+				transitions.add_jff_xml(x)
 			return TM(transitions, startNode, endNodes)
 
 	def __init__(self, transitions: TransitionTable, startState: str, endStates: List[str]) -> None:
@@ -72,7 +66,6 @@ class TM:
 
 	def run(self, input: str) -> None:
 		tape = Tape(input)
-		# Need to make sure 0 is a valid state
 		state = self.startState
 		while state not in self.endStates:
 			val = tape.read()
