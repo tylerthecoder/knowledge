@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{braket}
+
+\newtcolorbox{questionbox}{
+        colframe=cyan!20!white,
+        colback =cyan!20!white,
+        top=0mm, bottom=0mm, left=0mm, right=0mm,
+        arc=0mm,
+%
+        fontupper=\color{blue!70!black},
+        fonttitle=\bfseries\color{blue!70!black},
+        title=Question:
+                        }
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+
+\title{Computational Complexity Assignment 2}
+
+\author{Tyler Tracy}
+
+\begin{document}
+
+
+\section*{Problem 1}
+
+\begin{questionbox}
+	A tree is a connecteed graph with contains no cycles. Let $TREE = \{ \braket{G} \mid G \text{ is a tree } \}$. Prove that $TREE \in P$.
+\end{questionbox}
+
+To prove that a problem is a member of $P$, we must find an algorithm that can decide the problem in polynomial time. I'm going to assume the graph is a directed connected graph.
+
+An algorithm to solve this problem is depth first search. DFS picks some starting node and keeps a list of visited nodes. It then visits each node that is connected to the current node and repeats this process until all nodes have been visited. If DFS ever encounters a node that has already been visited, then we know that there is a cycle in the graph.
+
+Below I give a pseudocode implementation of the above algorithm and analyze its running time.
+
+\begin{lstlisting}[basicstyle=\small, tabsize=3]
+	fn ContainsCycle(G: Graph) -> bool:
+		visited = []
+		fn ContainsCycleInner(G: Graph, v: int) -> bool:
+			visited[v] = true
+			for each w in G.adjacentNodes(v):
+					if visited[w]:
+						return true
+					ContainsCycle(G, w)
+			return false
+	return ContainsCycleInner(G, G.startingNode)
+\end{lstlisting}
+
+It isn't explicit in the loop, but the loop will visit each node at most once. This is because the loop will only visit a node if it has not been visited yet. It will also only visit each edge once because each edge can only be reached from a single node and each node is only visited once. It is useful to refer to the size of these sets so I will set $N = |V| + |E|$
+
+I'll assume that the computational model allows for dictionary lookups and writes in $O(ln(n))$ time. Where $n$ is the size of the key and $ln(n)$ represents the number of bits needed to store $n$. The idea behind this assumption is the need to read the digits of the object and perform some computation on them. If the graph structure is well encoded, looking up a node or adjacent nodes will take $O(ln(n))$.
+
+So for each node, we potentially have to loop over its adjacent nodes and write to a dictionary. This means that the time complexity of the algorithm is $O(Nln(N))$. Since this complexity is polynomial in the size of the input, this algorithm is a member of $P$. Thus $TREE \in P$
+
+\section*{Problem 2}
+
+\begin{questionbox}
+	Given a graph $G$, a coloring of $G$ with $c$ colors is an assignment of a number in $[c]$ (i.e 0 through $c-1$) to each vertex such that no adjacent vertices get the same number. Let $2COL = \{ \braket{G, c} \mid G \text{ is a graph which has a coloring with 2 colors} \}$. Prove that $2COL \in NP$.
+\end{questionbox}
+
+To prove that a problem is a member of $NP$, we must find a polynomial time algorithm that given the input an a certificate, can verify that the certificate is a valid solution to the problem.
+
+The certificate for $2COL$ is the actual coloring of the graph. This can be represented as some mappings of each node to some number $c$.
+
+The basic idea of an algorithm to solve this problem is to read the coloring of the graph and check each node to see if it is connected to any other node with the same color. If it is, then the coloring is invalid. If it is not, then the coloring is valid.
+
+\begin{lstlisting}[basicstyle=\small, tabsize=3]
+	fn validColoring(
+		G: Graph,
+		coloring: Dict<node: int, color: int>
+	) -> bool:
+		# check that there are only two colors
+		seen: Set<int> = set()
+		for each color in coloring.values:
+			seen.add(color)
+			if len(seen) > 2:
+				return false
+
+		# check that no connected nodes
+		# of the same color are connected
+		for each node in G.nodes:
+			for each neighbor in G.adjacentNodes(node):
+				if coloring[node] == coloring[neighbor]:
+					return false
+		return true
+\end{lstlisting}
+
+
+I'll again assume that the computational model allows for dictionary lookups and writes in $O(ln(n))$ time. So looking up a node in the graph or the adjacent nodes takes $O(ln(N))$. The algorithm could also potentially each every node for every single node. This would be the case if the supplied graph was fully connected. This makes the complexity of this algorithm $O((ln(N)N)^2)$.
+
+Since the complexity is polynomial in the size of the input, this algorithm is a member of $NP$.
+
+
+\section*{Problem 3}
+\begin{questionbox}
+	Let $HALT = \{ \braket{M, w} \mid \text{ M is a TM}, w \in \{0,1\}^*, M \text { halts on input } w  \}$. Show that $HALT$ is NP-hard. Tell whether or not it is NP-complete.
+\end{questionbox}
+
+
+\section*{Problem 4}
+
+\begin{questionbox}
+		Prove whether of not the class $NP$ is closed under the operations (a) union and (b) intersection.
+\end{questionbox}
+
+\section*{Problem 5}
+
+\begin{questionbox}
+	Let $3COL = \{\braket{G} | G \text{is a graph which has a coloring with 3 colors} \}$ Prove that $3COL$ is
+NP-complete.
+\end{questionbox}
+
+
+
+
+\end{document}
