@@ -35,9 +35,9 @@
 	A tree is a connecteed graph with contains no cycles. Let $TREE = \{ \braket{G} \mid G \text{ is a tree } \}$. Prove that $TREE \in P$.
 \end{questionbox}
 
-To prove that a problem is a member of $P$, we must find an algorithm that can decide the problem in polynomial time. I'm going to assume the graph is a directed connected graph.
+To prove that a problem is a member of $P$, we must find an algorithm that can decide the problem in polynomial time.
 
-An algorithm to solve this problem is depth first search. DFS picks some starting node and keeps a list of visited nodes. It then visits each node that is connected to the current node and repeats this process until all nodes have been visited. If DFS ever encounters a node that has already been visited, then we know that there is a cycle in the graph.
+To solve this problem, I'll use a version of depth first search. The algorithm will loop over all nodes and start traversing each node, if any encountered node has already been visited and is not the parent of the current node, then we know that there is a cycle in the graph. The algorithm loops over all possible nodes doing this in case there are multiple disconnected components in the graph.
 
 Below I give a pseudocode implementation of the above algorithm and analyze its running time.
 
@@ -47,11 +47,19 @@ Below I give a pseudocode implementation of the above algorithm and analyze its 
 		fn ContainsCycleInner(G: Graph, v: int) -> bool:
 			visited[v] = true
 			for each w in G.adjacentNodes(v):
-					if visited[w]:
-						return true
-					ContainsCycle(G, w)
+				hasVisited = visited[w]
+				isParent = G.adjacentNode(w).contains(v)
+				if hasVisited and not isParent:
+					return true
+				ContainsCycle(G, w)
 			return false
-	return ContainsCycleInner(G, G.startingNode)
+
+		for each w in G.nodes():
+			if visited[w]:
+				continue
+			if ContainsCycleInner(G, w):
+				return true
+		return false
 \end{lstlisting}
 
 It isn't explicit in the loop, but the loop will visit each node at most once. This is because the loop will only visit a node if it has not been visited yet. It will also only visit each edge once because each edge can only be reached from a single node and each node is only visited once. It is useful to refer to the size of these sets so I will set $N = |V| + |E|$
@@ -114,7 +122,7 @@ Since the complexity is polynomial in the size of the input, this algorithm is a
 \section*{Problem 5}
 
 \begin{questionbox}
-	Let $3COL = \{\braket{G} | G \text{is a graph which has a coloring with 3 colors} \}$ Prove that $3COL$ is
+	Let $3COL = \{\braket{G} \mid G \text{ is a graph which has a coloring with 3 colors} \}$ Prove that $3COL$ is
 NP-complete.
 \end{questionbox}
 
