@@ -112,6 +112,23 @@ Since the complexity is polynomial in the size of the input, this algorithm is a
 	Let $HALT = \{ \braket{M, w} \mid \text{ M is a TM}, w \in \{0,1\}^*, M \text { halts on input } w  \}$. Show that $HALT$ is NP-hard. Tell whether or not it is NP-complete.
 \end{questionbox}
 
+A language $L$ is NP-Hard if all languages in $NP$ can polynomially reduced to $L$.
+This also means if a language that is NP-Complete can be reduced to language $L$, then $L$ is NP-Hard.
+
+So I will try to find a functions that maps a SAT, a know to be NP-Complete, to $HALT$.
+
+$M_{SAT}$ will be an NTM that decides $SAT$. $w$ will be the input to $M$
+
+Instead of making a function that maps the language of $SAT$ to the language of $HALT$, I'll design a TM $M_{HALT}$ that uses $M_{SAT}$ as a subroutine for convenience. This is equivalent as a language mapping function.
+
+$M_{HALT}$ will take the input $w$ and run $M_{SAT}$ on $w$. If $M_{SAT}$ halts, then $M_{HALT}$ will halt. If $M_{SAT}$ does not halt, then $M_{HALT}$ will run forever. $M_{HALT}$ recognizes the language of $HALT$.
+
+This is a polynomial transformation because very little work if done to the input other than running $M_{SAT}$ which runs in polynomial time.
+
+Thus this $SAT$ reduces to $HALT$ and $HALT$ is NP-Hard.
+
+$HALT$ is not NP-complete because it is not in NP. The language for the $HALT$ is known to be uncomputable because of the halting problem. And uncomputable languages are not in NP.
+
 
 \section*{Problem 4}
 
