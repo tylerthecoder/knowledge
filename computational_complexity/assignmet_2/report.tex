@@ -7,6 +7,10 @@
 \usepackage{tcolorbox}
 \usepackage{braket}
 
+\title{Computational Complexity Assignment 2}
+
+\author{Tyler Tracy}
+
 \newtcolorbox{questionbox}{
         colframe=cyan!20!white,
         colback =cyan!20!white,
@@ -21,18 +25,15 @@
 \setlength{\parskip}{\baselineskip}%
 \setlength{\parindent}{0pt}%
 
-
-\title{Computational Complexity Assignment 2}
-
-\author{Tyler Tracy}
-
 \begin{document}
+
+\maketitle
 
 
 \section*{Problem 1}
 
 \begin{questionbox}
-	A tree is a connecteed graph with contains no cycles. Let $TREE = \{ \braket{G} \mid G \text{ is a tree } \}$. Prove that $TREE \in P$.
+	A tree is a connected graph which contains no cycles. Let $TREE = \{ \braket{G} \mid G \text{ is a tree } \}$. Prove that $TREE \in P$.
 \end{questionbox}
 
 To prove that a problem is a member of $P$, we must find an algorithm that can decide the problem in polynomial time.
@@ -49,9 +50,11 @@ Below I give a pseudocode implementation of the above algorithm and analyze its 
 			for each w in G.adjacentNodes(v):
 				hasVisited = visited[w]
 				isParent = G.adjacentNode(w).contains(v)
-				if hasVisited and not isParent:
+				if isParent
+					continue
+				if hasVisited:
 					return true
-				ContainsCycle(G, w)
+				return ContainsCycleInner(G, w)
 			return false
 
 		for each w in G.nodes():
@@ -115,9 +118,9 @@ Since the complexity is polynomial in the size of the input, this algorithm is a
 A language $L$ is NP-Hard if all languages in $NP$ can polynomially reduced to $L$.
 This also means if a language that is NP-Complete can be reduced to language $L$, then $L$ is NP-Hard.
 
-So I will try to find a functions that maps a SAT, a know to be NP-Complete, to $HALT$.
+So I will try to find a functions that maps a a known NP-Complete language $SAT$ to $HALT$.
 
-$M_{SAT}$ will be an NTM that decides $SAT$. $w$ will be the input to $M$
+let $M_{SAT}$ be a NTM that decides $SAT$. $w$ will be the input to $M_{SAT}$
 
 Instead of making a function that maps the language of $SAT$ to the language of $HALT$, I'll design a TM $M_{HALT}$ that uses $M_{SAT}$ as a subroutine for convenience. This is equivalent as a language mapping function.
 
@@ -133,8 +136,15 @@ $HALT$ is not NP-complete because it is not in NP. The language for the $HALT$ i
 \section*{Problem 4}
 
 \begin{questionbox}
-		Prove whether of not the class $NP$ is closed under the operations (a) union and (b) intersection.
+		Prove whether or not the class $NP$ is closed under the operations (a) union and (b) intersection.
 \end{questionbox}
+
+Let $M_{0}$ be an NTM that decides some language $L_0 \in NP$ and $M_{1}$ be a NTM that decides some other language $L_1 \in NP$.
+
+
+Let $L_{union} = L_0 \cup L_1$. $L_{union}$ is the language of all strings that are in $L_0$ or $L_1$. Let $TM_{union}$ be a NTM that accepts if $M_0$ or $M_1$ accept input $w$ otherwise it rejects. It is easy to see that $TM_{union}$ decides $L_{union}$. $TM_{union}$ also runs in polynomial time because both subrountines run in polynomial time. Since $L_{union}$ is decided by an NTM in polynomial time $L_{union} \in NP$. Thus $NP$ is closed under union.
+
+For very similar reasons, NP is closed under intersection. $M_{intersection}$ is a NTM that accepts if both $M_0$ and $M_1$ accept and rejects otherwise.
 
 \section*{Problem 5}
 
@@ -143,7 +153,41 @@ $HALT$ is not NP-complete because it is not in NP. The language for the $HALT$ i
 NP-complete.
 \end{questionbox}
 
+A language is NP-Complete if it is in $NP$ and every language in $NP$ can be reduced to it in polynomial time.
 
+First we show that $3COL$ is in $NP$. This is simple enough because by using a certificate that is the coloring of the graph and designing a polynomial time TM that would check to make sure that no two nodes have the same color. Since you will be comparing each node potentially to every other node, this will be around $O(N^2)$. Thus $3COL$ is in $NP$.
+
+Next we have to reduce some problem in $NP$ to $3COL$. I will show that $3SAT$ can be reduced to $3COL$ in polynomial time.
+
+We say that there are $k$ clauses $c_1, c_2, \dots, c_k$ in the formula $\phi$. Each clause has $n$ variables $x_1, x_2, \dots x_n$
+It will be useful to introduce three colors that we use $T, F, B$ where $T$ represents a true value and is colored green, $F$ represents a false value and is colored red, and $B$ represents a "base" value and is colored blue.
+
+The basic idea of this reduction is to build a gadget for each clause in $\phi$ that can only be 3 colored if that clause is true and then connect all the gadgets together so that the graph is only 3 colored if $\phi$ is true.
+
+We first make the graph such that each variable has two nodes $v$ and $v'$ colored $T$ if true and $F$ if false. These are all connected to a base node $B$ to prevent them from taking a non logical coloring.
+
+We can make a simple graph gadget that takes two logical values and performs the logical or operation on them. I.E if $x$ or $y$ is colored $T$ then the output node is colored $T$ otherwise there isn't a valid coloring.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{or-gadget.png}
+	\caption{A simple OR gadget}
+\end{figure}
+
+In the above graph, we color $x$ and $y$ accordingly and then the graph only has a valid coloring if $x \lor y$ is true.
+
+This gadget can be easily extended to 3 variables so it can only be 3 colored if one of the variables is true. We can use this gadget to represent a clause. We use this gadget by connecting the node $x_i$ to the input node of the gadget if that node represents a variable in the corresponding clause.
+
+
+To prove this reduction, we have to show that $\phi$ is satisfiable iff $G$ is 3 colored.
+
+If $\phi$ is satisfiable, then each clause must be true. This means that each corresponding gadget must have a valid 3 coloring. If all the gadgets are 3 colored, then the graph is 3 colored.
+
+If a graph $G$ is 3 colored, then if a node is colored $T$ iff its corresponding variable is true. If we take some clause $C_j = (a \lor b \lor c)$ then one of those variables has to be True. Otherwise the output of the gadget is false. This means that the clause is false. This means that $\phi$ is unsatisfiable. Thus it has to be satisfiable if $G$ is 3 colored.
+
+We must also prove that this mapping is polynomial. For each clause in the formula, we have to construct a gadget that is a constant size. We have to do this for each clause in the formula. This means that the size of the graph is $O(N)$ where $N$ is the number of clauses in the formula. This is polynomial time.
+
+Since this reduction follows, $3COL$ is NP-Complete.
 
 
 \end{document}
