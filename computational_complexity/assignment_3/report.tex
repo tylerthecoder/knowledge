@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{braket}
+\usepackage{enumitem}
+
+\title{Computational Complexity Assignment 3}
+
+\author{Tyler Tracy}
+
+\newtcolorbox{questionbox}{
+        colframe=cyan!20!white,
+        colback =cyan!20!white,
+        top=0mm, bottom=0mm, left=0mm, right=0mm,
+        arc=0mm,
+%
+        fontupper=\color{blue!70!black},
+        fonttitle=\bfseries\color{blue!70!black},
+        title=Question:
+                        }
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Problem 1}
+
+\begin{questionbox}
+	Let $CNF_k = \{ \braket{\phi} \mid \phi$ is a satisfiable CNF-formula where each variable appear in at most $k$ places $\}$.
+	\begin{enumerate}[label=(\alph*)]
+		\item Show that $CNF_2 \in P$.
+		\item Show that $CNF_3$ is NP\_complete.
+	\end{enumerate}
+\end{questionbox}
+
+
+To answer part a I would try to find an algorithm to figure it out
+
+\subsection*{Part a}
+
+There are $V$ variables and $C$ clauses.
+
+I'll define a algorithm that will decide if some CNF formula is in $CNF_k$. It will use a recursive algorithm.
+
+
+Take in a formula $\phi$ and first check that no variable appears more than 2 times. This should be possible in a couple passes over the formula. If it does then $REJECT$. Next find the smallest clause in $\phi$. We set the first variable to be satisfied. I.E True if it is a $x$ and False if it is a $\overline{x}$. Call the clause this variable is it $k_0$. Find the clause that contains the other occurrence of the variable and call it $k_1$. Note that the number of vars in $k_0$ is less than or equal to the number of vars in $k_1$.
+
+We handle multiple cases to determine what to do
+
+\begin{enumerate}
+	\item If $k_0$ has a single variable and $k_1$ has a single variable and they are different signs (i.e. one is $\overline{x}$ and the other is $x$) then $REJECT$ this is not satisfiable.
+	\item If the two instance of the variable are the same sign, then remove both clauses from $\phi$ and recurse on the new formula.
+	\item If the two instance of the variable are different signs, then remove $k_0$ from $\phi$ and remove the other variable from $k_1$ and recurse on the new formula.
+	\item If there is not another occurrence of the variable in the formula then remove $k_0$ from $\phi$ and recurse on the new formula.
+
+\end{enumerate}
+
+If we follow these rules we will either $REJECT$ or get a formula with no clauses, meaning we $ACCEPT$.
+
+This does some work for each clause in the formula. There can be at most $2V$ clauses in the formula. The work consists of finding the other occurrence and removing other variables from the formula, which would take no more than $O(V^2)$ work. So the total work is at most $O(V^3)$ which is polynomial in the size of the formula, so it is in $P$.
+
+I give an example of this formula working
+
+$$ (x \lor \overline{y} \lor z) \land (\overline{z} \lor \overline{w}\lor a ) \land (\overline{a}) \land (w) \land (k \lor \overline{x}) $$
+The $(\overline{a})$ clause is the smallest, so we set $a$ to False and continue.
+$$ (x \lor \overline{y} \lor z) \land (\overline{z} \lor \overline{w}) \land (w) \land (k \lor \overline{x}) $$
+The $(w)$ clause is the smallest, so we set $w$ to True and continue.
+$$ (x \lor \overline{y} \lor z) \land (\overline{z})  \land (k \lor \overline{x}) $$
+The $(\overline{z})$ clause is the smallest, so we set $z$ to False and continue.
+$$ (x \lor \overline{y}) \land (k \lor \overline{x}) $$
+The $(x \lor \overline{y})$ clause is the smallest, so we set $x$ to True and continue.
+$$ (k) $$
+Set $k$ to True and we are done.
+
+
+This process will always work because if you handle the smallest clause first, then you will have enough control to satisfy the formula.
+
+
+
+\subsection*{Part b}
+
+To show that something is $NP$-complete, we need to show that it is in $NP$ and is $NP$-Hard
+
+$CNF_3$ is in $NP$ because we can use a certificate of a satisfiable variable assignment to decide if a formula is satisfiable. Having all of the truth values makes it very easy to check in polynomial time.
+
+To prove that $CNF_3$ is $NP$-Hard I will use a reduction from $3SAT$.
+
+We have a formula $\phi$ in $3SAT$ with $n$ variables and $m$ clauses. For each variable $x$ we will create a new variable $x_i$ for each occurrence of $x$ incrementing $i$ each time. Replace each $x$ in $\phi$ with the corresponding $x_i$ value. We now need some mechanism to make sure all the $x_i$s have the same value so they act as one variable. We can do this by adding clauses like the following $ (x_0 \lor \overline{x_1}) \land (x_i \lor \overline{x_2}) \land \dots \land (x_{i-1} \lor \overline{x_i}) \land (x_i \lor \overline{x_{0}})$ This ensures that all variables are the same value, thus acting as a single variable. This gadget uses each variable twice and then each variable is used once in the actual formula so no variable is used more than 3 times.
+
+We need to show that this formula ($\phi_0$) is satisfiable if and only if $\phi$ is satisfiable.
+
+If $\phi$ is satisfiable, then the main part of $\phi_0$ is satisfiable since it is the same as $\phi$. The gadget will also be satisfiable since it is satisfiable iff the variables $x_i$ are the same, which they will have to be since they are all assigned the same value as $x$ in the original formula.
+
+If $\phi_0$ is satisfiable, then $\phi$ is satisfiable. The gadget forces each $x_i$ to be the same so we can just remove the gadget and use the main part of $\phi_0$ as $\phi$.
+
+Since this condition holds both ways $CNF_3$ is $NP$-Complete
+
+
+\section*{Problem 2}
+
+\begin{questionbox}
+	Let $L_1 = \{ \braket{M,c} \mid M$ is a Turing machine which decides its language in c steps $\}$, (i.e. in c
+	steps for all inputs, which is $O(1)$ time). Prove that $L_1$ is decidable. [HINT: recall that this
+	must hold for all inputs.]
+\end{questionbox}
+
+\section*{Problem 3}
+
+\begin{questionbox}
+	Let $L_2 = \{ \braket{M} \mid M $ is a Turing machine which decides its language in $O(1)$ steps $\}$. Prove that
+	$L_2$ is undecidable. [Hint: you may want to try using a reduction from HALT.]
+\end{questionbox}
+
+
+
+
+\end{document}
