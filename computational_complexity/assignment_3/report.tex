@@ -29,7 +29,6 @@
 
 \maketitle
 
-
 \section*{Problem 1}
 
 \begin{questionbox}
@@ -88,7 +87,7 @@ This process will always work because if you handle the smallest clause first, t
 
 To show that something is $NP$-complete, we need to show that it is in $NP$ and is $NP$-Hard
 
-$CNF_3$ is in $NP$ because we can use a certificate of a satisfiable variable assignment to decide if a formula is satisfiable. Having all of the truth values makes it very easy to check in polynomial time.
+$CNF_3$ is in $NP$ because we can use a certificate of a satisfiable variable assignment to decide if a formula is satisfiable. Having all of the truth values makes it very easy to check in polynomial time. The certificate could be a string of 0s and 1s where each position corresponds to a variable. If the value is 0 then the variable is false and if the value is 1 then the variable is true. Using this to check all the clauses should be easily obtainable in less than $O(n^2)$ time.
 
 To prove that $CNF_3$ is $NP$-Hard I will use a reduction from $3SAT$.
 
@@ -111,6 +110,13 @@ Since this condition holds both ways $CNF_3$ is $NP$-Complete
 	must hold for all inputs.]
 \end{questionbox}
 
+To show that $L_1$ is decidable I'll define a new machine $D$ that will decide $L_1$.
+
+$D$ takes as input $M$ and $c$. It will run $M$ on all inputs of size c or less. It doesn't need to worry about inputs of size greater than c because $M$ can't process those inputs in less than $c$ steps. If $M$ takes more than $c$ steps, then $D$ will reject. If $M$ takes less than $c$ steps, then $D$ will accept.
+
+The time complexity of $D$ doesn't matter since we are trying to see if it is decidable.
+
+
 \section*{Problem 3}
 
 \begin{questionbox}
@@ -119,6 +125,10 @@ Since this condition holds both ways $CNF_3$ is $NP$-Complete
 \end{questionbox}
 
 
+$L_2$ is the set of turing machines that finish in some constant number of steps. I will show this is undecidable by reducing from $HALT$. If there exists some polynomial time reduction from $HALT$ to $L_2$, that means a machine that can decide $L_2$ can be used to help solve $HALT$ in polynomial time.
 
+I'll define a machine $D$ that will decide $L_2$ and use this machine to solve $HATL$. The reduction is rather simple. If $D$ accepts, then $HALT$ accepts. If $D$ rejects, then $HALT$ rejects. This is because $D$ will accept iff the machine it is given finishes in constant time for all inputs, meaning that it will never halt.
+
+Since a solution to $L_2$ can be used to solve $HALT$ in polynomial time, $L_2$ is undecidable.
 
 \end{document}
