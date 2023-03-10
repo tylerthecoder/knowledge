@@ -112,10 +112,7 @@ Since this condition holds both ways $CNF_3$ is $NP$-Complete
 
 To show that $L_1$ is decidable I'll define a new machine $D$ that will decide $L_1$.
 
-$D$ takes as input $M$ and $c$. It will run $M$ on all inputs of size c or less. It doesn't need to worry about inputs of size greater than c because $M$ can't process those inputs in less than $c$ steps. If $M$ takes more than $c$ steps, then $D$ will reject. If $M$ takes less than $c$ steps, then $D$ will accept.
-
-The time complexity of $D$ doesn't matter since we are trying to see if it is decidable.
-
+$D$ takes as input $M$ and $c$. It will run $M$ on all inputs of size $c+1$ or less. If $M$ takes more than $c$ steps, then $D$ will reject. If $M$ takes less than $c$ steps, then $D$ will accept. It doesn't need to worry about inputs of size greater than $c+1$ because $M$ can't process those inputs of $c$ or greater in less than $c$ steps. We check up to inputs $c+1$ to ensure that M will not accept any inputs of size $c+1$ or greater.
 
 \section*{Problem 3}
 
@@ -127,7 +124,7 @@ The time complexity of $D$ doesn't matter since we are trying to see if it is de
 
 $L_2$ is the set of turing machines that finish in some constant number of steps. I will show this is undecidable by reducing from $HALT$. If there exists some polynomial time reduction from $HALT$ to $L_2$, that means a machine that can decide $L_2$ can be used to help solve $HALT$ in polynomial time.
 
-I'll define a machine $D$ that will decide $L_2$ and use this machine to solve $HATL$. The reduction is rather simple. If $D$ accepts, then $HALT$ accepts. If $D$ rejects, then $HALT$ rejects. This is because $D$ will accept iff the machine it is given finishes in constant time for all inputs, meaning that it will never halt.
+I'll define a machine $D$ that will decide $L_2$ and use this machine to solve $HATL$. The reduction is rather simple. If $D$ accepts, then $HALT$ accepts. If $D$ rejects, then $HALT$ rejects. This is because $D$ will accept iff the machine it is given finishes in constant time for all inputs, meaning that it will always halt.
 
 Since a solution to $L_2$ can be used to solve $HALT$ in polynomial time, $L_2$ is undecidable.
 
