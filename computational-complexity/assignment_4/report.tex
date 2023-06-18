@@ -1,0 +1,288 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{braket}
+\usepackage{enumitem}
+
+\title{Computational Complexity Assignment 4}
+
+\author{Tyler Tracy}
+
+\newtcolorbox{questionbox}{
+        colframe=cyan!20!white,
+        colback =cyan!20!white,
+        top=0mm, bottom=0mm, left=0mm, right=0mm,
+        arc=0mm,
+%
+        fontupper=\color{blue!70!black},
+        fonttitle=\bfseries\color{blue!70!black},
+        title=Question:
+                        }
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1}
+
+\begin{questionbox}
+	Give examples of qubit systems in normalized form that satisfy the following:
+
+	(a) A 1-qubit system that will contain a 0 with a $30\%$ chance and a 1 with a $70\%$ chance
+
+	(b) 2-qubit system that has no chance of being measured as |11〉, but an equal chance of being measured in any other state,
+
+	(c) An n-qubit system where all possible measurements are equally likely.
+\end{questionbox}
+
+
+\subsection*{Part a}
+$\sqrt{\frac{3}{10}}\ket{0} + \sqrt{\frac{7}{10}} \ket{1}$
+\subsection*{Part b}
+$\sqrt{\frac{1}{3}}\ket{00} + \sqrt{\frac{1}{3}} \ket{01} + \sqrt{\frac{1}{3}} \ket{10}$
+
+
+\subsection*{Part c}
+$\frac{1}{\sqrt{2^n}}\sum_{x \in \{0,1\}^n} \ket{x}$
+
+\section*{Problem 2}
+
+\begin{questionbox}
+	Write a matrix for the following quantum operations:
+
+(a) A $2 \times 2$ matrix that rotates a qubit by an angle of $\pi/3$,
+
+(b) A $4 \times 4$ matrix that performs the XOR operation on two qubits and
+stores the result in the first qubit
+
+(c) A $8 \times 8$ matrix that takes in two inputs and a scratch-pad bit (assumed
+to be initialized to 0) and performs the OR operation on the inputs,
+storing the result in the scratch-pad bit
+\end{questionbox}
+
+\subsection*{Part a}
+
+
+I will use the rotation matrix we learned during lecture and plug in $\pi/6$ for $\theta$.
+
+\begin{equation}
+\begin{pmatrix}
+\cos(\frac{\pi}{3}) & -\sin(\frac{\pi}{3}) \\
+\sin(\frac{\pi}{3}) & \cos(\frac{\pi}{3})
+\end{pmatrix}
+\end{equation}
+
+\subsection*{Part b}
+
+I will leave the value of the second qubit unchanged so that this operation can be reversed.
+
+Here is the table that describes the operation:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00 & 00 \\
+01 & 11 \\
+10 & 10 \\
+01 & 01 \\
+\hline
+\end{tabular}
+\end{center}
+
+And here is the matrix
+
+
+\begin{equation}
+\begin{pmatrix}
+	1 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 1 \\
+	0 & 0 & 1 & 0 \\
+	0 & 1 & 0 & 0
+\end{pmatrix}
+\end{equation}
+
+\subsection*{Part c}
+
+I will leave the values of the first and second qubits unchanged so that this operation can be reversed. This only works because the scratch-pad bit is assumed to be zero.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00X & 000 \\
+01X & 011 \\
+10X & 101 \\
+11X & 111 \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\begin{equation}
+	\begin{pmatrix}
+	1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 \\
+	0	& 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 1 & 1
+	\end{pmatrix}
+\end{equation}
+
+
+
+
+\section*{Problem 3}
+
+
+\begin{questionbox}
+	Let M be a $2 \times 2$ unitary matrix. Recall that a matrix is unitary exactly
+	when $MM^T = I$, that is:
+	\begin{equation}
+		\begin{pmatrix}
+			a & b \\
+			c & d
+		\end{pmatrix}
+		\begin{pmatrix}
+			a & c \\
+			b & d
+		\end{pmatrix}
+		=
+		\begin{pmatrix}
+			1 & 0 \\
+			0 & 1
+		\end{pmatrix}
+	\end{equation}
+
+	Prove that if you knew the value of a, you could determine the entire
+	matrix.
+\end{questionbox}
+
+We can write out a list of formulas of how $a$ relates to the variables by writing out the equations you get if you multiply the matrices.
+
+$ a^2 + b^2 = 1 $
+
+$ ac + bd = 0 $
+
+$ c^2 + d^2 = 1 $
+
+If we solve for the variables in terms of $a$ we get:
+
+$ b = \pm \sqrt{1 - a^2} $
+
+$ c = \pm \sqrt{1 - a^2} $
+
+$ d = \pm a $
+
+So, if we know $a$, we can determine the entire matrix.
+
+\section*{Problem 4}
+\begin{questionbox}
+	There are 16 possible classical logic gates that have 2 input bits and 1
+	output bit. Suppose that you wanted to implement some of these gates
+	as quantum gates so that the result of the computation overwrote one of
+	the input bits from your quantum register rather than using a scratch-pad
+	bit. How many of these gates could you implement in this way and why
+	wouldn't they require scratch-pad bits?
+\end{questionbox}
+
+The only gates that you can implement without adding an extra scratch pad bit are gates that have equal numbers of $0$ and $1$ as output. So they would all have two states that yield a $0$ and two states that yield a $1$. This is to ensure that the operation is reversible. The first qubit would store the output of the operation and the second qubit represent which input yielded that output. This only works if there are 2 0s or 1s because if there was more you would need more than 1 bit to identify the input that gave that output.
+
+This means there are 6 possible classical logic gates that can be implemented as quantum gates without a scratch pad bit. They are:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00 & 10 \\
+01 & 11 \\
+10 & 00 \\
+01 & 01 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00 & 10 \\
+01 & 00 \\
+10 & 11 \\
+01 & 01 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00 & 10 \\
+01 & 01 \\
+10 & 00 \\
+01 & 11 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00 & 00 \\
+01 & 11 \\
+10 & 10 \\
+01 & 01 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00 & 00 \\
+01 & 10 \\
+10 & 01 \\
+01 & 11 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Input & Output  \\
+\hline
+00 & 00 \\
+01 & 01 \\
+10 & 10 \\
+01 & 11 \\
+\hline
+\end{tabular}
+\end{center}
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,213 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{braket}
+
+\title{Tile Complexity Proofs}
+
+\author{Tyler Tracy}
+
+\setlength{\parindent}{0pt}%
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\begin{document}
+
+\maketitle
+
+
+This document aims to prove various results about tile complexity. The following definitions will be used throughout the proofs.
+
+Assume we have the following
+
+$\mathcal{T} = (T, \sigma, \tau)$ is a TAS, where $T$ is a finite set of tile types, $\sigma$ is the seed tile, and $\tau$ is the temperature
+
+
+$\alpha$ is an assembly
+
+$\mathcal{A}[\mathcal{T}]$ is the set of all assemblies that can be constructed from $\mathcal{T}$
+
+$\mathcal{A}_{\square}[\mathcal{T}]$ is the set of all terminal assemblies that can be constructed from $\mathcal{T}$
+
+$TC(\mathcal{T})$ is the tile complexity of a TAS $\mathcal{T}$.
+
+$Dup(\alpha)$ is the set of duplicate tile types in an assembly $\alpha$
+
+A connected path in an assembly $\alpha$ is a sequence of tiles that are all adjacent and have positive glue strength between them
+
+
+\begin{lemma}[Pumping Lemma]
+	In a TAS $\mathcal{T}$, $|\mathcal{A}_{\square}[\mathcal{T}]| = \infty$ if $\exists \alpha \in \mathcal{A}[\mathcal{T}] : \alpha$ is a $\tau$-stable connected path of tiles that starts with the seed tile and $\exists$ a tile type $t : t \in Dup(\alpha)$
+\end{lemma}
+
+The basic idea of the pumping lemma is that if there is a connected path of tiles that starts with the seed tile and there is a duplicate tile type, then the assembly will repeat forever and never terminate. This is because the duplicate tile type will be able to bind to the connected path of tiles and the assembly will repeat forever.
+
+\begin{lemma}
+    In a TAS $\mathcal{T}$ if $\exists \alpha \in \mathcal{A}[\mathcal{T}]$ : $\exists$ a linear path $\pi$ that starts at the seed tile 
+
+\end{lemma}
+
+
+\begin{lemma}[Pumping Lemma 1]
+	In a TAS $\mathcal{T}$, $|\mathcal{A}_{\square}[\mathcal{T}]| = \infty$ if $\exists \alpha \in \mathcal{A}[\mathcal{T}] : \alpha$ is a $\tau$-stable rectalineart path of tiles that starts with the seed tile and $\exists$ a tile type $t : t \in Dup(\alpha)$
+\end{lemma}
+
+\begin{lemma}[Pumping Lemma 2]
+    let $\alpha \in \mathcal{A}[\mathcal{T}$
+
+    In a TAS $\mathcal{T}$  $\alpha$ has a $\tau$-stable monotone binding graph and there is a repeated path in the graph $\implies \exists \alpha_t \in \mathcal{A}_\square[\mathcal{T}] : |\alpha| $ is infinite
+\end{lemma}
+
+\begin{proof}
+    Proof by pumping. 
+
+    Let $T_R$ be the tile type that is repeated. We can take the segment that is repeated and splice in that segment in place of an occurance of $T_R$. "Pumping" the assembly. 
+
+    The assembly can't run into itself because it is monotonic.
+
+    We can pumping forever, making the size of $\alpha$ infinite 
+
+\end{proof}
+
+
+Lowerbound of a rectangle
+
+
+\section*{Proof 1 ($n \times 1 $ line)}
+
+Let $\alpha$ be an assembly of a $1 \times n$ line of tiles.
+
+Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
+
+\begin{theorem}
+	$TC(\mathcal{T}) = \Omega(n)$
+\end{theorem}
+
+Proof Idea:  We will show that if there were any less than n tile types in a 1xn assembly, then it would repeat forever and not terminate.
+
+
+\begin{proof}
+	We will go step by step to formally prove this theorem.
+
+	\begin{enumerate}
+		\item \textbf{Assume that $|T| < n$ is true to show a contradiction}
+
+		\item \textbf{$\exists \text{ a tile } T \in Dup(\alpha)$ }
+
+		By the pigeon hole principle. There are $n$ tiles in $\alpha$ and less than $n$ unique tiles, so one of them must be repeated
+
+		\item \textbf{$\exists$ a connected path $\pi$ that contains a duplicate tile.}
+
+		All tiles are connected in this assembly. Since the entire assembly is a connected path and there is a duplicate tile, this is true.
+
+        \item \textbf{$\pi$ is monotone}
+
+        A $n \times 1$ line is montoone becasue it never increases in a single direction
+
+
+		\item \textbf{$|\mathcal{A}_\square[\mathcal{T}]| = \infty$}
+
+		By applying the pumping lemma to the connected path of duplicate tiles we found in the previous step, we can see that the assembly will continue indefinitely
+
+		\item \textbf{This is a contradiction}
+
+		The definition of $\mathcal{T}$ states it only has a single terminal assembly, $\alpha$
+
+		\item \textbf{TC($\mathcal{T}$) = $\Omega(n)$}
+
+		Since our assumption is false, the inverse of it is true. So $|T| \geq n$.
+
+		By the definition of a lower bound our theorem is proved.
+
+	\end{enumerate}
+
+
+
+\end{proof}
+
+\section*{Proof 2 ($n \times 2 $ rectangle)}
+
+Let $\alpha$ be an assembly of a $2 \times n$ line of tiles.
+
+Define a TAS $\mathcal{T} = (T, \sigma, \tau)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
+
+\begin{theorem}
+	$TC(\mathcal{T}) = \Omega(\sqrt{n})$
+\end{theorem}
+
+Proof idea: Show that is there were any less than $\sqrt{n}$ tile types in a $2 \times n$ assembly then a column must repeat and we can pump the assembly.
+
+\begin{proof}
+		We will go step by step
+	\begin{enumerate}
+
+		\item \textbf{There are $|T|^2$ possible unique columns in $\alpha$}
+
+		$|T|$ possible tiles for the top of the column and $|T|$ possible tiles for the bottom of the column. $|T|^2$ total combinations
+
+		\item \textbf{if $n > |T|^2$ then $\alpha$ contains a repeated column}
+
+		By the pigeon hole principle, there are more columns than unique combinations of columns. So there must be a repeated column
+
+		\item \textbf{if $\alpha$ has a repeated column then $\mathcal{A}_\square[\mathcal{T}] = \infty$}
+
+		We can apply the pumping lemma. Assume each 2 tall column is a single unit. Since there are repeated columns, we can pump the assembly just like the $1 \times n$ assembly.
+
+		\item \textbf{$|T|^2 \geq n$}
+
+		This is the inverse of our assumption in step 2. Since that assumption leads to infinite terminal assemblies the inverse must be true.
+
+		\item \textbf{$TC(\mathcal{T}) = \Omega(\sqrt{n})$}
+
+	\end{enumerate}
+\end{proof}
+
+
+\section*{Proof 3 ($n \times n$ square)}
+
+Let $\alpha$ be an assembly of a $n \times n$ tiles where all tiles have positive glue strength between them.
+
+Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
+
+
+\begin{theorem}
+	$TC(\mathcal{T}) \geq n^2$
+\end{theorem}
+
+Proof idea: We will show that if there were any less than $n^2$ tile types in a $n \times n$ assembly, then a tile must repeat and then we can pump the assembly indefinitely.
+
+\begin{proof}
+	We will go step by step
+	\begin{enumerate}
+		\item \textbf{Assume $TC(\mathcal{T}) < n^2$ for a contradiction}
+
+		\item \textbf{$\exists \text{ a tile } T \in Dup(\alpha)$ }
+
+		By the pigeonhole principle, there are $n^2$ tiles in $\alpha$ and less than $n^2$ unique tiles, so one of them must be repeated
+
+		\item \textbf{$\exists$ a connected path of tiles that contains a duplicate tile starting at the seed tile}
+
+		All tiles are connected in this assembly. Since the entire assembly is a connected path and there is a duplicate tile, this is true.
+
+		\item \textbf{$\mathcal{A}_\square[\mathcal{T}] = \infty$}
+
+		By applying the pumping lemma to the previous statement
+
+		\item \textbf{$TC(\mathcal{T}) \geq n^2$}
+
+		Since our assumption is false. The inverse of it is true.
+
+
+	\end{enumerate}
+\end{proof}
+
+\end{document}
+
+
