@@ -31,10 +31,17 @@ We will use the following definition throughout the proofs.
     \item[$\alpha$:] An assembly that can be constructed by $\mathcal{T}$
     \item[{$\mathcal{A}[\mathcal{T}]$}:] The set of all assemblies that can be constructed from $\mathcal{T}$.
     \item[{$\mathcal{A}_{\square}[\mathcal{T}]$}:] The set of all terminal assemblies that can be constructed from $\mathcal{T}$.
+
+    \item[$U_n$]: The set of unit vectors in n dimensions
+
+    \item[diagonal cut]: $ U_1, U_2 \in U \text{are a diagonal cut} \iff U_1 \bigcap U_2 = \emptyset \land \forall \vec{u} \in U_1, \vec{v} \in U_2 : |u - v| = 1$
     \item[{$TC(\mathcal{T})$}:] The tile complexity of a TAS $\mathcal{T}$.
     \item[$Dup(\alpha)$:] The set of duplicate tile types in an assembly $\alpha$.
     \item[Connected path:] In an assembly $\alpha$, a connected path is a sequence of tiles that are all adjacent and have positive glue strength between them.
-    \item[Monotone assembly:] An assembly with a binding graph that only moves in two directions, i.e., starting with the seed tile, every tile only connects to another tile in two directions.
+    \item[Monotone assembly:] 
+        $\alpha, \exists \text{ a diagonal cut } F, B \subset U, f \in F, b \in B: \forall \vec{m} \in \text{ dom } \alpha, \{\vec{m},\vec{m}+\vec{f}\} \in E \implies \{\vec{m},\vec{m}+\vec{u}\} \in E$
+
+        An assembly with a binding graph that only moves in two directions, i.e., starting with the seed tile, every tile only connects to another tile in two directions.
     \item[Non-branching:] An assembly where every tile connects to at most two other tiles. I.E., there are no branches
 \end{description}
 
@@ -131,10 +138,16 @@ Proof idea: We convert the assembly to a 1xn assembly and use the lower bound fr
 
 		\item \textbf{Assume that $|T| < \sqrt{n}$ to show a contradiction}
 
-        \item \textbf{Convert $\alpha$ to 1xn line}
+        \item \textbf{Replace $\mathcal{T}$ with TAS that assembles a 1xn line}
 
-        Assign each column a certain tile type. Now there are $|T|^2$ tiles types and $\alpha$ is a 1-d line
-        The assumption changes from $|T| < \sqrt{n}$ to $|T| < n$
+            We construct a new TAS $\mathcal{T}' = (T', \sigma', 1)$ that has $\mathcal{A}_\square[\mathcal{T}'] = \{ \alpha' \}$ where $\alpha'$ is a 1xn line.
+
+            We build $\mathcal{T}'$ by creating $n^2$ tiles types, each tile represents a possible column of two tiles in the 2xn assembly.
+
+            $|T'| = |T|^2$. This mean that showing a lowerbound for $\mathcal{T}'$ is equivalent to showing a lowerbound for $\mathcal{T}$.
+
+            Showing that $TC(\mathcal{T}') = n$ is equivalent to showing that $TC(\mathcal{T}) = \sqrt{n}$
+
 
 		\item \textbf{$Dup(\alpha) \neq \emptyset$}
 
@@ -179,9 +192,8 @@ Proof idea: We will show that if there were any less than $n^2$ tile types in a 
 		All tiles are connected in this assembly. We can construct this path by starting at the seed tile and going up and then over to the duplicated tile. 
 
 		\item \textbf{$\pi$ is non obstructing}
-
-        This path is monotonic since it goes up and sideways and is non-branching since it only moves in two directions; thus, it is non-obstructive. 
-
+        
+            This path is monotonic since it goes up and side\-ways and is \\ non-branching since it only moves in two directions; thus, it is non-obstructive. 
         \item \textbf{$\pi$ is $\tau$-stable}
 
             Each tile has to be connected to the tiles next to it with a strength of 1.
