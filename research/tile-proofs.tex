@@ -36,24 +36,29 @@ We will use the following definition throughout the proofs.
     \item[$Dup(\alpha)$:] The set of duplicate tile types in an assembly $\alpha$.
     \item[$E(\alpha)$:] The set of connected edges in the assembly $\alpha$ 
 
-    \item[diagonal cut]: A diagonal cut splits the unit directions into two groups that are diagonal of eachother. Like "cutting" a unit square with a diagonal line. 
+    \item[diagonal cut]: A diagonal cut splits the unit directions into two groups that are diagonal to each other, like "cutting" a unit square with a diagonal line. 
 
         $D_1, D_2 \subset U_2$ are a diagonal cut if 
 
         \begin{enumerate}
             \item $D_1 \bigcup D_2 = U_2$
             \item $D_1 \bigcap D_2 = \emptyset$
-            \item $\forall \vec{u} \in D_1 \vec{v} \in D_2 : |u - v| = 1$
+            \item $|D_1| = |D_2| = 2$
+            \item $ \vec{u}, \vec{v} \in \{D_1, D_2 \} : u \ne v \land |u - v| = 1$
         \end{enumerate}
 
-    \item[Connected path:] In an assembly $\alpha$, a connected path is a sequence of tiles that are all adjacent and have positive glue strength between them.
-    \item[Monotone assembly:] An assembly with a binding graph that only moves in two directions (forward and backwards). Starting with the seed tile, every tile only connects to another tile in the same two adjacent directions
+    \item[Connected path:] In an assembly $\alpha$, a connected path is a sequence of adjacent tiles with positive glue strength between them.
 
-        $\exists \vec{f}, \vec{b} \in U_2 : | \vec{f} - \vec{b} | = 1 \land \forall \vec{t} \in \text{ dom } \alpha, \{\vec{t},\vec{t}+\vec{f}\} \in E(\alpha) \implies \{\vec{t}, \vec{t}+\vec{b}\} \in E(\alpha)$
+    \item[Monotone assembly:] An assembly is monotone if starting with the seed tile, every tile only connects to another tile in the same two adjacent directions (the forward directions). Formally:
+
+        $$F,B \text{ are a diagonal cut }$$
+        $$\forall \vec{t} \in \text{ dom } \alpha - \sigma, \{\vec{t},\vec{t}+\vec{f} \in F\} \in E(\alpha) \implies \{\vec{t}, \vec{t}+\vec{b} \in B\} \in E(\alpha)$$
 
     \item[Non-branching:] An assembly where every tile connects to at most two other tiles. I.E., there are no branches
 
-        $$ \forall \vec{t} \in \alpha |\{\vec{u} \in U : \vec{t} + \vec{u} \in \text { dom } \alpha | \leq 2 $$
+        $$ \forall \vec{t} \in \text{dom } \alpha |\{\vec{u} \in U_2 : \vec{t} + \vec{u} \in \text { dom } \alpha \} | \leq 2 $$
+
+    \item[Non-obstructive:] An assembly is non-obstructive if no tile can be reached by multiple paths. Meaning the assembly can never get in its own way.  
 
 
 \end{description}
@@ -71,10 +76,7 @@ Now we define the following lemmas that will be used in the proofs.
 
 
 \begin{lemma}[Pumping Lemma] 
-
-    let $\mathcal{T}$ be a TAS
-
-    $\exists \alpha \in \mathcal{A}_\square[\mathcal{T}] : \alpha$ is non-obstructive $\tau$-stable and $Dup(\alpha) \ne \emptyset \implies \exists \alpha_t \in \mathcal{A}_\square[\mathcal{T}] : |\alpha_t| = \infty$
+    $\alpha \in \mathcal{A}_\square[\mathcal{T}]$ is non-obstructive $\tau$-stable and $Dup(\alpha) \ne \emptyset \implies \exists \alpha_t \in \mathcal{A}_\square[\mathcal{T}] : |\alpha_t| = \infty$
 \end{lemma}
 
 \begin{proof}
@@ -95,7 +97,7 @@ Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\math
 	$TC(\mathcal{T}) = \Omega(n)$
 \end{theorem}
 
-Proof Idea:  We will show that if there were any less than n tile types in a 1xn assembly, it would repeat forever and not terminate.
+Proof Idea:  We show that if there were less than n tile types in $\alpha$ then there would be an assembly of infinite size
 
 \begin{proof}
 	We will go step by step to prove this theorem formally.
@@ -109,7 +111,8 @@ Proof Idea:  We will show that if there were any less than n tile types in a 1xn
 
 		\item \textbf{$\alpha$ is non-obstructive}
 
-            A straight line can only be assembled in a monotonic way. All possible binding graphs only move in a single direction away from the seed tile.
+            $\alpha$ is non-branching because each tile is connected to at most two other tiles. $\alpha$ is monotonic since it only moves in one direction
+
 
         \item \textbf{$\alpha$ is $\tau$-stable}
 
@@ -153,22 +156,22 @@ Proof idea: We convert the assembly to a 1xn assembly and use the lower bound fr
 
         \item \textbf{Replace $\mathcal{T}$ with TAS that assembles a 1xn line}
 
-            We construct a new TAS $\mathcal{T}' = (T', \sigma', 1)$ that has $\mathcal{A}_\square[\mathcal{T}'] = \{ \alpha' \}$ where $\alpha'$ is a 1xn line.
+            We construct a new TAS $\mathcal{T}' = (T', \sigma', 1)$ that has $\mathcal{A}_\square[\mathcal{T}'] = \{ \alpha' \}$ where $\alpha'$ is a 1xm line.
 
-            We build $\mathcal{T}'$ by creating $n^2$ tiles types, each tile represents a possible column of two tiles in the 2xn assembly.
+            We build $\mathcal{T}'$ by creating $n^2$ tiles types, each tile represents a possible column of two tiles in the 2xn assembly. $m = n^2$
 
-            $|T'| = |T|^2$. This mean that showing a lowerbound for $\mathcal{T}'$ is equivalent to showing a lowerbound for $\mathcal{T}$.
+            $|T'| = |T|^2$. This means that showing a lower bound for $\mathcal{T}'$ is equivalent to showing a lower bound for $\mathcal{T}$.
 
-            Showing that $TC(\mathcal{T}') = \Omega(n)$ is equivalent to showing that $TC(\mathcal{T}) = \Omega(\sqrt{n})$
+            Showing that $TC(\mathcal{T}') = \Omega(m)$ is equivalent to showing that $TC(\mathcal{T}) = \Omega(\sqrt{n})$
 
 
-		\item \textbf{$Dup(\alpha) \neq \emptyset$}
+		\item \textbf{$Dup(\alpha') \neq \emptyset$}
 
-            There are n tiles and $|T|$ tile types. Since $|T| < n$, we use the pigeonhole principle to show that there must be a repeated tile type
+            There are $m$ tiles and $|T'|$ tile types. Since $|T'| < m$, we use the pigeonhole principle to show that there must be a repeated tile type
 
 		\item \textbf{Apply lower bound of 1xn line to show contradiction}
 
-            The above theorem shows that $\Omega(n)$ tile types are needed to construct a 1xn line. However, we have less than $n$ tile types, so we can pump the assembly indefinitely, showing a contraction with our assumption that there is a single terminal assembly.
+            The above theorem shows that $\Omega(m)$ tile types are needed to construct a 1xm line. However, we have less than $m$ tile types, so we can pump the assembly indefinitely, showing a contraction with our assumption that there is a single terminal assembly.
 
 		\item \textbf{$TC(\mathcal{T}) = \Omega(\sqrt{n})$}
 
@@ -180,7 +183,7 @@ Proof idea: We convert the assembly to a 1xn assembly and use the lower bound fr
 
 \section*{Proof 3 ($n \times n$ square)}
 
-Let $\alpha$ be an assembly of a $n \times n$ tiles where all tiles have positive glue strength between them.
+Let $\alpha$ be an assembly of $n \times n$ tiles where all tiles have positive glue strength between them.
 
 Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
 
@@ -189,7 +192,7 @@ Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\math
 	$TC(\mathcal{T}) \geq n^2$
 \end{theorem}
 
-Proof idea: We will show that if there were any less than $n^2$ tile types in a $n \times n$ assembly, then a tile must repeat. We can build a path from the seed assembly that includes one of the duplicate tile and show that we coudl pump it by having the duplicate tile connect to something else
+Proof idea: We will show that if there were any less than $n^2$ tile types in an $n \times n$ assembly, then a tile must repeat. We can build a path from the seed assembly that includes one of the duplicate tiles and show that we could pump it by having the duplicate tile connect to something else.
 
 \begin{proof}
 	We will go step by step
@@ -209,7 +212,7 @@ Proof idea: We will show that if there were any less than $n^2$ tile types in a 
             This path is monotonic since it goes up and side\-ways and is \\ non-branching since it only moves in two directions; thus, it is non-obstructive. 
         \item \textbf{$\pi$ is $\tau$-stable}
 
-            Each tile has to be connected to the tiles next to it with a strength of 1.
+            Each tile has to be connected to the tiles next to it with a strength of 1 via our initial assumptions.
 
         \item \textbf{$\exists \alpha \in \mathcal{A}_\square[\mathcal{T}] : |\alpha| = \infty $}
 
@@ -228,5 +231,4 @@ Proof idea: We will show that if there were any less than $n^2$ tile types in a 
 \end{proof}
 
 \end{document}
-
 
