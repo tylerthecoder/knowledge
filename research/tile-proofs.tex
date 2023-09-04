@@ -18,6 +18,13 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 
+
+\newcommand{\tDom}{\text{dom } \alpha}
+\newcommand{\tConst}{\mathcal{A}[\mathcal{T}]}
+\newcommand{\tTerm}{\mathcal{A}_\square[\mathcal{T}]}
+\newcommand{\tSeq}{\mathcal{A}_{seq}[\mathcal{T}]}
+\newcommand{\aSeq}{\overrightarrow{\alpha}}
+
 \begin{document}
 
 \maketitle
@@ -29,42 +36,65 @@ We will use the following definition throughout the proofs.
 \begin{description}
     \item[Tile Assembly System (TAS):] A TAS is a tuple $\mathcal{T} = (T, \sigma, \tau)$ where $T$ is a finite set of tile types, $\sigma$ is the seed tile, and $\tau$ is the temperature.
     \item[$\alpha$:] An assembly that can be constructed by $\mathcal{T}$
-    \item[{$\mathcal{A}[\mathcal{T}]$}:] The set of all assemblies that can be constructed from $\mathcal{T}$.
-    \item[{$\mathcal{A}_{\square}[\mathcal{T}]$}:] The set of all terminal assemblies that can be constructed from $\mathcal{T}$.
+    \item[$\tConst$] The set of all assemblies that can be constructed from $\mathcal{T}$.
+    \item[$\tTerm$] The set of all terminal assemblies that can be constructed from $\mathcal{T}$.
+    \item[$\tSeq$] The set of assembly sequences that can be constructed from $\mathcal{T}$.
     \item[$U_n$]: The set of unit vectors in n dimensions
     \item[{$TC(\mathcal{T})$}:] The tile complexity of a TAS $\mathcal{T}$.
     \item[$Dup(\alpha)$:] The set of duplicate tile types in an assembly $\alpha$.
     \item[$E(\alpha)$:] The set of connected edges in the assembly $\alpha$ 
+    \item[$\aSeq$]: Is an assembly sequence. It is a list of assemblies where each assembly results from a single tile attaching to the previous assembly. The tile that attached is called the input tile and the side that it attaches on it called the input side. The tile that the input tile attaches to is called the docking tile. 
+    \item[$IS(\aSeq)$:] The set of input sides that any input tile in the sequence connects on.
+    \item[$DT(\aSeq)$:] The set of docking tiles and corresponding assemblies. Each assembly does not have the input tile connects. Usage: $(\vec{dt} , \alpha) \in DT(\aSeq)$
 
-    \item[diagonal cut]: A diagonal cut splits the unit directions into two groups that are diagonal to each other, like "cutting" a unit square with a diagonal line. 
+    % \item[diagonal cut]: A diagonal cut splits the unit directions into two groups that are diagonal to each other, like cutting a unit square with a diagonal line. 
+    %
+    %     $D_1, D_2 \subset U_2$ are a diagonal cut if 
+    %
+    %     \begin{enumerate}
+    %         \item $D_1 \bigcup D_2 = U_2$
+    %         \item $D_1 \bigcap D_2 = \emptyset$
+    %         \item $|D_1| = |D_2| = 2$
+    %         \item $ \vec{u}, \vec{v} \in \{D_1, D_2 \} : u \ne v \land |u - v| = 1$
+    %     \end{enumerate}
 
-        $D_1, D_2 \subset U_2$ are a diagonal cut if 
+    % \item[Connected path:] In an assembly $\alpha$, a connected path is a sequence of adjacent tiles with positive glue strength between them.
 
-        \begin{enumerate}
-            \item $D_1 \bigcup D_2 = U_2$
-            \item $D_1 \bigcap D_2 = \emptyset$
-            \item $|D_1| = |D_2| = 2$
-            \item $ \vec{u}, \vec{v} \in \{D_1, D_2 \} : u \ne v \land |u - v| = 1$
-        \end{enumerate}
+    % \item[Monotone assembly:] An assembly is monotone if starting with the seed tile, every tile only connects to another tile in the same two adjacent directions (the forward directions). Formally:
+    %
+    %     $$F,B \text{ are a diagonal cut }$$
+    %     $$\forall \vec{t} \in \text{ dom } \alpha - \sigma, \{\vec{t},\vec{t}+\vec{f} \in F\} \in E(\alpha) \implies \{\vec{t}, \vec{t}+\vec{b} \in B\} \in E(\alpha)$$
 
-    \item[Connected path:] In an assembly $\alpha$, a connected path is a sequence of adjacent tiles with positive glue strength between them.
 
-    \item[Monotone assembly:] An assembly is monotone if starting with the seed tile, every tile only connects to another tile in the same two adjacent directions (the forward directions). Formally:
+    \item[Monotone:] An assembly sequence is monotone if every input tile's input side is in a set of one or two adjacent directions. Formally:
 
-        $$F,B \text{ are a diagonal cut }$$
-        $$\forall \vec{t} \in \text{ dom } \alpha - \sigma, \{\vec{t},\vec{t}+\vec{f} \in F\} \in E(\alpha) \implies \{\vec{t}, \vec{t}+\vec{b} \in B\} \in E(\alpha)$$
+        \[IS(\aSeq) \leq 2\]
 
-    \item[Non-branching:] An assembly where every tile connects to at most two other tiles. I.E., there are no branches
+    \item[Non-branching:] An assembly sequence is non-branching if every docking tile is connected to only a single other tile before the input tile attaches. 
 
-        $$ \forall \vec{t} \in \text{dom } \alpha |\{\vec{u} \in U_2 : \vec{t} + \vec{u} \in \text { dom } \alpha \} | \leq 2 $$
+        \[ \forall (\vec{dt}, \alpha) \in DT(\aSeq), |\{\vec{u} \in U_2 : \vec{dt} + \vec{u} \in \text { dom } \alpha \} | = 1 \]
 
-    \item[Non-obstructive:] An assembly is non-obstructive if no tile can be reached by multiple paths. Meaning the assembly can never get in its own way.  
+    \item[Non-obstructive:] An assembly sequence is non-obstructive if no possible input tile overlaps with the assembly. More formally, there exists no terminal assembly that could be made non-terminal by removing a tile and a different tile attaching in its place. A TAS is non-obstructive, if for all possilbe assembly sequences, each is non-obstructive.
+
+    % \item[Non-branching:] An assembly where every tile connects to at most two other tiles. I.E., there are no branches
+    %
+    % \[ \forall \vec{t} \in \text{dom } \alpha |\{\vec{u} \in U_2 : \vec{t} + \vec{u} \in \text { dom } \alpha \} | \leq 2 \]
+
+    % \item[Non-obstructive:] An assembly is non-obstructive if no tile can be reached by multiple paths. Meaning the assembly can never get in its own way.  
 
 
 \end{description}
 
 
 Now we define the following lemmas that will be used in the proofs.
+
+% \begin{lemma}
+%     A non-branching monotone assembly is non-obstructive
+% \end{lemma}
+%
+% \begin{proof}
+%     For an assembly to obstruct itself, there must be a location that can be reached multiple times. In a monotonic non-branching assembly, there is only one way to reach a location. Every tile only connects to the tile behind it and the tile in front of it. Furthermore, the tiles can never turn around and obstruct themselves because they are monotonic.
+% \end{proof}
 
 \begin{lemma}
     A non-branching monotone assembly is non-obstructive
@@ -75,23 +105,30 @@ Now we define the following lemmas that will be used in the proofs.
 \end{proof}
 
 
-\begin{lemma}[Pumping Lemma] 
-    $\alpha \in \mathcal{A}_\square[\mathcal{T}]$ is non-obstructive $\tau$-stable and $Dup(\alpha) \ne \emptyset \implies \exists \alpha_t \in \mathcal{A}_\square[\mathcal{T}] : |\alpha_t| = \infty$
+\begin{lemma}[Pumping lemma]
+    Let $\mathcal{T}$ be a TAS, $\aSeq \in \tSeq$ is not obstructive, $\tau$-stable, and produces $\alpha \in \tTerm$. If $Dup(\alpha) \ne \emptyset$ then $\exists \alpha_t \in \tTerm$ such that $|\alpha_t| = \infty$
 \end{lemma}
-
 \begin{proof}
-    Proof by pumping. 
-
-    Let $T_R$ be the tile type that is repeated. We can take the segment that is repeated and splice in that segment in place of an occurrence of $T_R$. "Pumping" the assembly. 
-
-    Since the assembly is non-obstructive, we can pump forever, making the size of $\alpha$ infinite 
+    Let $T_R$ be the tile type that is repeated. We can take the segment that is repeated and splice in that segment in place of an occurrence of $T_R$, pumping the assembly. Since the assembly is not obstructive, we can pump forever, making the size of $\alpha$ infinite 
 \end{proof}
 
-\section*{Proof 1 ($n \times 1 $ line)}
 
-Let $\alpha$ be an assembly of a $1 \times n$ line of tiles.
+% \begin{lemma}[Pumping Lemma] 
+%     $\alpha \in \mathcal{A}_\square[\mathcal{T}]$ is non-obstructive $\tau$-stable and $Dup(\alpha) \ne \emptyset \implies \exists \alpha_t \in \mathcal{A}_\square[\mathcal{T}] : |\alpha_t| = \infty$
+% \end{lemma}
+%
+% \begin{proof}
+%     Proof by pumping. 
+%
+%     Let $T_R$ be the tile type that is repeated. We can take the segment that is repeated and splice in that segment in place of an occurrence of $T_R$. Pumping the assembly. 
+%
+%     Since the assembly is non-obstructive, we can pump forever, making the size of $\alpha$ infinite 
+% \end{proof}
 
-Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
+% \section*{Proof 1 ($n \times 1 $ line)}
+
+
+Let $\alpha$ be an assembly of a $1 \times n$ line of tiles. Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\tTerm = \{ \alpha \}$. 
 
 \begin{theorem}
 	$TC(\mathcal{T}) = \Omega(n)$
@@ -111,8 +148,8 @@ Proof Idea:  We show that if there were less than n tile types in $\alpha$ then 
 
 		\item \textbf{$\alpha$ is non-obstructive}
 
-            $\alpha$ is non-branching because each tile is connected to at most two other tiles. $\alpha$ is monotonic since it only moves in one direction
 
+            Any assembly sequence that produces $\alpha$ is non-branching because $\alpha$ is non-branching. There is no tile that connects to more than two tile. The assembly sequence is also monotone. 
 
         \item \textbf{$\alpha$ is $\tau$-stable}
 
@@ -127,7 +164,7 @@ Proof Idea:  We show that if there were less than n tile types in $\alpha$ then 
 
 		The definition of $\mathcal{T}$ states it only has a single terminal assembly, but we have found multiple.
 
-		\item \textbf{TC($\mathcal{T}$) = $\Omega(n)$}
+		\item \textbf{TC($\mathcal{T}$)=$\Omega(n)$}
 
 		Since our assumption is false, the inverse of it is true. So $|T| \geq n$.
 
@@ -136,99 +173,97 @@ Proof Idea:  We show that if there were less than n tile types in $\alpha$ then 
 	\end{enumerate}
 \end{proof}
 
-\section*{Proof 2 ($n \times 2 $ rectangle)}
-
-Let $\alpha$ be an assembly of a $2 \times n$ line of tiles.
-
-Define a TAS $\mathcal{T} = (T, \sigma, \tau)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
-
-\begin{theorem}
-	$TC(\mathcal{T}) = \Omega(\sqrt{n})$
-\end{theorem}
-
-Proof idea: We convert the assembly to a 1xn assembly and use the lower bound from above to prove. 
-
-\begin{proof}
-		We will go step by step
-	\begin{enumerate}
-
-		\item \textbf{Assume that $|T| < \sqrt{n}$ to show a contradiction}
-
-        \item \textbf{Replace $\mathcal{T}$ with TAS that assembles a 1xn line}
-
-            We construct a new TAS $\mathcal{T}' = (T', \sigma', 1)$ that has $\mathcal{A}_\square[\mathcal{T}'] = \{ \alpha' \}$ where $\alpha'$ is a 1xm line.
-
-            We build $\mathcal{T}'$ by creating $n^2$ tiles types, each tile represents a possible column of two tiles in the 2xn assembly. $m = n^2$
-
-            $|T'| = |T|^2$. This means that showing a lower bound for $\mathcal{T}'$ is equivalent to showing a lower bound for $\mathcal{T}$.
-
-            Showing that $TC(\mathcal{T}') = \Omega(m)$ is equivalent to showing that $TC(\mathcal{T}) = \Omega(\sqrt{n})$
-
-
-		\item \textbf{$Dup(\alpha') \neq \emptyset$}
-
-            There are $m$ tiles and $|T'|$ tile types. Since $|T'| < m$, we use the pigeonhole principle to show that there must be a repeated tile type
-
-		\item \textbf{Apply lower bound of 1xn line to show contradiction}
-
-            The above theorem shows that $\Omega(m)$ tile types are needed to construct a 1xm line. However, we have less than $m$ tile types, so we can pump the assembly indefinitely, showing a contraction with our assumption that there is a single terminal assembly.
-
-		\item \textbf{$TC(\mathcal{T}) = \Omega(\sqrt{n})$}
-
-            Since assuming that we have less than $\sqrt{n}$ tile types leads to a contradiction, we can conclude that $|T| \geq \sqrt{n}$. By the definition of a lower bound, our theorem is proved.
-
-	\end{enumerate}
-\end{proof}
-
-
-\section*{Proof 3 ($n \times n$ square)}
-
-Let $\alpha$ be an assembly of $n \times n$ tiles where all tiles have positive glue strength between them.
-
-Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
-
-
-\begin{theorem}
-	$TC(\mathcal{T}) \geq n^2$
-\end{theorem}
-
-Proof idea: We will show that if there were any less than $n^2$ tile types in an $n \times n$ assembly, then a tile must repeat. We can build a path from the seed assembly that includes one of the duplicate tiles and show that we could pump it by having the duplicate tile connect to something else.
-
-\begin{proof}
-	We will go step by step
-	\begin{enumerate}
-		\item \textbf{Assume $TC(\mathcal{T}) < n^2$ for a contradiction}
-
-		\item \textbf{$Dup(\alpha) \neq \emptyset$}
-
-		By the pigeonhole principle, there are $n^2$ tiles in $\alpha$ and less than $n^2$ unique tiles, so one of them must be repeated
-
-		\item \textbf{$\exists$ a connected path $\pi$ of tiles starting at the seed tile where $Dup(\pi) \neq \emptyset$}
-
-		All tiles are connected in this assembly. We can construct this path by starting at the seed tile and going up and then over to the duplicated tile. 
-
-		\item \textbf{$\pi$ is non obstructing}
-        
-            This path is monotonic since it goes up and side\-ways and is \\ non-branching since it only moves in two directions; thus, it is non-obstructive. 
-        \item \textbf{$\pi$ is $\tau$-stable}
-
-            Each tile has to be connected to the tiles next to it with a strength of 1 via our initial assumptions.
-
-        \item \textbf{$\exists \alpha \in \mathcal{A}_\square[\mathcal{T}] : |\alpha| = \infty $}
-
-        We can now apply the pumping lemma to show that this path could be pumped to an infinite size.
-
-        \item \textbf{This is a contradiction}
-
-        The definition of $\mathcal{T}$ states it only has a single terminal assembly, but we have found multiple.
-
-		\item \textbf{$TC(\mathcal{T}) \geq n^2$}
-
-            Since there are other possible terminal assemblies, our assumption is false. There must be at least $n^2$ tile types in the assembly when they are required to all be connected. 
-
-
-	\end{enumerate}
-\end{proof}
+% \section*{Proof 2 ($n \times 2 $ rectangle)}
+%
+% Let $\alpha$ be an assembly of a $2 \times n$ line of tiles. Define a TAS $\mathcal{T} = (T, \sigma, \tau)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
+%
+% \begin{theorem}
+% 	$TC(\mathcal{T}) = \Omega(\sqrt{n})$
+% \end{theorem}
+%
+% Proof idea: We convert the assembly to a 1xn assembly and use the lower bound from above to prove. 
+%
+% \begin{proof}
+% 		We will go step by step
+% 	\begin{enumerate}
+%
+% 		\item \textbf{Assume that $|T| < \sqrt{n}$ to show a contradiction}
+%
+%         \item \textbf{Replace $\mathcal{T}$ with TAS that assembles a 1xn line}
+%
+%             We construct a new TAS $\mathcal{T}' = (T', \sigma', 1)$ that has $\mathcal{A}_\square[\mathcal{T}'] = \{ \alpha' \}$ where $\alpha'$ is a 1xm line.
+%
+%             We build $\mathcal{T}'$ by creating $n^2$ tiles types, each tile represents a possible column of two tiles in the 2xn assembly. $m = n^2$
+%
+%             $|T'| = |T|^2$. This means that showing a lower bound for $\mathcal{T}'$ is equivalent to showing a lower bound for $\mathcal{T}$.
+%
+%             Showing that $TC(\mathcal{T}') = \Omega(m)$ is equivalent to showing that $TC(\mathcal{T}) = \Omega(\sqrt{n})$
+%
+%
+% 		\item \textbf{$Dup(\alpha') \neq \emptyset$}
+%
+%             There are $m$ tiles and $|T'|$ tile types. Since $|T'| < m$, we use the pigeonhole principle to show that there must be a repeated tile type
+%
+% 		\item \textbf{Apply lower bound of 1xn line to show contradiction}
+%
+%             The above theorem shows that $\Omega(m)$ tile types are needed to construct a 1xm line. However, we have less than $m$ tile types, so we can pump the assembly indefinitely, showing a contraction with our assumption that there is a single terminal assembly.
+%
+% 		\item \textbf{$TC(\mathcal{T}) = \Omega(\sqrt{n})$}
+%
+%             Since assuming that we have less than $\sqrt{n}$ tile types leads to a contradiction, we can conclude that $|T| \geq \sqrt{n}$. By the definition of a lower bound, our theorem is proved.
+%
+% 	\end{enumerate}
+% \end{proof}
+%
+%
+% \section*{Proof 3 ($n \times n$ square)}
+%
+% Let $\alpha$ be an assembly of $n \times n$ tiles where all tiles have positive glue strength between them.
+%
+% Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\mathcal{A}_\square[\mathcal{T}] = \{ \alpha \}$
+%
+%
+% \begin{theorem}
+% 	$TC(\mathcal{T}) \geq n^2$
+% \end{theorem}
+%
+% Proof idea: We will show that if there were any less than $n^2$ tile types in an $n \times n$ assembly, then a tile must repeat. We can build a path from the seed assembly that includes one of the duplicate tiles and show that we could pump it by having the duplicate tile connect to something else.
+%
+% \begin{proof}
+% 	We will go step by step
+% 	\begin{enumerate}
+% 		\item \textbf{Assume $TC(\mathcal{T}) < n^2$ for a contradiction}
+%
+% 		\item \textbf{$Dup(\alpha) \neq \emptyset$}
+%
+% 		By the pigeonhole principle, there are $n^2$ tiles in $\alpha$ and less than $n^2$ unique tiles, so one of them must be repeated
+%
+% 		\item \textbf{$\exists$ a connected path $\pi$ of tiles starting at the seed tile where $Dup(\pi) \neq \emptyset$}
+%
+% 		All tiles are connected in this assembly. We can construct this path by starting at the seed tile and going up and then over to the duplicated tile. 
+%
+% 		\item \textbf{$\pi$ is non obstructing}
+%         
+%             This path is monotonic since it goes up and side\-ways and is \\ non-branching since it only moves in two directions; thus, it is non-obstructive. 
+%         \item \textbf{$\pi$ is $\tau$-stable}
+%
+%             Each tile has to be connected to the tiles next to it with a strength of 1 via our initial assumptions.
+%
+%         \item \textbf{$\exists \alpha \in \mathcal{A}_\square[\mathcal{T}] : |\alpha| = \infty $}
+%
+%         We can now apply the pumping lemma to show that this path could be pumped to an infinite size.
+%
+%         \item \textbf{This is a contradiction}
+%
+%         The definition of $\mathcal{T}$ states it only has a single terminal assembly, but we have found multiple.
+%
+% 		\item \textbf{$TC(\mathcal{T}) \geq n^2$}
+%
+%             Since there are other possible terminal assemblies, our assumption is false. There must be at least $n^2$ tile types in the assembly when they are required to all be connected. 
+%
+%
+% 	\end{enumerate}
+% \end{proof}
 
 \end{document}
 
