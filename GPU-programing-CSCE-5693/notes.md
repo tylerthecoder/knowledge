@@ -68,7 +68,7 @@ GPU can be called device
 
 There is a thread grid of thread blocks
 
-You can't schedule threads on a GPU, you scheudle a thread block
+You can't schedule threads on a GPU, you schedule a thread block
 
 Each thread block has an id
 
@@ -84,4 +84,35 @@ $threadIdx.x, threadIdx.y, threadIdx.z$ are the thread ids
 CPU memory is different than GPU memeory. 
 
 cuda has its own malloc `cudaMalloc`. Need to free memory as well
+
+When scheduling threads, you shoudl keep the thread blocks smaller. This way, you can run the most threads at a time. 
+
+
+## Matrix Multiplication
+
+Rows need to match the column number
+
+
+
+We have matrix P [ M x N ]
+
+Each element in M is going to be read N times
+
+It is better to "share" inside of the thread block. So you compute the product of the matrix blocks at a time. Each block reads the entire row
+
+
+
+
+Types of variables
+
+local: each thread has its own copy 
+- Normally in a register
+shared: each block has its own copy
+- Shared memory is tiny compared to local memory
+- typically at the kilobyte
+
+
+There is no communication between thread blocks. 
+
+
 

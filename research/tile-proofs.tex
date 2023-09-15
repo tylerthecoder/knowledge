@@ -36,9 +36,9 @@ We will use the following definition throughout the proofs.
 \begin{description}
     \item[Tile Assembly System (TAS):] A TAS is a tuple $\mathcal{T} = (T, \sigma, \tau)$ where $T$ is a finite set of tile types, $\sigma$ is the seed tile, and $\tau$ is the temperature.
     \item[$\alpha$:] An assembly that can be constructed by $\mathcal{T}$
-    \item[$\tConst$] The set of all assemblies that can be constructed from $\mathcal{T}$.
-    \item[$\tTerm$] The set of all terminal assemblies that can be constructed from $\mathcal{T}$.
-    \item[$\tSeq$] The set of assembly sequences that can be constructed from $\mathcal{T}$.
+    \item[$\tConst$:] The set of all assemblies that can be constructed from $\mathcal{T}$.
+    \item[$\tTerm$:] The set of all terminal assemblies that can be constructed from $\mathcal{T}$.
+    \item[$\tSeq$:] The set of assembly sequences that can be constructed from $\mathcal{T}$.
     \item[$U_n$]: The set of unit vectors in n dimensions
     \item[{$TC(\mathcal{T})$}:] The tile complexity of a TAS $\mathcal{T}$.
     \item[$Dup(\alpha)$:] The set of duplicate tile types in an assembly $\alpha$.
@@ -66,15 +66,17 @@ We will use the following definition throughout the proofs.
     %     $$\forall \vec{t} \in \text{ dom } \alpha - \sigma, \{\vec{t},\vec{t}+\vec{f} \in F\} \in E(\alpha) \implies \{\vec{t}, \vec{t}+\vec{b} \in B\} \in E(\alpha)$$
 
 
-    \item[Monotone:] An assembly sequence is monotone if every input tile's input side is in a set of one or two adjacent directions. Formally:
+    \item[Monotone:] An assembly sequence $\aSeq \in \tSeq$ is monotone if every input tile's input side is in a set of one or two adjacent directions. $IS(\aSeq) \leq 2$. To account for $|\sigma| > 1$, there must exist a valid assembly sequence $\overrightarrow{\beta}$ that can build $\sigma$ starting with a single tile such that $IS(\overrightarrow{\beta}) = IS(\aSeq)$ and $\overrightarrow{\beta}$ could be validly inserted at the beginning of $\aSeq$.
 
-        \[IS(\aSeq) \leq 2\]
-
-    \item[Non-branching:] An assembly sequence is non-branching if every docking tile is connected to only a single other tile before the input tile attaches. 
-
+    \item[Non-branching:] An assembly sequence is non-branching if every docking tile is connected to only a single other tile before the input tile attaches.  
         \[ \forall (\vec{dt}, \alpha) \in DT(\aSeq), |\{\vec{u} \in U_2 : \vec{dt} + \vec{u} \in \text { dom } \alpha \} | = 1 \]
+    The same needs to be true of $\sigma$ here too. It should be able to be built by an assembly sequence in a non-branching way and be able to be inserted at the back of $\aSeq$
 
-    \item[Non-obstructive:] An assembly sequence is non-obstructive if no possible input tile overlaps with the assembly. More formally, there exists no terminal assembly that could be made non-terminal by removing a tile and a different tile attaching in its place. A TAS is non-obstructive, if for all possilbe assembly sequences, each is non-obstructive.
+    % \item[Non-obstructive:] An assembly sequence is non-obstructive if no possible input tile overlaps with the assembly. More formally, there exists no terminal assembly that could be made non-terminal by removing a tile and a different tile attaching in its place.
+
+    \item[Obstructive $\aSeq$]: An assembly sequence $\aSeq$ is obstructive if the input tile is adjacent to another tile that is not the docking tile. The sequence `ran into itself'
+
+    \item[Obstructive $\mathcal{T}$]: A TAS $\mathcal{T}$ is obstructive if there exists an obstructive assembly sequence $\aSeq$ that can be constructed by $\mathcal{T}$
 
     % \item[Non-branching:] An assembly where every tile connects to at most two other tiles. I.E., there are no branches
     %
@@ -97,19 +99,20 @@ Now we define the following lemmas that will be used in the proofs.
 % \end{proof}
 
 \begin{lemma}
-    A non-branching monotone assembly is non-obstructive
+    Let $\mathcal{T}$ be a TAS, $\aSeq \in \tSeq$.
+    If $\aSeq$ is non-branching and monotone then $\aSeq$ is non-obstructive
 \end{lemma}
 
 \begin{proof}
-    For an assembly to obstruct itself, there must be a location that can be reached multiple times. In a monotonic non-branching assembly, there is only one way to reach a location. Every tile only connects to the tile behind it and the tile in front of it. Furthermore, the tiles can never turn around and obstruct themselves because they are monotonic.
+    For an assembly sequence to obstruct itself, there must be a location that can be reached multiple times. In a monotonic non-branching assembly sequence, there is only one way to reach any location. Every tile only connects to the tile behind it and the tile in front of it. Furthermore, the tiles can never turn around and obstruct themselves because they are monotonic
 \end{proof}
 
 
 \begin{lemma}[Pumping lemma]
-    Let $\mathcal{T}$ be a TAS, $\aSeq \in \tSeq$ is not obstructive, $\tau$-stable, and produces $\alpha \in \tTerm$. If $Dup(\alpha) \ne \emptyset$ then $\exists \alpha_t \in \tTerm$ such that $|\alpha_t| = \infty$
+    Let $\mathcal{T}$ be a TAS that is not obstructive, $\tau$-stable, and produces $\alpha \in \tTerm$. If $Dup(\alpha) \ne \emptyset$ then $\exists \alpha_t \in \tTerm$ such that $|\alpha_t| = \infty$
 \end{lemma}
 \begin{proof}
-    Let $T_R$ be the tile type that is repeated. We can take the segment that is repeated and splice in that segment in place of an occurrence of $T_R$, pumping the assembly. Since the assembly is not obstructive, we can pump forever, making the size of $\alpha$ infinite 
+    Let $T_R$ be the tile type that is repeated. We can take the segment that is repeated and splice in that segment in place of an occurrence of $T_R$, pumping the assembly. Since $\mathcal{T}$ is not obstructive, we can pump forever, making the size of $\alpha$ infinite 
 \end{proof}
 
 
@@ -125,8 +128,7 @@ Now we define the following lemmas that will be used in the proofs.
 %     Since the assembly is non-obstructive, we can pump forever, making the size of $\alpha$ infinite 
 % \end{proof}
 
-% \section*{Proof 1 ($n \times 1 $ line)}
-
+\section*{Proof 1 ($n \times 1 $ line)}
 
 Let $\alpha$ be an assembly of a $1 \times n$ line of tiles. Define a TAS $\mathcal{T} = (T, \sigma, 1)$ such that $\tTerm = \{ \alpha \}$. 
 
@@ -146,10 +148,18 @@ Proof Idea:  We show that if there were less than n tile types in $\alpha$ then 
 
 		By the pigeonhole principle. There are $n$ tiles in $\alpha$ and less than $n$ unique tiles, so one of them must be repeated
 
-		\item \textbf{$\alpha$ is non-obstructive}
+    \item \textbf{$\mathcal{T}$ is non-obstructive}
 
+        We will use lemma 1 to prove this. We need to two things:
+        \begin{enumerate}
+            \item All $\aSeq \in \tSeq$ are non-branching
 
-            Any assembly sequence that produces $\alpha$ is non-branching because $\alpha$ is non-branching. There is no tile that connects to more than two tile. The assembly sequence is also monotone. 
+                $\alpha$ has no tiles that connect to more than two tiles since it is a line, so all possible assembly sequences are non-branching
+            \item All $\aSeq \in \tSeq$ are monotone
+
+                $\alpha$ grows in a single dimension, so there is at most 2 sides in $IS(\aSeq)$
+        \end{enumerate}
+        Since all possible assembly sequences are non-obstructive, $\mathcal{T}$ is non-obstructive
 
         \item \textbf{$\alpha$ is $\tau$-stable}
 

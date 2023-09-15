@@ -51,7 +51,6 @@ def assembly_map : Π (p : assembly_dom), assembly_range :=
     | _ := ⟨tile_1, or.inl rfl⟩ -- default case
     end
 
-
 def assembly_dom_2 := {p : Z2 // (0 ≤ p.fst ∧ p.fst ≤ 10) ∧ (0 ≤ p.snd ∧ p.snd ≤ 10)}
 
 def assembly_map_2 : Π (p : assembly_dom_2), assembly_range :=

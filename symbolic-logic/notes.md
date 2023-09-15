@@ -6,13 +6,13 @@
 ### Informal logic
 
 All substance of typer Y conduct electricity. <br />
-X conducts electricity <br />
+X conducts electricity<br/>
 So X is a type Y
 
 - This is a bad argument, X could be a type Z that also conducts electricity
 
 All substance of type Y conduct electricity. <br />
-X is a substance of type Y <br />
+X is a substance of type Y<br />
 So X conducts electricity
 
 - This is a good argument
@@ -102,8 +102,8 @@ How do you build the negation of a sentence?
 - Some people are rich ( P )
 - Some people are not rich ( Q )
 - $\lnot$ P $\neq$ Q
-- Can you just put "Its not the case that"?
-- no, "tyler is cool and it is not the case that john is cool"
+- Can you just put "It's not the case that"?
+- No, "Tyler is cool, and it is not the case that john is cool"
 
 
 
@@ -189,9 +189,138 @@ If Oswald hadn't shot kennedy, then someone else woudl have.
 If Oswald didn't shoot kennedy, then someone else did. 
 - This is an indicitive conditional and is true. 
 
+## Rules of formation
+
+Grammatical rules or PL (propositional logic), how to make "well formed formulas" (wff)
+
+A, B, C, D, E
+
+Binary Connectives: $\land$, $\lor$, $\rightarrow$, $\leftrightarrow$
+
+If p and q are wffs, then ($p \land q) is a wff
+($p \lor q) is a wff. 
+
+If we think of these recursively, if p or q is bigger than a single sentence, then it already has brackets. 
+
+As convention, we commonly drop the outermost brackets. 
+
+
+## Truth Trees
+
+You ignore ways of making premises false or the conclusion false
+
+Strategy, minimize branching early. Pick sentences that stack instead of branch.  
+
+Different tree rules for each type of sentences. 
+
+Definition: A branch closes exact if it includs lines which are p and not p. 
+
+
+1. $(A \land B) \rightarrow C$
+
+2. $\lnot A \rightarrow D$
+3. $\lnot(B \rightarrow (C \lor D))$
+4. $B$, 3
+5. $\lnot(C \lor D)$, 3
+6. $\lnot C$, 5
+7. $\lnot D$, 5
+8. $\lnot \lnot A$, $D$, 7
+
+
+1. $A \rightarrow (B \rightarrow C)$<br/>
+2. $D \rightarrow (A \lor B)$<br/>
+3. $\therefore \lnot (D \rightarrow C)$
+ - The conclusion is negated to check the argument is valid
+4. $D$, 3
+5. $\lnot C$, 3
+6. $\lnot D$ --- $A\lor B$, 2
+    - D$\lnot D$ closes since it is a contradiction
+7. $A$ --- $B \rightarrow C$, 6
+8. $\lnot A$ --- $B \rightarrow C$ --- $\lnot A$ --- $B \rightarrow C$, 1
+ - $A \lnot A$ closes since it is a contradiction
+ - The argument is invalid since $\lnot A$ is open
+
+The tree test is essentially a test of consistency. 
+
+What its doing is determining whether the initial list of sentences is consistent or not. 
+
+Open tree = consistent<br/>
+Closed tree = inconsistent
+
+How do we use tress to test is a sentence is a tautology? 
+
+Suppose $p$ is a tautology. Then $\lnot p$ is a contradiction. So all of its branches are closed. 
+
+i.e. $\{\lnot p\}$ is inconsistent.
+
+IS $(A \lor B) \rightarrow (A \land B)$ a tautology?
+
+1. $\lnot ((A \lor B) \rightarrow (A \land B))$
+2. $A \lor B$, 1
+3. $\lnot (A \land B)$, 1
+4. $A$ ___ $B$, 2
+5. $\lnot A$ ___ $\lnot B$ ___ $\lnot A$ ___ $\lnot B$, 3
+
+Open branches: $A \lnot B$, $\lnot A B$, Not a tautology
+
+$p$ is logically equivalent to $q$ if and only if ($p \leftrightarrow q$) is a tautology
+
+Write down $\lnot (p \leftrightarrow q)$ at top of the tree, and if the tree closes, then p and q are logically equivalent. An open branch will show that explicitly. 
 
 
 
+### Tree Test Meta-Theory
 
+Soundness of the tree test: if the test says an argument is valid, it's (always) correct. <br/>
+Completeness of the tree test: if an argument is valid, the test will (eventually) say so. <br/>
+Decidability of the tree test: whatever argument you provided as input, the tree test always delivers a verdict (valid or invalid) <br/>
+
+
+
+Steps: 
+1. Reform soundness in a way that I can provide it. 
+2. Prove something substantive about the actual tree rules we've got (Rule soundess: not to be confused with _soundness_ i.e. the soundness of the tree test)
+3. Use the rule soundess of all of our rules to prove the reformulation of soundness
+
+
+Soundness of the tree test rules
+
+If the tree closes, then the initial list is inconsistent. i.e. the premises and the negated conclusion. 
+
+Contrapositive: If the initial list is consistent, then the tree doesn't close.
+
+__Digression__: 
+
+Prove $\Gamma \models p$ iff $\Gamma \cup \{\lnot p\}$ is inconsistent
+
+i. Suppose $\Gamma \models p$. 
+- There is no row in the truth table where all the member of $\Gamma$ are true and $p$ is false. 
+- So there is no row where all the members of $\Gamma$ are true and $\lnot p$ is true [By the true table for logical not]
+- So there is no row where all the members of $\Gamma \cup \{\lnot p\}$ are true
+- So $\Gamma \cup \{\lnot p\}$ is inconsistent
+
+ii. Suppose $\Gamma \cup \{\lnot p\}$ is inconsistent
+
+
+Proof (soundness of truth trees):
+Suppose the inital list is consistent
+- Then, there is at least one valuation / argument of truth values that makes all the sentences in the inital list ture, call it C. 
+- Since all of our tree values are rule sound, application of a tree rule to a branch of the tree in which all of the sentences are true under C, yields at least one extension of the branch, (with an added node) that is also true under C. So when our tree is completed we have at least on branch taht is true under C. 
+- So the set of sentences in that branch is consistent
+- So the branch cannot contain a pair of sentences of form $p$ and $\lnot p$
+- So the branch is open
+
+
+__Rule Soundness__:
+
+Rule $p \lor q$ makes a branch with $p$ and $q$ open
+
+If the input is true under andy assignment, C, then at least one of the outputs is true under C. 
+
+There are 3 types of assignemnt that make the input $p \lor q$ true. 
+- (type 1) $p$ is true and $q$ is false
+- (type 2) $p$ is false and $q$ is true
+- (type 3) $p$ is true and $q$ is true
+Each of thesee have at least one of the branches that is true. 
 
 

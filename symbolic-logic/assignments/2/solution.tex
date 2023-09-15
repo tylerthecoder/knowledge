@@ -1,0 +1,111 @@
+\documentclass[12pt]{article}
+
+\usepackage{prooftrees,amsmath,turnstile}
+
+\begin{document}
+
+\section*{Solution to Problem 1}
+
+\subsection*{Part (a)}
+
+Argument: 
+\begin{enumerate}
+    \item $A \rightarrow [ (B \lor C) \rightarrow R]$
+    \item $(R \lor S) \rightarrow T$
+    \item $\therefore A \rightarrow (C \rightarrow T)$
+\end{enumerate}
+
+Truth tree: 
+
+% \begin{prooftree}
+%   {
+%     to prove={}
+%   }
+%   [A \rightarrow ((B \lor C) \rightarrow R), checked, just={(premise)}, name=pr
+%   [(R \lor S) \rightarrow T, checked, grouped, just={(premise)}
+%   [\lnot (A \rightarrow (C \rightarrow T)) , checked, just={}
+%   [A, checked, just={3}
+%   [\lnot (C \rightarrow T), checked, just={3}, name=fa
+%   [\tnot (\forall y) Fy, checked, grouped, just={}
+%   [(\exists y) \tnot Fy, checked=b, just={}
+%   [\tnot Fb, just={$\exists$D:!u}, name=nofb
+%   [\tnot (\exists x) Fx, checked, just={}
+%   [(\forall x) \tnot Fx, subs=a, just={}
+%   [\tnot Fa, close={:fa,!c}, just={}
+%                         ]
+%                       ]
+%                     ]
+%                     [(\forall x) Fx, subs=b
+%                       [Fb, close={:nofb,!c}, just={}, move by=2
+%                       ]
+%                     ]
+%                   ]
+%                 ]
+%               ]
+%             ]
+%           ]
+%         ]
+%       ]
+%     ]
+%
+% \end{prooftree}
+%
+
+\section*{Problem 2}
+
+
+\section*{Problem 3}
+
+
+\section*{Problem 4}
+
+
+\subsection*{Part (a)}
+
+\begin{enumerate}
+    \item A sentence of form $p \lor q$ is a tautology if at least one of p and q is a tautology
+    \item A sentence of form $p \lor q$ has truth table that always yeilds true, if at least one of p or q has a truth table that always yeilds true (by defintion of tautology)
+    \item WLOG suppose p has a truth table that always yeilds true
+    \item $p \lor q$ is always true since p is always true (by definition of logical or)
+    \item This is true
+\end{enumerate}
+
+\subsection*{Part (b)}
+
+Claim: For any set of sentence, $\Gamma$, if $\Gamma \vdash p \lor q$ then either $\Gamma \vdash p$ or $\Gamma \vdash q$.
+
+This is false.
+
+Suppose $\Gamma = \{p \lor q\}$. Then $\Gamma \vdash p \lor q$ but $\Gamma \nvdash p$ and $\Gamma \nvdash q$.
+
+
+\subsection*{Part (c)}
+
+Claim: If a set of sentences is inconsistent, then the set consisting of the negations of those sentences must be consistent. 
+
+This is false.
+
+Suppose $\Gamma = \{p, \lnot p\}$. Then $\Gamma$ is inconsistent but $\{\lnot p, p\}$ is also inconsistent.
+
+
+\subsection*{Part (d)}
+
+Claim: If the argument from the set of premises, $\Gamma$, to the conclusion ($A \land \lnot A$) is valid, then $\Gamma$ is inconsistent. 
+
+
+
+\begin{itemize}
+    \item If $\Gamma$ was consistent, then there would be a valid assignment of truth values that leds to all the sentences being true. 
+    \item For a sentence to follow from $\Gamma$, it must be true in all of the truth assignments of $\Gamma$
+    \item $A \land \lnot A$ is false in all truth assignments
+    \item Therefore, $A \land \lnot A$ cannot follow from $\Gamma$
+    \item We have a contradiction, so $\Gamma$ must be inconsistent
+\end{itemize}
+
+\section*{Problem 5}
+
+
+
+
+\end{document}
+
