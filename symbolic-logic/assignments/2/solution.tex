@@ -2,7 +2,15 @@
 
 \usepackage{prooftrees,amsmath,turnstile}
 
+\usepackage{graphicx}
+\graphicspath{ {./imgs/} }
+
+\title{Symbolic Logic HW 2}
+\author{Tyler Tracy}
+
 \begin{document}
+
+\maketitle
 
 \section*{Solution to Problem 1}
 
@@ -54,6 +62,8 @@ Argument:
     \item $\therefore A \lor C$
 \end{enumerate}
 
+\includegraphics[width=\textwidth]{1b}
+
 This argument is invalid. The following is a counterexample:
 
 $\lnot A, \lnot B, \lnot C, D$
@@ -76,6 +86,10 @@ Argument:
     \item $\therefore (Z \land \lnot A) \rightarrow \lnot M$
 \end{enumerate}
 
+\includegraphics[width=\textwidth]{1c}
+
+The argument is valid since the tree closes.
+
 \section*{Problem 2}
 
 To prove if something is a tautology, we negatate the sentence and show that the tree closes. 
@@ -84,6 +98,9 @@ To prove if something is a tautology, we negatate the sentence and show that the
 
 Sentence: $A \rightarrow (B \rightarrow A)$
 
+\includegraphics[width=\textwidth]{2a}
+
+This is a tautology since the tree closes.
 
 \subsection*{Part (b)}
 
@@ -93,20 +110,40 @@ I'm going to quick simpify this by recognizing that $B \rightarrow A$ is logical
 
 $(B \leftrightarrow A) \leftrightarrow (A \land \lnot B)$
 
+\includegraphics[width=\textwidth]{2b}
 
-This is not a tautology, $A, \lnot B$ is a counterexample.
+
+This is not a tautology, $A, \lnot B$ is a counterexample. $(F \leftrightarrow T) \leftrightarrow (T \lor \lnot F)$ is false
 
 
 \section*{Problem 3}
 
-
-\section*{Problem 4}
-
+To prove logically equivalance, we can negate the biconditional between the two sentences and if the tree closes, they are equivalent. 
 
 \subsection*{Part (a)}
 
+Sentences: $A \rightarrow B$ and $B \rightarrow A$
+
+\includegraphics[width=\textwidth]{3a}
+
+These two sentences are not logically equivalent. $A, \lnot B$ is a counterexample. $(F \rightarrow T) \leftrightarrow (T \rightarrow F)$ is false.
+
+
+\subsection*{Part (b)}
+
+Sentences: $(B \rightarrow A) \land (A \rightarrow B)$ and $A \leftrightarrow B$
+
+\includegraphics[width=\textwidth]{3b}
+
+These two sentences are logically equivalent since the tree closes. 
+
+\section*{Problem 4}
+
+\subsection*{Part (a)}
+
+Claim: A sentence of form $p \lor q$ is a tautology if at least one of p and q is a tautology
+
 \begin{enumerate}
-    \item A sentence of form $p \lor q$ is a tautology if at least one of p and q is a tautology
     \item A sentence of form $p \lor q$ has truth table that always yeilds true, if at least one of p or q has a truth table that always yeilds true (by defintion of tautology)
     \item WLOG suppose p has a truth table that always yeilds true
     \item $p \lor q$ is always true since p is always true (by definition of logical or)
