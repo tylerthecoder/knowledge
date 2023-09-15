@@ -17,41 +17,84 @@ Argument:
 
 Truth tree: 
 
-% \begin{prooftree}
-%   {
-%     to prove={}
-%   }
-%   [A \rightarrow ((B \lor C) \rightarrow R), checked, just={(premise)}, name=pr
-%   [(R \lor S) \rightarrow T, checked, grouped, just={(premise)}
-%   [\lnot (A \rightarrow (C \rightarrow T)) , checked, just={}
-%   [A, checked, just={3}
-%   [\lnot (C \rightarrow T), checked, just={3}, name=fa
-%   [\tnot (\forall y) Fy, checked, grouped, just={}
-%   [(\exists y) \tnot Fy, checked=b, just={}
-%   [\tnot Fb, just={$\exists$D:!u}, name=nofb
-%   [\tnot (\exists x) Fx, checked, just={}
-%   [(\forall x) \tnot Fx, subs=a, just={}
-%   [\tnot Fa, close={:fa,!c}, just={}
-%                         ]
-%                       ]
-%                     ]
-%                     [(\forall x) Fx, subs=b
-%                       [Fb, close={:nofb,!c}, just={}, move by=2
-%                       ]
-%                     ]
-%                   ]
-%                 ]
-%               ]
-%             ]
-%           ]
-%         ]
-%       ]
-%     ]
-%
-% \end{prooftree}
-%
+\begin{prooftree}
+  {
+    to prove={}
+  }
+  [A \rightarrow{} ((B \lor{} C) \rightarrow{} R), checked, just={(premise)}, name=pr
+  [(R \lor{} S) \rightarrow{} T, checked, grouped, just={(premise)}
+  [\lnot{} (A \rightarrow{} (C \rightarrow{} T)), checked, just={(conclusion)}
+  [A, checked, just={3}
+  [\lnot{} (C \rightarrow{} T), checked, just={3}
+  [C, checked, grouped, just={5}
+  [\lnot{} T, checked, just={5}
+  [\lnot{} (R \lor{} S), just={2}, 
+  [\lnot{} R, checked, just={8}
+  [\lnot{} S, checked, just={8}
+  [(B \lor{} C) \rightarrow{} R, just={1}
+  [\lnot{} (B \lor{} C), just={11}
+  [\lnot{} B, just={12}
+  [\lnot{} C, just={12}, close={6}
+  ]]]]
+    [R, close={9}]
+    ]]]]]
+    [T, close={7}]
+  ]]]]]
+\end{prooftree}
+
+This is a valid argument because the truth tree is closed.
+
+\subsection*{Part (b)}
+
+Argument:
+\begin{enumerate}
+    \item $\lnot A \rightarrow B$
+    \item $C \rightarrow D$
+    \item $\lnot B \lor D$
+    \item $\therefore A \lor C$
+\end{enumerate}
+
+This argument is invalid. The following is a counterexample:
+
+$\lnot A, \lnot B, \lnot C, D$
+
+\begin{enumerate}
+    \item $\lnot F \rightarrow T$, $T$ 
+    \item $F \rightarrow T$, $T$
+    \item $\lnot F \lor T$, $T$
+    \item $F \lor F$, $F$
+\end{enumerate}
+
+The premises are true but the conclusion is false.
+
+\subsection*{Part (c)}
+
+Argument:
+\begin{enumerate}
+    \item $(Z \land M) \rightarrow (S \lor A)$
+    \item $\lnot (Z \land S)$
+    \item $\therefore (Z \land \lnot A) \rightarrow \lnot M$
+\end{enumerate}
 
 \section*{Problem 2}
+
+To prove if something is a tautology, we negatate the sentence and show that the tree closes. 
+
+\subsection*{Part (a)}
+
+Sentence: $A \rightarrow (B \rightarrow A)$
+
+
+\subsection*{Part (b)}
+
+Sentence: $(B \leftrightarrow A) \leftrightarrow ((B \rightarrow A) \land (A \lor \lnot B))$
+
+I'm going to quick simpify this by recognizing that $B \rightarrow A$ is logically equivalent to ($A \lor \lnot B$). So the sentence simpifies to the following
+
+$(B \leftrightarrow A) \leftrightarrow (A \land \lnot B)$
+
+
+This is not a tautology, $A, \lnot B$ is a counterexample.
 
 
 \section*{Problem 3}
@@ -92,8 +135,6 @@ Suppose $\Gamma = \{p, \lnot p\}$. Then $\Gamma$ is inconsistent but $\{\lnot p,
 
 Claim: If the argument from the set of premises, $\Gamma$, to the conclusion ($A \land \lnot A$) is valid, then $\Gamma$ is inconsistent. 
 
-
-
 \begin{itemize}
     \item If $\Gamma$ was consistent, then there would be a valid assignment of truth values that leds to all the sentences being true. 
     \item For a sentence to follow from $\Gamma$, it must be true in all of the truth assignments of $\Gamma$
@@ -104,7 +145,27 @@ Claim: If the argument from the set of premises, $\Gamma$, to the conclusion ($A
 
 \section*{Problem 5}
 
+Claim: $p$ and $q$ are logically equivalent if, and only if, $p \leftrightarrow q$ is a tautology. 
 
+
+
+Prove if $p$ and $q$ are logically equivalent then $p \leftrightarrow q$ is a tautology.
+\begin{itemize}
+    \item $p$ and $q$ being loically equivalent means that they have the same truth tables
+    \item Thus whenever $p$ is true, $q$ is true, and whenever $p$ is false, $q$ is false
+    \item Thus the only two possible truth assignments for $p$ and $q$ are both true or both false
+    \item $p \leftrightarrow q$ is true whenever $p$ and $q$ have the same truth assignment
+    \item Thus $p \leftrightarrow q$ is true in all truth assignments
+    \item Thus $p \leftrightarrow q$ is a tautology (by definition)
+\end{itemize}
+
+Prove if $p \leftrightarrow q$ is a tautology then $p$ and $q$ are logically equivalent.
+
+\begin{itemize}
+    \item $p$ and $q$ are a tautology if all truth assignments are true
+    \item $p \leftrightarrow q$ is true whenever $p$ and $q$ have the same truth assignment
+    \item $p$ and $q$ having the same truth assignment means that $p$ and $q$ are logically equivalent
+\end{itemize}
 
 
 \end{document}
