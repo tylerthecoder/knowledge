@@ -1,0 +1,7 @@
+[
+    {
+        "directory": "/home/tylord/assignments/gpu-programming/assignments/p2-sgemm",
+        "command": "/usr/bin/clang++ -I/home/tylord/assignments/gpu-programming/cuda-headers/cuda.h -o /home/tylord/assignments/gpu-programming/assignments/p2-sgemm/out.o -c /home/tylord/assignments/gpu-programming/assignments/p2-sgemm/kernel.cu",
+        "file": "/home/tylord/assignments/gpu-programming/assignments/p2-sgemm/kernel.cu"
+    }
+]

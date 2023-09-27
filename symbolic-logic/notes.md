@@ -323,4 +323,22 @@ There are 3 types of assignemnt that make the input $p \lor q$ true.
 - (type 3) $p$ is true and $q$ is true
 Each of thesee have at least one of the branches that is true. 
 
+You can do the same for the other rules. 
+
+Formulation of completeness of the tree test:
+If the argument is valid, then the tree test says so. 
+
+- If the inital list is incocnsistent, then the tree closes
+- If the tree is ope, then the inital list is consistent (contrapositive)
+
+Suppose the tree is open.
+- Pick an open branch
+- Then we can define a truth assignment by assigning truth values that make all the uncheck lines true
+- So, if they are atomic sentence, make those atomic sentence true. If they are negated atomic sentences make those atomic sentences false. 
+- So under this turh assignment all the uncheck lines in that branch are ture under that truth assignment too. 
+- And so on up the tree : all the lines in the tree must be true under that assignment
+- So the initial list must be true under that assignment
+- So the inital list is consistent.
+- So if the trees open, the inital list is consistent. 
+
 

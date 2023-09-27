@@ -1,0 +1,14 @@
+ 1. How many times is each element of each input matrix loaded during the execution of the kernel? 
+
+Each element of the matrix A is loaded n times. This is because for each element we compute, we need to get all the elements in the row. Since there are n items in a row, each of them loads the other elements. 
+
+
+2. What is the memory-access to floating-point computation ratio (i.e., the total number of memory accesses divided by the total number of floating-point operations) in each thread? Consider multiplication and addition as separate operations, and ignore the global memory store at the end. Only count global memory loads when calculating the total number of memory accesses.
+
+The number of floating point opperation per thread is 2k-1 where k is the dimension of the matrix. This is because there are k multiplications and k -1 additions. There are 2k memory accesses. We need to get the entire row for one matrix and en entire column for the other. Thus the ratio is (2k) / (2k - 1)
+
+
+
+
+
+
