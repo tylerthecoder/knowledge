@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 
-\usepackage{prooftrees,amsmath,turnstile}
+\usepackage{prooftrees,amsmath,turnstile,amsthm}
 \usepackage{tikz}
 \usepackage{tikz-qtree}
 
@@ -9,6 +9,8 @@
 
 \title{Symbolic Logic HW 3}
 \author{Tyler Tracy}
+
+\newtheorem{theorem}{Theorem}
 
 \begin{document}
 
@@ -256,29 +258,72 @@ False, L doesn't map 2 to every value in x
 
 \section*{Solution to Problem 6}
 
-Use the tree test to verify that each of the following argumens is valid. 
+\subsection*{Problem a}
+\includegraphics[width=\textwidth]{6a}
 
-\[ \forall x (Fx \rightarrow Gx), \neg Ga, \therefore \neg Fa \]
+\subsection*{Problem b}
+\includegraphics[width=\textwidth]{6b}
 
+\subsection*{Problem c}
+\includegraphics[width=\textwidth]{6c}
 
-
-
+\subsection*{Problem d}
+\includegraphics[width=\textwidth]{6d}
 
 \section*{Solution to Problem 7}
 
 Prove rule-soundness of the tree rules for the conditional and the negated conditional.
 
-Rule Soundness: if the premise/input is true in some case/valuation C, then all the lines in at least
-one of its conclusions/outputs is true in case C too.
+Rule Soundness: if the premise/input is true in some case/valuation C, then all the lines in at least one of its conclusions/outputs is true in case C too.
 
+\begin{theorem}[Conditional Rule Soundness]
+    If $A \rightarrow B$ is true in some case/valuation C, then all the lines in one the tree rule's outputs must be true
+\end{theorem}
 
+\begin{proof}
+    The conditional tree rule is as follows: $A \rightarrow B$ creates a single line with two branches $A$ and $\neg B$. 
+    \begin{itemize}
+        \item Assume $A \rightarrow B$ is true in some case/valuation C.
+        \item $A \rightarrow B$ has the same truth table as $\neg A \lor B$.
+        \item In C, either $A$ is false or $B$ is true.
+        \item The $A$ branch is true in C when the value of $A$ is true in C.
+        \item The $\neg B$ branch is true in C when the value of $B$ is false in C.
+        \item That is all the possible cases or C. So if C is true, then one of the branches are true. 
+    \end{itemize}
+\end{proof}
 
 
 \section*{Solution to Problem 8}
  Prove the rule-completeness of the tree rules for the biconditional and the negated biconditional.  
  
-Rule Completeness:  If all the lines in one of its conclusions/outputs  is true in some case/valuation 
-C, the premise/input is true in C also.
+Rule Completeness:  If all the lines in one of its conclusions/outputs  is true in some case/valuation C, the premise/input is true in C also.
+
+
+\begin{theorem}[Biconditional Rule Completeness]
+    If $A \leftrightarrow B$ is true in some case/valuation C, then $A \rightarrow B$ and $B \rightarrow A$ are true in C also.
+\end{theorem}
+
+\begin{proof}
+
+    The biconditional tree rule is as follows:
+    $A \leftrightarrow B$ creates a single line with two branches:
+    \begin{itemize}
+        \item $A \rightarrow B$
+        \item $B \rightarrow A$
+    \end{itemize}
+
+    We show that
+
+    \begin{itemize}
+        \item Assume $A \leftrightarrow B$ is true in some case/valuation C. 
+        \item $A \leftrightarrow B$ has the same truth table as $(A \rightarrow B) \land (B \rightarrow A)$.
+    \end{itemize}
+
+    By defintion of biconditional, $A \leftrightarrow B$ is true in C if and only if $A$ and $B$ have the same truth value in C.
+    Then $A \rightarrow B$ and $B \rightarrow A$ are true in C.
+    Therefore, if $A \leftrightarrow B$ is true in some case/valuation C, then $A \rightarrow B$ and $B \rightarrow A$ are true in C also.
+
+\end{proof}
 
 
 
