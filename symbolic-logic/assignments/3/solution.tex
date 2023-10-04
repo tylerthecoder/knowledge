@@ -23,7 +23,7 @@
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
-\tikzset{grow=down,level distance=32pt}
+\tikzset{grow=up,level distance=32pt}
 \Tree
 [.\(\leftrightarrow\)
     [ .\(\exists x\)
@@ -55,7 +55,7 @@ The $\rightarrow$ in $\forall x Fx \rightarrow \forall xGx$ has scope over $\for
 
 \begin{center}
 \begin{tikzpicture}
-\tikzset{grow=down,level distance=32pt}
+\tikzset{grow=up,level distance=32pt}
 \Tree
 [.\(\rightarrow\)
     [ .\(\forall x\)
@@ -86,7 +86,7 @@ The $\land$ in $Ax \land Bx$ has scope over $Ax$ and $Bx$.
 
 \begin{center}
 \begin{tikzpicture}
-\tikzset{grow=down,level distance=32pt}
+\tikzset{grow=up,level distance=32pt}
 \Tree
 [.\(\rightarrow\)
     [ .\(\forall x\)
@@ -123,7 +123,7 @@ The $\rightarrow$ in $Fx \rightarrow Gx$ has scope over $Fx$ and $Gx$.
 
 \begin{center}
 \begin{tikzpicture}
-\tikzset{grow=down,level distance=32pt}
+\tikzset{grow=up,level distance=32pt}
 \Tree
 [.\(\lor\)
     [ .\(\forall x\)
@@ -281,7 +281,7 @@ Rule Soundness: if the premise/input is true in some case/valuation C, then all 
 \end{theorem}
 
 \begin{proof}
-    The conditional tree rule is as follows: $A \rightarrow B$ creates a single line with two branches $A$ and $\neg B$. 
+    The conditional tree rule is as follows: $A \rightarrow B$ creates a single line with two branches $\neg A$ and $B$. 
     \begin{itemize}
         \item Assume $A \rightarrow B$ is true in some case/valuation C.
         \item $A \rightarrow B$ has the same truth table as $\neg A \lor B$.
@@ -293,6 +293,21 @@ Rule Soundness: if the premise/input is true in some case/valuation C, then all 
 \end{proof}
 
 
+\begin{theorem}[Negated Conditional Rule Soundness]
+    If $\neg (A \rightarrow B)$ is true in some case/valuation C, then all the lines in one the tree rule's outputs must be true
+\end{theorem}
+
+\begin{proof}
+    The conditional tree rule is as follows: $A \rightarrow B$ creates two lines $A$ and $\neg B$. 
+    \begin{itemize}
+        \item Assume $\neg(A \rightarrow B)$ is true in some case/valuation C.
+        \item $\neg (A \rightarrow B)$ has the same truth table as $A \land \neg B$.
+        \item In C, $A$ is true or $B$ is false.
+        \item Both new lines ($A$ and $\neg B$) of the tree are true in C.
+        \item The negated conditional rule is sound.
+    \end{itemize}
+\end{proof}
+
 \section*{Solution to Problem 8}
  Prove the rule-completeness of the tree rules for the biconditional and the negated biconditional.  
  
@@ -300,35 +315,63 @@ Rule Completeness:  If all the lines in one of its conclusions/outputs  is true 
 
 
 \begin{theorem}[Biconditional Rule Completeness]
-    If $A \leftrightarrow B$ is true in some case/valuation C, then $A \rightarrow B$ and $B \rightarrow A$ are true in C also.
+    If all the lines one of the biconditionals outputs is true in some case C, then $A \leftrightarrow B$ is true in C also.
 \end{theorem}
 
-\begin{proof}
-
-    The biconditional tree rule is as follows:
-    $A \leftrightarrow B$ creates a single line with two branches:
+\begin{proof} The binconditional rule completeness
     \begin{itemize}
-        \item $A \rightarrow B$
-        \item $B \rightarrow A$
+        \item The biconditional tree rule has two branches with two lines. The first branch has $A$ and $B$ and the second branch has $\neg A$ and $\neg B$. 
+        \item Restating the goal, we are showing that if either ($A$ and $B$) or ($\neg A$ and $\neg B$) are true in some case C, then $A \leftrightarrow B$ is true in C also.
+        \item Assume either ($A$ and $B$) or ($\neg A$ and $\neg B$) are true in some case C.
+        \item The truth table of C only has true outputs when $A$ and $B$ are true or $A$ and $B$ are false. By the truth table of the conditional and truth table of the and. 
+        \item The truth table of C is equivalent to the truth table of $A \leftrightarrow B$.
+        \item No matter the value of C, C is always true in $A \leftrightarrow B$.
+        \item Therefore, the biconditional rule is complete.
     \end{itemize}
-
-    We show that
-
-    \begin{itemize}
-        \item Assume $A \leftrightarrow B$ is true in some case/valuation C. 
-        \item $A \leftrightarrow B$ has the same truth table as $(A \rightarrow B) \land (B \rightarrow A)$.
-    \end{itemize}
-
-    By defintion of biconditional, $A \leftrightarrow B$ is true in C if and only if $A$ and $B$ have the same truth value in C.
-    Then $A \rightarrow B$ and $B \rightarrow A$ are true in C.
-    Therefore, if $A \leftrightarrow B$ is true in some case/valuation C, then $A \rightarrow B$ and $B \rightarrow A$ are true in C also.
-
 \end{proof}
 
+\begin{theorem}[Negated Biconditional Rule Completeness]
+    If $\neg (A \leftrightarrow B)$ is true in some case/valuation C, then $A \rightarrow B$ and $B \rightarrow A$ are true in C also.
+\end{theorem}
+
+\begin{proof} The negated binconditional rule completeness
+    \begin{itemize}
+        \item The negated biconditional tree rule has two branches with two lines. The first branch has $\neg A$ and $B$ and the second branch has $A$ and $\neg B$. 
+        \item Restating the goal, we are showing that if either ($\neg A$ and $B$) or ($A$ and $\neg B$) are true in some case C, then $\neg (A \leftrightarrow B)$ is true in C also.
+        \item Assume either ($\neg A$ and $B$) or ($A$ and $\neg B$) are true in some case C.
+        \item The truth table of C only has true outputs when $A$ is false and $B$ is true or when $A$ is true and $B$ is false. By the truth table of the conditional and truth table of the and. 
+        \item The truth table of C is equivalent to the truth table of $\neg (A \leftrightarrow B)$.
+        \item No matter the value of C, C is always true in $\neg (A \leftrightarrow B)$.
+        \item Therefore, the biconditional rule is complete.
+    \end{itemize}
+\end{proof}
 
 
 \section*{Solution to Problem 9}
 
+Consider the follow, alternative tree rule for conditionals (X), $p \rightarrow q$ where there are two branches. The first one is $p$ and the second one is $q$
+
+
+\subsection*{X is not rule sound}
+Consider the case where $p$ is false and $q$ is false. The value of the conditional in this case is true. However, the rule outputs two branches that are both false for this case. Thus the rule is not sound. 
+
+
+\subsection*{X is not rule complete}
+Consider the case where the $p$ branch is true and the $q$ branch is not true. One of the branches is true, so the rule input should be true. This corresponds to the case where $p$ is true and $q$ is false. But, the value of the conditional in this case is false. Thus the rule is not complete.
+
+
+\subsection*{X makes the tree test not sound}
+
+I'll show a tree test for the argument $A \rightarrow B, \neg A, \therefore \neg B$ that is not sound. This argument is invalid, but the tree closes
+
+\includegraphics[width=\textwidth]{9c}
+
+
+\subsection*{X makes the tree test not complete}
+
+I'll show a tree test where the argument is valid, but the tree doesn't close. The argument is $A \rightarrow B, A, \therefore B$. 
+
+\includegraphics[width=\textwidth]{9d}
 
 
 \end{document}

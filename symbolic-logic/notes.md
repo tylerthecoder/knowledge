@@ -342,3 +342,44 @@ Suppose the tree is open.
 - So if the trees open, the inital list is consistent. 
 
 
+
+## Quantifiers
+
+Existential quantifier: $\exists x$
+- The tree rule replaces the existential quantifier with a new name that is not in the tree yet. 
+Universal quantifier: $\forall x$
+- The rule is never checked off, because it applies to any instance of the variable. 
+- The tree rule for the Universal quantifier is rule sound
+
+With these rules, the tree test is still sound and complete.
+
+
+
+
+## Chapter 4 (Multiple Generality)
+
+So far we have only had one variable, x. Now we allow multiple variables. 
+
+Why? This allows us to express much more complicated sentences formally
+
+
+Domain = people
+r = Romeo, j = Juliet, Lxy = x loves y
+
+"Everyone loves themselves"
+- $\forall x Lxx$
+"Romeo loves everyone"
+- $\forall x Lrx$
+"Everyone loves Romeo"
+- $\forall x Lxr$
+"Juliet loves someone"
+- $\exists x Ljx$
+"Everyone loves someone"
+- $\forall x \exists y Lxy$
+"Somebody loves everyone"
+- $\exists x \forall y Lxy$
+
+
+
+
+

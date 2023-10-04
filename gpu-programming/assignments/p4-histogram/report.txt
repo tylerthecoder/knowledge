@@ -1,0 +1,15 @@
+I didn't do all of these optimizations, but I think they would speed up the computaiton of the histogram
+
+1. **Naive Implementation**:
+    - Initially, a straightforward approach is adopted where each thread processes one data item. It calculates the bin index for the item and increments the corresponding bin using atomic operations. While this method is simple, it may not be efficient due to contention over memory locations when threads attempt to update the same bin simultaneously.
+
+2. **Optimization #1: Shared Memory Usage**:
+    - This optimization leverages shared memory, which is faster than global memory, to store a histogram for each block of threads. Initially, a local histogram is created and stored in shared memory, with each thread updating this local histogram. After all threads have processed their data items, the local histograms are merged into the global histogram. This approach reduces the contention and global memory traffic that can slow down the naive implementation.
+
+3. **Optimization #2: Privatization**:
+    - Privatization further reduces contention by having each thread maintain a private histogram, which is stored in the thread's local memory. After processing all its data items, each thread merges its private histogram into the shared memory histogram for its block. This step significantly reduces the number of atomic operations, further improving performance.
+
+4. **Optimization #3: Coarsened Binning**:
+    - In coarsened binning, each thread processes multiple data items instead of just one. This approach reduces the kernel launch overhead, allowing for better utilization of the GPU's computational resources and shared memory. It can lead to better memory access patterns and more efficient use of the hardware.
+
+These optimizations aim at reducing the execution time of the histogramming algorithm by minimizing contention, making better use of memory hierarchies, and efficiently utilizing the parallel processing capabilities of the GPU. Each step is aimed at incrementally improving the performance of the algorithm while ensuring the correctness of the histogramming operation.

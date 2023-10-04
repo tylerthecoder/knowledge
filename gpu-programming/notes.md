@@ -130,6 +130,13 @@ __constant__ int const_var; // memory: constant, scope: grid, lifetime: applicat
 
 
 
+## 2D convolution
+
+If a 12x12 output tile and a 5x5 mask, then the thread block is 16x16
+
+
+
+
 
 
 
