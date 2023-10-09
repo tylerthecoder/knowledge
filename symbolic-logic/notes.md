@@ -366,20 +366,61 @@ Why? This allows us to express much more complicated sentences formally
 Domain = people
 r = Romeo, j = Juliet, Lxy = x loves y
 
-"Everyone loves themselves"
-- $\forall x Lxx$
-"Romeo loves everyone"
-- $\forall x Lrx$
-"Everyone loves Romeo"
-- $\forall x Lxr$
-"Juliet loves someone"
-- $\exists x Ljx$
-"Everyone loves someone"
-- $\forall x \exists y Lxy$
-"Somebody loves everyone"
-- $\exists x \forall y Lxy$
+"Everyone loves themselves": $\forall x Lxx$
+
+"Romeo loves everyone": $\forall x Lrx$
+
+"Everyone loves Romeo": $\forall x Lxr$
+
+"Juliet loves someone": $\exists x Ljx$
+
+"Everyone loves someone": $\forall x \exists y Lxy$
+
+"Somebody loves everyone": $\exists x \forall y Lxy$
+
+
+Formation trees: (Scope of quantifiers) <br />
+
+Quasi-English: (Leave the quantifiers in the sentence) <br />
+
+When you build up a sentence with a formation tree: The line where you introduce a quantifier can often be best understood by reference to the previous line
+- This means you can't put quantifiers in between others.
+- Can't go from $\forall x Lxb$ to $\forall x \exists y Lxy$
+
+Everyone loves someone != Someone is loved by everyone
+
+$\forall x ( \exists y Lxy \rightarrow \exists yLyx)$
+- Everyone who loves someone is loved by someone. 
+- Everyone who loves is loved
+
+What is a lover? 
+
+$a$ is a lover if $\exists y Lay$
+
+All love all lovers = For every x, if x is a lover, then everyone loves x. 
+$\forall x (\exists yLxy \rightarrow \forall yLyx)$
 
 
 
+__Infinite Trees__:
 
+$\forall x \exists y Lxy$, $\therefore Laa$
+
+1. $\forall x \exists y Lxy$
+2. $lnot Laa$
+3. $\exists y Lay$, 1
+4. Lab, 3
+5. $\exists y Lby$, 1
+6. Continue forever
+
+The domain is $\{a, b, c, d, ...\}$
+$a \rightarrow 1, b \rightarrow 2, ...$
+$L = \{(a, b), (b, c), (c, d), ...\}$
+
+
+So infinite tree exist. 
+The tree test will always work for valid arguments. (Sound and complete)
+But, there are some invalid arguments that make the tree test go on forever.
+
+In general, having a decision procedure for validity is uncomputable. 
 

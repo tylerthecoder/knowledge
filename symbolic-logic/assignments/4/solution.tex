@@ -1,0 +1,42 @@
+\documentclass[12pt]{article}
+
+\title{Symbolic Logic HW 4}
+\author{Tyler Tracy}
+
+
+\begin{document}
+
+\section*{Solution to Problem 1}
+
+\section*{Solution to Problem 2}
+
+Let the domain = the set of people. Symbolize the following sentences, using P = is a philosopher, W = is wise, Txy = x teaches y, Lxy = x learns from y, s = Socrates, p = Plato. 
+
+\begin{itemize}
+    \item Everyone learns from someone \\
+        $\forall x \exists y Lxy$
+    \item Someone learns from everyone \\
+        $\exists x \forall y Lxy$
+    \item Someone learns from everyone who learns from them \\
+        $\exists x \forall y (Lyx \rightarrow Lxy)$
+    \item Someone learns from no-one \\
+        $\exists x \forall y \neg Lxy$
+    \item Everyone has someone they learn from who also learns from them \\
+        $\forall x \exists y (Lxy \land Lyx) $
+    \item Some wise people aren’t philosophers, but all philosophers are wise \\
+        $(\forall x Px \rightarrow Wx) \land (\exists y Wx \land \lnot Px)$
+    \item Anyone who was taught by Socrates was wise  
+    \item If everyone is a philosopher, then Socrates is a philosopher 
+    \item If anyone is a philosopher, then Socrates is a philosopher 
+    \item Anyone who is taught by Socrates learns from Socrates 
+    \item Whoever learns from Plato, learns from Socrates 
+    \item If no-one is wise, then no-one is a philosopher 
+    \item If everyone is taught by a philosopher, then everyone will be wise
+\end{itemize}
+
+
+
+\end{document}
+
+
+

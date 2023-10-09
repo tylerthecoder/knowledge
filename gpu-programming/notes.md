@@ -129,14 +129,29 @@ __constant__ int const_var; // memory: constant, scope: grid, lifetime: applicat
 ```
 
 
-
 ## 2D convolution
 
 If a 12x12 output tile and a 5x5 mask, then the thread block is 16x16
 
 
+## Warps
 
+The threads in a warp always stay together. Normally 32 threads
 
+We want each warp to take the same branch
 
+```c
+if ((tx / WARP_SIZE) > 2) {
+// do something
+} else {
+// do something else
+}
+```
+
+if $tx$ goes up to 255. And warp size is 32. 
+
+First 3 warps go to the first branch, the last 5 go to the second branch
+
+Divergence is when a warp takes two different branches. We want to avoid this. 
 
 
