@@ -3,6 +3,8 @@
 \title{Symbolic Logic HW 4}
 \author{Tyler Tracy}
 
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 \begin{document}
 
@@ -24,16 +26,33 @@ Let the domain = the set of people. Symbolize the following sentences, using P =
     \item Everyone has someone they learn from who also learns from them \\
         $\forall x \exists y (Lxy \land Lyx) $
     \item Some wise people aren’t philosophers, but all philosophers are wise \\
-        $(\forall x Px \rightarrow Wx) \land (\exists y Wx \land \lnot Px)$
-    \item Anyone who was taught by Socrates was wise  
-    \item If everyone is a philosopher, then Socrates is a philosopher 
-    \item If anyone is a philosopher, then Socrates is a philosopher 
-    \item Anyone who is taught by Socrates learns from Socrates 
-    \item Whoever learns from Plato, learns from Socrates 
-    \item If no-one is wise, then no-one is a philosopher 
-    \item If everyone is taught by a philosopher, then everyone will be wise
+        $(\forall x Px \rightarrow Wx) \land (\exists y Wy \land \lnot Py)$
+    \item Anyone who was taught by Socrates was wise  \\
+        $\forall x Tsx \rightarrow Wx$
+    \item If everyone is a philosopher, then Socrates is a philosopher \\
+        $(\forall x Px) \rightarrow Ps$
+    \item If anyone is a philosopher, then Socrates is a philosopher \\
+        $(\exists x Px) \rightarrow Ps$
+    \item Anyone who is taught by Socrates learns from Socrates \\
+        $\forall x (Tsx \rightarrow Lxs)$
+    \item Whoever learns from Plato, learns from Socrates \\
+        $\forall x (Lxp \rightarrow Lxs)$
+    \item If no-one is wise, then no-one is a philosopher \\
+        $(\lnot \exists x Wx) \rightarrow (\lnot \exists x Px) $
+    \item If everyone is taught by a philosopher, then everyone will be wise\\
+        $(\forall x \exists y (Tyx \land Py)) \rightarrow (\forall x Wx)$
 \end{itemize}
 
+
+\section*{Solution to Problem 3}
+
+\begin{itemize}
+    \item $\forall y Lya \rightarrow \forall y Lay, Lba, \therefore Lab$
+    If everyone loves Alma then Alma loves everyone. Baron loves Alma. Therefore Alma loves Baron
+    \item $\forall x \forall y (Lxy \rightarrow Lyx), Lba, \therefore Lab$
+    \item $\exists y \forall x Lxy \therefore \exists x \exists y(Lxy \land Lyx)$
+    \item $\exists x \forall y (Lxy \rightarrow lyx), \forall x Lxb \therefore \forall x Lbx$
+\end{itemize}
 
 
 \end{document}
