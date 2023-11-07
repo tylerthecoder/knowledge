@@ -155,3 +155,8 @@ First 3 warps go to the first branch, the last 5 go to the second branch
 Divergence is when a warp takes two different branches. We want to avoid this. 
 
 
+# Radix Sort
+
+
+
+

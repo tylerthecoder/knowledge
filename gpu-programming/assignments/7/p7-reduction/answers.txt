@@ -1,0 +1,22 @@
+How many times does a single thread block synchronize to reduce its portion of the array to a single value?
+
+In the code, the reduction within each thread block is carried out using a for-loop that iteratively halves the distance between the threads contributing to a given sum. The synchronization is done using __syncthreads() after each iteration of the loop to make sure that all the threads in the block have completed their operation before the next iteration begins.
+
+The loop counter variable s starts from BLOCK_SIZE and is halved (s >>= 1) in each iteration until s becomes zero. Therefore, if BLOCK_SIZE is 512, the loop will iterate:
+
+log2(512) = 9 times
+So, a single thread block will synchronize 9 times to reduce its portion of the array to a single value.
+
+What is the minimum, maximum, and average number of "real" operations that a thread will perform?
+
+Minimum:
+The last thread in the hierarchy of the reduction tree would only participate once in the actual summing. So, the minimum number of "real" operations is 1.
+
+Maximum:
+The first thread (tid = 0) will contribute to all 9 levels of the reduction tree. Thus, the maximum number of "real" operations for a thread is 9.
+
+Average:
+The total number of operations to sum up BLOCK_SIZE * 2 = 1024 numbers in a binary tree-like fashion would be 1024 - 1 = 1023. This is distributed across 512 threads, so on average:
+
+1023 operations / 512 threads ≈ 2 operations per thread
+So, on average, a thread will perform 2 "real" operations that contribute to the final reduction value.

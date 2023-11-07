@@ -424,3 +424,149 @@ But, there are some invalid arguments that make the tree test go on forever.
 
 In general, having a decision procedure for validity is uncomputable. 
 
+### Completeness of the tree test as a test for validity
+
+If the argument is invalid then the tree test says so. 
+
+The tree is either finite or open or infinite then the initial list is consistent 
+
+
+## Identity
+
+Qualitative Identity: Distinct objects with the same properties 
+Numerical identity: two names same object
+- This is what we care about for logic
+
+Identity Symbol: $=$ 
+In terms of syntax $=$ function like a 2-place predicate. i.e., in a WOFF it has to be paired with exactly two names. 
+
+Logical truths about identity. 
+- $\forall x x=x$
+- $\forall x \forall y ((Px ^ x = y) \rightarrow Py)$
+
+New tree rules
+- $\lnot a = a$, then close the tree
+- If $a = b$, then you can make a new line where you replace a with b
+
+
+Sherlock Holmes has a hat. $Ha$
+Sherlock Holmes exists. $\exists x x = a$
+
+Problem: When we translate a name in English / natural languae, we presuppose that the object exists. 
+
+
+The sentence "Does Sherlock Holmes exists?"
+
+
+The cat on the mat is black 
+
+Definite description construction (Russel made this): 
+= "There is at least one ___ and everything that satisfies ___ is identical with it"
+
+$\exists x ((Cx \land Mx) \land \forall y ((Cy \land My) \rightarrow y = x)) \land ...)$
+
+Russell part II: 
+Names are all really definite descriptions.
+i) seems to dispose of the Sherlock Holmes problem, naming someone doesn't loggicaly commit us to their existence. 
+ii) seems to give an account of how to refer to someone we aren't acquainted with. 
+
+Numerical identify is an equivalence relation. 
+- Reflexivity: Everything bears this relation to itself
+- Symmetry: if a bears R to b, then b bears R to a. 
+- Transitivity: If a bears R to b and b bears R to C, then a bears R to c. 
+
+Tree rules for identity allow you to replace instance of a with b if $a = b$
+
+$\lnot b = a$ means $\lnot(a = b)$
+You can't negate names. "Not Tyler" does not make sense. 
+
+There are at least 2 Ps:
+$\exists x \exists y (Px \land Py \land \lnot x = y)$
+
+There are at most 2 Ps:
+$\lnot \exists x \exists y \exists z (Px \land Py \land Pz \land \lnot x = y \land \lnot x = z \land \lnot y = z)$
+
+There are exactly 2 Ps:
+There are at least 2 Ps and there are at most 2 Ps
+
+$ \exist x \exist y (Px \land Py \land \forall x (Pz \rightarrow (z = x \lor z = y)))
+
+This is numbers
+
+Achilles loathes Hector and only Heactor
+$ Lah \land \forall x(Lax \rightarrow x = h) $
+
+
+Achilles is feared by all Trojans who fear no other Greeks. 
+
+i.e. All Trojans who fear no other Greeks fear Achilles.
+
+$\forall x ((Tx \land \lnot \exists y ( Gy \land Fxy \land \lnot (y = a) )) \rightarrow Fxa)$
+
+
+$\lnot \exists ( \phi(x) \land \sigma(x))$ = $\forall x ( \phi(x) \rightarrow \lnot \sigma(x))$
+
+
+Achilles is feared by the (one) traojan who fears no other Greek. 
+
+i.e. The one Trojan who fears no other Greek fears achilles
+
+
+## Functions
+
+A **function** is something we can apply to a name and yield another name. 
+
+The father of John's father is tall
+
+j = John, fj = The father of John, ffj = The father of the father of John
+
+All functions are single-valued (i.e. one output)
+
+The function must be defined over the entirety of the domain. 
+
+A 1 place function will be a set of ordered pairs
+
+1. $\forall x (Mx \rightarrow \forall y (x \neq Fy))$
+2. $\exists x Mx$
+3. Mfa, 2, EI with a new name
+4. Mfa \rightarrow \forall y(fa \neq fy), UI with x = fa
+
+We can't use EI with a function name. We don't know if there is some name that maps to the input
+
+
+### Dealing with infinity
+
+We are really stuck with infinite trees now
+
+
+The first time you UI, you can only use name without function symbols. Next time around you do a single function symbol, then two, etc... This helps deal with infinite trees
+
+
+
+## Robinson arithmetic
+
+An axiomatizion of arithmetic. The counting numbers plus basic operations (add, multiply)
+
+A set of basic assumptions regarding the subject in question. 
+
+Prove all and only the true claims of that subject matter. 
+
+Axioms
+1. $\forall x \forall y (x \neq y \rightarrow Sx \neq Sy )$
+2. $\forall x 0 \neq Sx$
+3. $\forall x (x \nq 0 \rightarrow \exists y (x = Sy))$
+
+S is a function is the "successor" functions
+
+
+There are four other axioms that define addition and  multiplication
+
+4. $\forall (x + 0 = x)$
+4. $\forall x \forall y (x + Sy = S(x + y))$
+
+
+We can get 1, 2, 3, 4 by taking the successor of numbers
+
+
+
+

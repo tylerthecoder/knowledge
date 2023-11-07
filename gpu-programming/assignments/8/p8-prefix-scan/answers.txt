@@ -1,0 +1,2 @@
+Describe how you handled arrays not a power of two in size and all performance-enhancing 
+optimizations you added. 
