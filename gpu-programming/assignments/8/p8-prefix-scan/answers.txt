@@ -1,2 +1,18 @@
 Describe how you handled arrays not a power of two in size and all performance-enhancing 
 optimizations you added. 
+
+To handle inputs that were not a multiple of 512 in the CUDA-based parallel prefix sum (scan) algorithm, the approach involved padding the input array. The size of the input array was adjusted to the next multiple of 512 to ensure optimal utilization of CUDA threads.
+
+Here's a brief overview of the steps taken:
+
+Determine Additional Padding Required: Calculated how much extra memory was needed to make the array size a multiple of 512. This was done by finding the size of the last block and subtracting it from 512.
+
+Allocate and Initialize Padded Array: Allocated a new array (paddedInout) with the padded size. Copied the original data to this array and initialized the extra elements to zero to ensure they didn't affect the scan results.
+
+Perform Scan Operation on Padded Array: Executed the scan kernel on the padded array. In the case of multiple blocks, additional steps were taken to process block-wise sums and update the elements accordingly.
+
+Copy Relevant Results Back: If padding was applied, the relevant portion of the results (corresponding to the original array size) was copied back from the padded array to the original array.
+
+This method effectively addressed the issue of non-multiple-of-512 input sizes, ensuring that the scan operation worked correctly for arrays of arbitrary size.
+
+

@@ -19,8 +19,8 @@ void initVector(float **vec_h, unsigned size) {
   }
 
   for (unsigned int i = 0; i < size; i++) {
-    // (*vec_h)[i] = (rand() % 100) / 100.00;
-    (*vec_h)[i] = i / 100.00;
+    (*vec_h)[i] = (rand() % 100) / 100.00;
+    // (*vec_h)[i] = i / 100.00;
   }
 
   // print the first 5 elements
@@ -30,11 +30,6 @@ void initVector(float **vec_h, unsigned size) {
 }
 
 void verify(float *input, float *output, unsigned num_elements) {
-
-  // print first 5 elements of the input and output for comparison
-  for (unsigned int i = 0; i < 8; i++) {
-    printf("\n Gpu num: [%d]: %f\n", i, output[i]);
-  }
 
   const float relativeTolerance = 2e-5;
 

@@ -81,10 +81,10 @@ __global__ void addKernel(float *inout, float *sum, unsigned size) {
 
   if (blockIdx.x > 0) {
     if (globalIndex < size) {
-      inout[globalIndex] += sum[blockIdx.x - 1];
+      inout[globalIndex] += sum[blockIdx.x];
     }
     if (globalIndex + BLOCK_SIZE < size) {
-      inout[globalIndex + BLOCK_SIZE] += sum[blockIdx.x - 1];
+      inout[globalIndex + BLOCK_SIZE] += sum[blockIdx.x];
     }
   }
 }

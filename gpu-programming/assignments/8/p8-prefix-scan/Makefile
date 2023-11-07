@@ -18,3 +18,6 @@ $(EXE): $(OBJ)
 
 clean:
 	rm -rf *.o $(EXE)
+
+package:
+	tar -cvf p8_tracy.tar kernel.cu answers.txt
