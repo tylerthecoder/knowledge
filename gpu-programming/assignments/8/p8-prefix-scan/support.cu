@@ -20,7 +20,7 @@ void initVector(float **vec_h, unsigned size) {
 
   for (unsigned int i = 0; i < size; i++) {
     // (*vec_h)[i] = (rand() % 100) / 100.00;
-    (*vec_h)[i] = ((size - i) - 1) / 100.00;
+    (*vec_h)[i] = i / 100.00;
   }
 
   // print the first 5 elements
@@ -41,11 +41,17 @@ void verify(float *input, float *output, unsigned num_elements) {
   float sum = 0.0f;
   for (int i = 0; i < num_elements; ++i) {
     float relativeError = (sum - output[i]) / sum;
-    printf("Sum = %f, Output = %f\n", sum, output[i]);
+    // printf("Sum = %f, Output = %f\n", sum, output[i]);
     if (relativeError > relativeTolerance ||
         relativeError < -relativeTolerance) {
       printf("TEST FAILED at i = %d, cpu = %0.3f, gpu = %0.3f\n\n", i, sum,
              output[i]);
+
+      // print the next 5 elements for debugging
+      for (unsigned int j = i - 5; j < i + 5; j++) {
+        printf("\n Gpu num: [%d]: %f\n", j, output[j]);
+      }
+
       exit(0);
     }
     sum += input[i];

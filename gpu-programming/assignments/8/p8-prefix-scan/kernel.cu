@@ -17,12 +17,14 @@ __global__ void preScanKernel(float *inout, unsigned size, float *sum) {
   __shared__ float temp[BLOCK_SIZE * 2];
 
   int t = threadIdx.x;
-  int n = size;
+  int bx = blockIdx.x;
+  int n = BLOCK_SIZE * 2;
   int offset = 1;
+  int globalIndex = 2 * bx * BLOCK_SIZE + 2 * t;
 
   // load input into shared memory
-  temp[2 * t] = inout[2 * t];
-  temp[2 * t + 1] = inout[2 * t + 1];
+  temp[2 * t] = inout[globalIndex];
+  temp[2 * t + 1] = inout[globalIndex + 1];
 
   __syncthreads();
 
@@ -37,8 +39,13 @@ __global__ void preScanKernel(float *inout, unsigned size, float *sum) {
     offset *= 2;
   }
 
+  // store sum of each block
+
   // clear the last element
   if (t == 0) {
+    if (sum != NULL) {
+      sum[bx] = temp[n - 1];
+    }
     temp[n - 1] = 0;
   }
 
@@ -63,8 +70,8 @@ __global__ void preScanKernel(float *inout, unsigned size, float *sum) {
 
   __syncthreads();
 
-  inout[2 * t] = temp[2 * t];
-  inout[2 * t + 1] = temp[2 * t + 1];
+  inout[globalIndex] = temp[2 * t];
+  inout[globalIndex + 1] = temp[2 * t + 1];
 }
 
 __global__ void addKernel(float *inout, float *sum, unsigned size) {
@@ -82,16 +89,6 @@ __global__ void addKernel(float *inout, float *sum, unsigned size) {
   }
 }
 
-unsigned int nextPow2(unsigned int x) {
-  --x;
-  x |= x >> 1;
-  x |= x >> 2;
-  x |= x >> 4;
-  x |= x >> 8;
-  x |= x >> 16;
-  return ++x;
-}
-
 /******************************************************************************
 Setup and invoke your kernel(s) in this function. You may also allocate more
 GPU memory if you need to
@@ -104,8 +101,11 @@ void preScan(float *inout, unsigned in_size) {
   dim3 dim_grid, dim_block;
 
   num_blocks = in_size / (BLOCK_SIZE * 2);
-  if (in_size % (BLOCK_SIZE * 2) != 0)
+  if (in_size % (BLOCK_SIZE * 2) != 0) {
     num_blocks++;
+  }
+
+  printf("Number of blocks: %d\n", num_blocks);
 
   dim_block.x = BLOCK_SIZE;
   dim_block.y = 1;
@@ -114,49 +114,44 @@ void preScan(float *inout, unsigned in_size) {
   dim_grid.y = 1;
   dim_grid.z = 1;
 
-  unsigned paddedSize = nextPow2(in_size);
+  // Pad the input
+  unsigned last_block_size = in_size - (num_blocks - 1) * BLOCK_SIZE * 2;
+  unsigned extra_mem_to_allocate = BLOCK_SIZE * 2 - last_block_size;
+  unsigned paddedSize = in_size + extra_mem_to_allocate;
 
-  float *real_inout = inout;
-  unsigned real_size = in_size;
+  printf("Padding by %d\n", extra_mem_to_allocate);
 
-  // Check if padding is needed
-  if (paddedSize != in_size) {
-    printf("Padding needed\n");
+  cuda_ret = cudaMalloc((void **)&paddedInout, paddedSize * sizeof(float));
+  if (cuda_ret != cudaSuccess)
+    FATAL("Unable to allocate device memory for padded inout");
 
-    cuda_ret = cudaMalloc((void **)&paddedInout, paddedSize * sizeof(float));
-    if (cuda_ret != cudaSuccess)
-      FATAL("Unable to allocate device memory for padded inout");
+  cuda_ret = cudaMemcpy(paddedInout, inout, in_size * sizeof(float),
+                        cudaMemcpyHostToDevice);
+  if (cuda_ret != cudaSuccess)
+    FATAL("Unable to copy to padded inout");
 
-    cuda_ret = cudaMemcpy(paddedInout, inout, in_size * sizeof(float),
-                          cudaMemcpyHostToDevice);
-    if (cuda_ret != cudaSuccess)
-      FATAL("Unable to copy to padded inout");
+  // Initialize the padded elements to 0
+  cuda_ret = cudaMemset(paddedInout + in_size, 0,
+                        (paddedSize - in_size) * sizeof(float));
+  if (cuda_ret != cudaSuccess)
+    FATAL("Unable to initialize padded elements");
 
-    // Initialize the padded elements to 0
-    cuda_ret = cudaMemset(paddedInout + in_size, 0,
-                          (paddedSize - in_size) * sizeof(float));
-    if (cuda_ret != cudaSuccess)
-      FATAL("Unable to initialize padded elements");
-
-    real_inout = paddedInout; // Use the padded array
-    real_size = paddedSize;
-  }
-
-  // print the padded size
-  printf("Using size: %d\n", in_size);
+  // Finish pad
 
   if (num_blocks > 1) {
+    printf("Running preScanKernel with multiple blocks\n");
+
     cuda_ret = cudaMalloc((void **)&sum, num_blocks * sizeof(float));
     if (cuda_ret != cudaSuccess)
       FATAL("Unable to allocate device memory");
 
-    preScanKernel<<<dim_grid, dim_block>>>(inout, real_size, sum);
-    // preScan(sum, num_blocks);
-    // addKernel<<<dim_grid, dim_block>>>(inout, sum, in_size);
+    preScanKernel<<<dim_grid, dim_block>>>(paddedInout, in_size, sum);
+    preScan(sum, num_blocks);
+    addKernel<<<dim_grid, dim_block>>>(paddedInout, sum, in_size);
 
     cudaFree(sum);
   } else {
-    preScanKernel<<<dim_grid, dim_block>>>(real_inout, real_size, NULL);
+    preScanKernel<<<dim_grid, dim_block>>>(paddedInout, in_size, NULL);
   }
 
   if (paddedSize != in_size) {
@@ -171,7 +166,9 @@ void preScan(float *inout, unsigned in_size) {
     }
 
     cuda_ret = cudaFree(paddedInout);
-    if (cuda_ret != cudaSuccess)
+    if (cuda_ret != cudaSuccess) {
+      fprintf(stderr, "GPUassert: %s\n", cudaGetErrorString(cuda_ret));
       FATAL("Unable to free padded inout");
+    }
   }
 }
