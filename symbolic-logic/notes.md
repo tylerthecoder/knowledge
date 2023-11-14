@@ -544,7 +544,6 @@ The first time you UI, you can only use name without function symbols. Next time
 
 
 ## Robinson arithmetic
-
 An axiomatizion of arithmetic. The counting numbers plus basic operations (add, multiply)
 
 A set of basic assumptions regarding the subject in question. 
@@ -558,14 +557,44 @@ Axioms
 
 S is a function is the "successor" functions
 
-
-There are four other axioms that define addition and  multiplication
+There are four other axioms that define addition and multiplication
 
 4. $\forall (x + 0 = x)$
 4. $\forall x \forall y (x + Sy = S(x + y))$
 
+We can get 1, 2, 3, 4 by taking the successor of numbers. 
 
-We can get 1, 2, 3, 4 by taking the successor of numbers
+This looks good, but it doesn't axiomatise the natural numbers. 
+All the truths of the natural numbers are not provable in Robinson arithmetic
+
+We can show that Q doesn't "Pick out" the natural numbers by giving a non standard model of arithmetic that satisfies those axioms. 
+
+Godel = there is no finite axiomatization that captures all and only all truths of arithmetic. 
+
+
+
+## Computing Machines
+
+Types of computing machines:
+- Turing Machines
+- Recursive functions (lambda calculus)
+- Register machines
+
+
+Register machine:
+- There is a set of registers and operations that you can perform. You draw lines from states and leaving from different directions depending on the value in the register. 
+
+Church Turning Thesis: All effectively computable functions are Turing computable. 
+
+Lossless Adder: Compute the sum of two number and Im going to leave it that the registers that contain the input value shave those values at the end of the calculation. 
+Input values: in A and B registers and then compute the sum of those values
+
+Halting problem:
+Can we construct a program that does the following: 
+Given a register machine program and the input, tell me if that program will ever finish. 
+
+We can prove by contradictions. We show that you can name each program with a number. So our program would take two numbers (the program and the input). 
+
 
 
 
