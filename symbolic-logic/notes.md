@@ -595,6 +595,26 @@ Given a register machine program and the input, tell me if that program will eve
 
 We can prove by contradictions. We show that you can name each program with a number. So our program would take two numbers (the program and the input). 
 
+We can enumerate all the register machines. 
+
+### Halting problem
+
+We can give each register machine a number. 
+So we input the name of a register machine that can hypothetical machine that computes the halting function. 
+
+$h(m,n)$ = 1 if f_m(n) is defined and halts, 0 otherwise
+
+Self halting problem is when m = n
+
+This is the halting problem for all machines. There is a subset of machines that you can solve the halting problem for. 
+
+Proof: 
+Suppose there was a machine that solved the self halting problem. 
+
+You tack on a circuit that halts if the machine doesn't halt and vice versa. Call new machine g. 
+
+What happens if I feed g its own name? It halts when g doesn't halt, this is a contradiction. 
+
 
 
 

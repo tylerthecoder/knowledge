@@ -18,3 +18,6 @@ $(EXE): $(OBJ)
 
 clean:
 	rm -rf *.o $(EXE)
+
+package:
+	tar -cvf p9_tracy.tar kernel.cu

@@ -25,7 +25,7 @@ void initVector(unsigned int **vec_h, unsigned int size) {
   }
 
   for (long unsigned int i = 0; i < size; i++) {
-    (*vec_h)[i] = i;
+    (*vec_h)[i] = rand();
   }
 }
 
@@ -39,11 +39,6 @@ void verify(unsigned int *input, unsigned int *output,
   qsort(input, num_elements, sizeof(unsigned int), cmpfunc);
 
   int relativeError;
-
-  // print first 10 elements of gpu
-  for (long unsigned int i = 0; i < 10; ++i) {
-    printf("Input: %u Output: %u \n", input[i], output[i]);
-  }
 
   for (long unsigned int i = 0; i < num_elements; ++i) {
     relativeError = input[i] - output[i];
