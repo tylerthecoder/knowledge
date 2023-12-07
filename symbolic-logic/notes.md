@@ -615,7 +615,68 @@ You tack on a circuit that halts if the machine doesn't halt and vice versa. Cal
 
 What happens if I feed g its own name? It halts when g doesn't halt, this is a contradiction. 
 
+We can use the fact that you can't solve the halting problem to show that there is no decision procedure for validity. I.e. if the argument is valid, your procedure tells you so and if the argument is invalid, your procedure tells you so. 
+
+We prove this by showing if there was a decision procedure for validity, we could solve the halting problem. 
+
+If we have a decision procedure for validity, then we can mechanically assess the validity of 
+
+We prove both that
+- If the argument is valid, then the machine halts
+- If the machine halts, then the argument is valid
 
 
+## Modal logic
+
+We want to expand the expressive capabilities of our formal languages
+- Necessary 
+- Possible
+- Impossible
+
+Why do we talk about things that are not possible / non-actual 
+
+Let's try to formalize this. 
+
+Modal propositional logic
+- It is possible that p: $\Diamond p$
+- It is necessary that p: $\Box p$
+
+Question: are $\Box$ and $\Diamond$ truth functional?
+- No, these do not have truth tables
+
+$\Box (2+2=4) = T$
+
+$\Box$(I am over 10 years old) $= F$
+
+Helpful suggestion (from Leibniz):
+- Necessity = truth in all possible worlds
+- Possibility = truth in at least one possible world. 
+
+Kripke
+- Put this on a formal footing
+
+We need to define what a possible world is
+
+Modal Semantics
+- The formal articulation of the possible worlds idea
+- We added the new two new operators to PL
+
+An interpretation is an ordered triple $<W,R,V>$. 
+- $W$ is a non-empty set of objects, the set of possible worlds. 
+- $R$ is a binary relation (The accessibility function, tells you which worlds are accessible from which) 
+- $V$ to a two-place function that assigns a truth value to each sentence relative to each world in the set W. 
+
+We can think of a world as a set of sentences that are true
+
+
+This needs to hold:
+- $V_w(\lnot p) = T iff V_w(p) = 0$
+- $V_w(\Diamond p) = T \text{ iff } \exists w' \in W \land wRw' \land V_{w'}(p) = T$
+    - P must be true in world w' that is related to w
+- $V_w(\Box p) = T \text { iff } \forall w' \in W, wRw', V_{w'}(p) = T$
+
+Note if no worlds are accessible from w, then $\Box p = 1$ for all p.
+
+We want: $\lnot \Diamond p = \Box \lnot p$
 
 

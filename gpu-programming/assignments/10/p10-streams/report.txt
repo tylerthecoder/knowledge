@@ -1,0 +1,81 @@
+# Test Run: 1 (Moderate data size requiring around 20 thread blocks)
+# ---------------------------------------------------------------------
+./stream 
+
+Setting up the problem...0.839431 s
+    Vector size = 10000
+
+[Setting up regular Kernel configurations]
+Allocating device variables...0.000161 s
+Performing 2000000 iterations of regular Kernel launch...
+Total time in 2000000 iterations of regular Kernel launch: 70.729080 s
+Verifying results...TEST PASSED
+
+[Cleaning up before Stream Kernel setup]
+Freeing up device memory...
+Clearing result vector...
+
+[Setting up stream based Kernel configurations]
+Allocating device variables...
+Performing 2000000 iterations of stream Kernel launch...
+Total time in 2000000 iterations of stream Kernel launch: 36.941708 s
+Verifying results...TEST PASSED
+
+Speedup (regular/stream): 1.915
+
+
+
+
+# Test Run: 2 (Small data size requiring only one thread block)
+# ---------------------------------------------------------------------
+./stream 200
+
+Setting up the problem...0.912981 s
+    Vector size = 200
+
+[Setting up regular Kernel configurations]
+Allocating device variables...0.000192 s
+Performing 2000000 iterations of regular Kernel launch...
+Total time in 2000000 iterations of regular Kernel launch: 60.986343 s
+Verifying results...TEST PASSED
+
+[Cleaning up before Stream Kernel setup]
+Freeing up device memory...
+Clearing result vector...
+
+[Setting up stream based Kernel configurations]
+Allocating device variables...
+Performing 2000000 iterations of stream Kernel launch...
+Total time in 2000000 iterations of stream Kernel launch: 35.458973 s
+Verifying results...TEST PASSED
+
+Speedup (regular/stream): 1.720
+
+
+
+
+# Test Run: 3 (Comparatively larger data size requiring 200 thread blocks)
+# ------------------------------------------------------------------------
+./stream 51000
+
+Setting up the problem...0.841371 s
+    Vector size = 51000
+
+[Setting up regular Kernel configurations]
+Allocating device variables...0.000155 s
+Performing 2000000 iterations of regular Kernel launch...
+Total time in 2000000 iterations of regular Kernel launch: 150.320343 s
+Verifying results...TEST PASSED
+
+[Cleaning up before Stream Kernel setup]
+Freeing up device memory...
+Clearing result vector...
+
+[Setting up stream based Kernel configurations]
+Allocating device variables...
+Performing 2000000 iterations of stream Kernel launch...
+Total time in 2000000 iterations of stream Kernel launch: 126.425323 s
+Verifying results...TEST PASSED
+
+Speedup (regular/stream): 1.189
+
